@@ -1,0 +1,964 @@
+swagger: '2.0'
+info:
+  description: This is the API to support the players interaction within Nycemoves.
+  version: 1.0.0
+  title: Nycemoves
+  contact:
+    email: mohit.mehrotra19@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# host: player.nycemoves.com
+# basePath: /v1
+tags:
+- name: players
+  description: Everything about Players
+- name: images
+  description: Access to Players images
+- name: videos
+  description: Player's Videos
+- name: comments
+  description: Comments on Images and Videos
+- name: post
+  description: Post posted by players
+
+parameters:
+  pageSize:
+    name: pageSize
+    in: query
+    type: number
+    required: false
+    default: 10
+  pageNumber:
+    name: pageNumber
+    in: query
+    type: number
+    required: false
+    default: 1
+
+# schemes:
+# - http
+paths:
+  /players:
+    post:
+      tags:
+      - players
+      summary: Player Registration
+      description: This API will be used to registers players within the system.
+      operationId: createPlayer
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Created user object
+        required: true
+        schema:
+          $ref: '#/definitions/PlayerRequest'
+      responses:
+        200:
+          description: successful operation 
+          schema:
+             $ref: '#/definitions/PlayerResponse'
+        default:
+          description: successful operation
+        403:
+          description: Unauthorized
+  /players/login:
+    get:
+      tags:
+      - players
+      summary: Logs player into the system
+      operationId: loginUser
+      produces:
+      - application/json
+      parameters:
+      - name: username
+        in: header
+        description: The user name for login
+        required: true
+        type: string
+      - name: password
+        in: header
+        description: The password for login in clear text
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PlayerResponse'          
+        400:
+          description: Invalid username/password supplied
+  /players/{playerId}/logout:
+    get:
+      tags:
+      - players
+      summary: Logs out current logged in player session
+      operationId: logoutUser
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId of the current player
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseTemplate'
+  /players/{playerId}:
+    get:
+      tags:
+      - players
+      summary: Get the details of a player based on player id session
+      description: Player Information.
+      operationId: getPlayer
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId of the current player
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation 
+          schema:
+             $ref: '#/definitions/PlayerResponse'
+
+    put:
+      tags:
+      - players
+      summary: Update player
+      description: This will enable logged in player to update its information.
+      operationId: updatePlayer
+      produces:
+      - application/json      
+      parameters:
+      - in: path
+        name: playerId
+        description: player that need to be updated
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Updated player object
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PlayerResponse'
+        400:
+          description: Invalid Player supplied
+        404:
+          description: Player not found
+    delete:
+      tags:
+      - players
+      summary: Delete player
+      description: Delete Player Account.
+      operationId: deletePlayer
+      produces:
+      - application/json      
+      parameters:
+      - name: playerId
+        in: path
+        description: The Id of the player which need to be deleted
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseTemplate'
+        400:
+          description: Invalid username supplied
+        404:
+          description: User not found
+  /players/{playerId}/followers:
+    get:
+      tags:
+      - players
+      summary: Followers of a player
+      operationId: getFollowers
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId of the current player
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Followers'
+  /players/{playerId}/follows:
+    get:
+      tags:
+      - players
+      summary: Players followed by current player
+      operationId: playerFollows
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId of the current player
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Follows'
+  /posts/{playerId}:
+    post:
+      tags:
+      - posts
+      summary: Player Submit a Post
+      operationId: submit Post
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: playerId
+        required: true
+        type: integer
+      - in: body
+        name: body
+        description: Created post object
+        required: true
+        schema:
+          $ref: '#/definitions/PostRequest'
+      responses:
+        200:
+          description: successful operation 
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Post'  
+        default:
+          description: successful operation
+    get:
+      tags:
+      - posts
+      summary: Get the posts submitted by the user ordered by timestamp desc
+      operationId: getPosts
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId of the current player
+        required: true
+        type: integer
+      - $ref: '#/parameters/pageSize'
+      - $ref: '#/parameters/pageNumber'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Post'
+    delete:
+      tags:
+      - posts
+      summary: Delete a post
+      description: Delete a post 
+      operationId: deletePost
+      produces:
+      - application/json      
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId for which post needs to be deleted
+        required: true
+        type: string
+      - name: postId
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseTemplate'
+        400:
+          description: Invalid playerId supplied
+        404:
+          description: PlayerId not found      
+  /media/images/players/{playerId}:
+    post:
+      tags:
+      - images
+      summary: Player Submit a Image
+      operationId: submitImage
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: playerId
+        required: true
+        type: integer
+      - in: body
+        name: body
+        description: Created image object
+        required: true
+        schema:
+          $ref: '#/definitions/ImageRequest'
+      responses:
+        200:
+          description: successful operation 
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Image'
+        default:
+          description: successful operation
+    get:
+      tags:
+      - images
+      summary: Get the posts submitted by the user ordered by timestamp desc
+      operationId: getImages
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId of the current player
+        required: true
+        type: integer
+      - $ref: '#/parameters/pageSize'
+      - $ref: '#/parameters/pageNumber'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Image'
+    delete:
+      tags:
+      - images
+      summary: Delete a image
+      description: Delete a image 
+      operationId: deleteImage
+      produces:
+      - application/json      
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId for which post needs to be deleted
+        required: true
+        type: string
+      - name: imageId
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseTemplate'
+        400:
+          description: Invalid playerId supplied
+        404:
+          description: PlayerId not found
+  /media/images/{imageId}:
+    get:
+      tags:
+      - images
+      summary: Get the posts submitted by the user ordered by timestamp desc
+      operationId: getImagesByImageId
+      produces:
+      - application/json
+      parameters:
+      - name: imageId
+        in: path
+        description: The ImageId of the image
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                      $ref: '#/definitions/Image'
+  /media/images/{imageId}/appluad:
+    post:
+      tags:
+      - images
+      summary: Get the posts submitted by the user ordered by timestamp desc
+      operationId: applaudImageByImageId
+      produces:
+      - application/json
+      parameters:
+      - name: imageId
+        in: path
+        description: The ImageId of the image
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+              $ref: '#/definitions/ResponseTemplate'
+
+
+  /media/videos/players/{playerId}:
+    post:
+      tags:
+      - videos
+      summary: Player Submit a Video
+      operationId: submitVideo
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: playerId
+        required: true
+        type: integer
+      - in: body
+        name: body
+        description: Created Video object
+        required: true
+        schema:
+          $ref: '#/definitions/VideoRequest'
+      responses:
+        200:
+          description: successful operation 
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Video'  
+        default:
+          description: successful operation
+    get:
+      tags:
+      - videos
+      summary: Get the videos submitted by the user ordered by timestamp desc
+      operationId: getVideos
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId of the current player
+        required: true
+        type: integer
+      - $ref: '#/parameters/pageSize'
+      - $ref: '#/parameters/pageNumber'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                   type: array
+                   items:
+                     $ref: '#/definitions/Video'
+    delete:
+      tags:
+      - videos
+      summary: Delete a video
+      description: Delete a video 
+      operationId: deleteVideo
+      produces:
+      - application/json      
+      parameters:
+      - name: playerId
+        in: path
+        description: The playerId for which post needs to be deleted
+        required: true
+        type: string
+      - name: videoId
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseTemplate'
+        400:
+          description: Invalid playerId supplied
+        404:
+          description: PlayerId not found
+  /media/videos/{videoId}:
+    get:
+      tags:
+      - videos
+      summary: Get the videos by video id
+      operationId: getVideosByVideoId
+      produces:
+      - application/json
+      parameters:
+      - name: videoId
+        in: path
+        description: The video id of the video which need to be fetched
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                   $ref: '#/definitions/Video'
+  /media/videos/{videoId}/appluad:
+    post:
+      tags:
+      - videos
+      summary: Applaud / Like the by video id
+      operationId: applaudVideosByVideoId
+      produces:
+      - application/json
+      parameters:
+      - name: videoId
+        in: path
+        description: The video id of the video which need to be fetched
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseTemplate'
+              
+
+
+  /comments:
+    post:
+      tags:
+      - comments
+      summary: Player Submit a Comment based on the image id / video id, here first image id field will be checked if filled the comment will go against that otherwise against the video id.
+      operationId: submitComment
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: playerId
+        required: true
+        type: integer
+      - in: header
+        name: imageId
+        required: true
+        type: integer
+      - in: header
+        name: videoId
+        required: true
+        type: integer  
+      - in: header
+        name: postId
+        required: true
+        type: integer  
+      - in: body
+        name: body
+        description: Created Comment object
+        required: true
+        schema:
+          $ref: '#/definitions/CommentsRequest'
+      responses:
+        200:
+          description: successful operation 
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Comments'  
+        default:
+          description: successful operation
+    get:
+      tags:
+      - comments
+      summary: Get the comments submitted by the user ordered by timestamp desc
+      operationId: getComments
+      produces:
+      - application/json
+      parameters:
+      - name: playerId
+        in: header
+        description: The playerId of the current player
+        required: true
+        type: integer
+      - name: imageId
+        in: header
+        description: ImageId for which comments need to be fetched
+        required: false
+        type: integer
+      - name: videoId
+        in: header
+        description: VideoId for which comments need to be fetched
+        required: false
+        type: integer
+      - name: postId
+        in: header
+        description: PostId for which comments need to be fetched
+        required: false
+        type: integer
+      - $ref: '#/parameters/pageSize'
+      - $ref: '#/parameters/pageNumber'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                   type: array
+                   items:
+                    $ref: '#/definitions/Comments'
+    delete:
+      tags:
+      - comments
+      summary: Delete a comment
+      description: Delete a comment
+      operationId: deleteComment
+      produces:
+      - application/json      
+      parameters:
+      - name: playerId
+        in: header
+        description: The playerId for which comment needs to be deleted
+        required: true
+        type: string
+      - name: commentId
+        in: header
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseTemplate'
+        400:
+          description: Invalid playerId supplied
+        404:
+          description: PlayerId not found      
+
+
+            
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  ResponseTemplate:
+    type: object
+    properties:
+      status:
+        type: string
+        enum:
+          - SUCCESS
+          - FAILURE
+      code:
+         type: string
+      message:
+        type: string
+  PlayerRequest:
+    type: object
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      password:
+        type: string
+      displayName:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      gender:
+        type: string
+        enum:
+        - male
+        - female
+        - unspecified
+      school:
+        type: string
+      primarySport:
+        type: string
+      dob:
+        type: string
+        format: date
+    xml:
+      name: PlayerRequest
+  Player:
+    allOf: 
+       - $ref: '#/definitions/PlayerRequest'
+       - properties:
+           playerId:
+             type: integer
+             format: int64
+           creationTime:
+             type: string
+             format: date-time
+           updateTime:
+             type: string
+             format: date
+           numberOfConnections:
+             type: integer
+             format: int64
+  PlayerResponse:
+     allOf: 
+       - $ref: '#/definitions/ResponseTemplate'
+       - properties:
+            data:
+              $ref: '#/definitions/Player'          
+  Image:
+    type: object
+    properties:
+      imageId:
+        type: integer
+        format: int64
+      playerId:
+        type: integer
+        format: int64
+      title:
+        type: string
+      imageUrl:
+        type: string
+      description:
+        type: string
+      applauds:
+        type: integer
+      postedTimestamp:
+        type: string
+        format: date-time
+  ImageRequest:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      title:
+        type: string
+      imageUrl:
+        type: string
+      description:
+        type: string
+  Video:
+    type: object
+    properties:
+      videoId:
+        type: integer
+        format: int64
+      playerId:
+        type: integer
+        format: int64
+      title:
+        type: string
+      videoUrl:
+        type: string
+      descriptioin:
+        type: string
+      postedTimestamp:
+        type: string
+        format: date-time
+      applauds:
+        type: integer
+  VideoRequest:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      title:
+        type: string
+      videoUrl:
+        type: string
+      description:
+        type: string
+  Comments:
+    type: object
+    properties:
+      commentId:
+        type: integer
+        format: int64
+      postedBy:
+        type: integer
+        format: int64
+      imageId:
+        type: integer
+        format: int64
+      videoId:
+        type: integer
+        format: int64
+      postId:
+        type: integer
+        format: int64
+      comments:
+        type: string
+      postedTimestamp:
+        type: string
+        format: date-time
+  CommentsRequest:
+    type: object
+    properties:
+      postedBy:
+        type: integer
+        format: int64
+      imageId:
+        type: integer
+        format: int64
+      videoId:
+        type: integer
+        format: int64
+      postId:
+        type: integer
+        format: int64
+      comments:
+        type: string
+  Post:
+    type: object
+    properties:
+      postId:
+        type: integer
+        format: int64
+      postedBy:
+        type: integer
+        format: int64
+        description: Player Id
+      post:
+        type: string
+      postedTimestamp:
+        type: string
+        format: date-time  
+  PostRequest:
+    type: object
+    properties:
+      postedBy:
+        type: integer
+        format: int64
+        description: Player Id
+      post:
+        type: string
+  Followers:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      followers:
+        type: array
+        items:
+          type: object
+          properties:
+            playerId:
+              type: integer
+              format: int64
+            followTimestamp:
+              type: string
+              format: date-time
+  FollowerRequest:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      followerId:
+        type: integer
+        format: int64
+  Follows:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      follows:
+        type: array
+        items:
+          type: object
+          properties:
+            playerId:
+              type: integer
+              format: int64
+            followTimestamp:
+              type: string
+              format: date-time
+  FollowsRequest:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      followsId:
+        type: integer
+        format: int64
+      followsTimestamp:
+        type: string
+        format: date-time
+      
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+# basePath: /players-api/1.0.0
+# schemes:
+#   - http
+# Added by API Auto Mocking Plugin
+schemes:
+ - https
+ - http
+# Added by API Auto Mocking Plugin
+# basePath: /nycemoves-players/1.0.0
+# Added by API Auto Mocking Plugin
+# basePath: /nycemoves/players-api/1.0.0
+# Added by API Auto Mocking Plugin
+basePath: /nycemoves/players-api/1.0.0
