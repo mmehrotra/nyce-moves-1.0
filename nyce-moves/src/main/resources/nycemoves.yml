@@ -104,7 +104,6 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation
@@ -125,7 +124,6 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation 
@@ -145,8 +143,7 @@ paths:
         name: playerId
         description: player that need to be updated
         required: true
-        type: integer
-        format: int64
+        type: string
       - in: body
         name: body
         description: Updated player object
@@ -175,8 +172,7 @@ paths:
         in: path
         description: The Id of the player which need to be deleted
         required: true
-        type: integer
-        format: int64
+        type: string
       responses:
         200:
           description: successful operation
@@ -186,12 +182,12 @@ paths:
           description: Invalid username supplied
         404:
           description: User not found
-  /players/{playerId}/friends:
+  /players/{playerId}/followers:
     get:
       tags:
       - players
       summary: Followers of a player
-      operationId: getFriends
+      operationId: getFollowers
       produces:
       - application/json
       parameters:
@@ -200,46 +196,22 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
-      - $ref: '#/parameters/pageSize'
-      - $ref: '#/parameters/pageNumber'  
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/GetFriendsResponse'
-  /players/{playerId}/friendRequest:
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Followers'
+  /players/{playerId}/follows:
     get:
       tags:
       - players
-      summary: Player sending the friend request
-      operationId: sendFriendRequest
-      produces:
-      - application/json
-      parameters:
-      - name: playerId
-        in: path
-        description: The playerId of the current player who is sending the request
-        required: true
-        type: integer
-        format: int64
-      - name: friendId
-        in: header
-        description: PlayerId of the player with whom friendship is been seeken
-        required: true
-        type: integer
-        format: int64
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/ResponseTemplate'
-  /players/{playerId}/pendingFriendRequests:
-    get:
-      tags:
-      - players
-      summary: Pending Friend Requests
-      operationId: getPendingFriendRequests
+      summary: Players followed by current player
+      operationId: playerFollows
       produces:
       - application/json
       parameters:
@@ -248,39 +220,16 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/GetPendingFriendsRequestsResponse'          
-  /players/{playerId}/approveFriendRequest:
-    get:
-      tags:
-      - players
-      summary: Player approving the friend request
-      operationId: approveFriendRequest
-      produces:
-      - application/json
-      parameters:
-      - name: playerId
-        in: path
-        description: The playerId of the current player who is sending the request
-        required: true
-        type: integer
-        format: int64
-      - name: friendId
-        in: header
-        description: PlayerId of the player with whom friendship is been seeken
-        required: true
-        type: integer
-        format: int64
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/ResponseTemplate'          
-
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Follows'
   /posts/{playerId}:
     post:
       tags:
@@ -294,7 +243,6 @@ paths:
         name: playerId
         required: true
         type: integer
-        format: int64
       - in: body
         name: body
         description: Created post object
@@ -305,7 +253,12 @@ paths:
         200:
           description: successful operation 
           schema:
-            $ref: '#/definitions/CreatePostResponse'  
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Post'  
         default:
           description: successful operation
     get:
@@ -321,14 +274,20 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
       - $ref: '#/parameters/pageSize'
       - $ref: '#/parameters/pageNumber'
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/GetAllPostsResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Post'
     delete:
       tags:
       - posts
@@ -342,13 +301,11 @@ paths:
         in: path
         description: The playerId for which post needs to be deleted
         required: true
-        type: integer
-        format: int64
+        type: string
       - name: postId
-        in: header
+        in: query
         required: true
-        type: integer
-        format: int64
+        type: string
       responses:
         200:
           description: successful operation
@@ -357,10 +314,7 @@ paths:
         400:
           description: Invalid playerId supplied
         404:
-          description: PlayerId not found
-          
-          
-          
+          description: PlayerId not found      
   /media/images/players/{playerId}:
     post:
       tags:
@@ -374,7 +328,6 @@ paths:
         name: playerId
         required: true
         type: integer
-        format: int64
       - in: body
         name: body
         description: Created image object
@@ -385,7 +338,12 @@ paths:
         200:
           description: successful operation 
           schema:
-            $ref: '#/definitions/CreateImageResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Image'
         default:
           description: successful operation
     get:
@@ -401,14 +359,20 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
       - $ref: '#/parameters/pageSize'
       - $ref: '#/parameters/pageNumber'
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/GetImagesResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Image'
     delete:
       tags:
       - images
@@ -422,13 +386,11 @@ paths:
         in: path
         description: The playerId for which post needs to be deleted
         required: true
-        type: integer
-        format: int64
+        type: string
       - name: imageId
-        in: header
+        in: query
         required: true
-        type: integer
-        format: int64
+        type: string
       responses:
         200:
           description: successful operation
@@ -442,7 +404,7 @@ paths:
     get:
       tags:
       - images
-      summary: Get the image with the help of image id
+      summary: Get the posts submitted by the user ordered by timestamp desc
       operationId: getImagesByImageId
       produces:
       - application/json
@@ -452,17 +414,21 @@ paths:
         description: The ImageId of the image
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/CreateImageResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                      $ref: '#/definitions/Image'
   /media/images/{imageId}/appluad:
     post:
       tags:
       - images
-      summary: Applaud - like the image
+      summary: Get the posts submitted by the user ordered by timestamp desc
       operationId: applaudImageByImageId
       produces:
       - application/json
@@ -472,13 +438,11 @@ paths:
         description: The ImageId of the image
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation
           schema:
               $ref: '#/definitions/ResponseTemplate'
-
 
 
   /media/videos/players/{playerId}:
@@ -494,7 +458,6 @@ paths:
         name: playerId
         required: true
         type: integer
-        format: int64
       - in: body
         name: body
         description: Created Video object
@@ -505,7 +468,12 @@ paths:
         200:
           description: successful operation 
           schema:
-            $ref: '#/definitions/CreateVideoResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Video'  
         default:
           description: successful operation
     get:
@@ -521,14 +489,20 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
       - $ref: '#/parameters/pageSize'
       - $ref: '#/parameters/pageNumber'
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/GetVideosResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                   type: array
+                   items:
+                     $ref: '#/definitions/Video'
     delete:
       tags:
       - videos
@@ -542,13 +516,11 @@ paths:
         in: path
         description: The playerId for which post needs to be deleted
         required: true
-        type: integer
-        format: int64
+        type: string
       - name: videoId
-        in: header
+        in: query
         required: true
-        type: integer
-        format: int64
+        type: string
       responses:
         200:
           description: successful operation
@@ -572,12 +544,16 @@ paths:
         description: The video id of the video which need to be fetched
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/CreateVideoResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                   $ref: '#/definitions/Video'
   /media/videos/{videoId}/appluad:
     post:
       tags:
@@ -592,7 +568,6 @@ paths:
         description: The video id of the video which need to be fetched
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation
@@ -614,22 +589,18 @@ paths:
         name: playerId
         required: true
         type: integer
-        format: int64
       - in: header
         name: imageId
         required: true
         type: integer
-        format: int64
       - in: header
         name: videoId
         required: true
-        type: integer
-        format: int64
+        type: integer  
       - in: header
         name: postId
         required: true
-        type: integer
-        format: int64
+        type: integer  
       - in: body
         name: body
         description: Created Comment object
@@ -640,7 +611,12 @@ paths:
         200:
           description: successful operation 
           schema:
-            $ref: '#/definitions/CreateCommentResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/definitions/Comments'  
         default:
           description: successful operation
     get:
@@ -656,32 +632,35 @@ paths:
         description: The playerId of the current player
         required: true
         type: integer
-        format: int64
       - name: imageId
         in: header
         description: ImageId for which comments need to be fetched
         required: false
         type: integer
-        format: int64
       - name: videoId
         in: header
         description: VideoId for which comments need to be fetched
         required: false
         type: integer
-        format: int64
       - name: postId
         in: header
         description: PostId for which comments need to be fetched
         required: false
         type: integer
-        format: int64
       - $ref: '#/parameters/pageSize'
       - $ref: '#/parameters/pageNumber'
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/GetCommentsResponse'
+            allOf:
+              - $ref: '#/definitions/ResponseTemplate'
+              - type: object
+                properties:
+                  data:
+                   type: array
+                   items:
+                    $ref: '#/definitions/Comments'
     delete:
       tags:
       - comments
@@ -695,13 +674,11 @@ paths:
         in: header
         description: The playerId for which comment needs to be deleted
         required: true
-        type: integer
-        format: int64
+        type: string
       - name: commentId
         in: header
         required: true
         type: integer
-        format: int64
       responses:
         200:
           description: successful operation
@@ -762,8 +739,6 @@ definitions:
       dob:
         type: string
         format: date
-      profileImageUrl:
-        type: string
     xml:
       name: PlayerRequest
   Player:
@@ -778,7 +753,7 @@ definitions:
              format: date-time
            updateTime:
              type: string
-             format: date-time
+             format: date
            numberOfConnections:
              type: integer
              format: int64
@@ -787,34 +762,7 @@ definitions:
        - $ref: '#/definitions/ResponseTemplate'
        - properties:
             data:
-              $ref: '#/definitions/Player'
-  GetFriendsResponse:
-     allOf:
-        - $ref: '#/definitions/ResponseTemplate'
-        - type: object
-          properties:
-             data:
-               type: array
-               items: 
-                 $ref: '#/definitions/Player'
-        - properties:
-             pageSize:
-                type: integer
-                format: int64
-             pageNumber:
-                type: integer
-                format: int64
-  GetPendingFriendsRequestsResponse:
-     allOf:
-        - $ref: '#/definitions/ResponseTemplate'
-        - type: object
-          properties:
-             data:
-               type: array
-               items: 
-                 $ref: '#/definitions/Player'
-        
-              
+              $ref: '#/definitions/Player'          
   Image:
     type: object
     properties:
@@ -832,7 +780,6 @@ definitions:
         type: string
       applauds:
         type: integer
-        format: int64
       postedTimestamp:
         type: string
         format: date-time
@@ -848,31 +795,6 @@ definitions:
         type: string
       description:
         type: string
-  CreateImageResponse:
-    allOf:
-      - $ref: '#/definitions/ResponseTemplate'
-      - type: object
-        properties:
-          data:
-              $ref: '#/definitions/Image'
-  GetImagesResponse:
-     allOf:
-        - $ref: '#/definitions/ResponseTemplate'
-        - type: object
-          properties:
-            data:
-             type: array
-             items:
-                $ref: '#/definitions/Image'
-        - properties:
-             pageSize:
-                type: integer
-                format: int64
-             pageNumber:
-                type: integer
-                format: int64
-        
-        
   Video:
     type: object
     properties:
@@ -893,7 +815,6 @@ definitions:
         format: date-time
       applauds:
         type: integer
-        format: int64
   VideoRequest:
     type: object
     properties:
@@ -906,30 +827,6 @@ definitions:
         type: string
       description:
         type: string
-  CreateVideoResponse:
-    allOf:
-      - $ref: '#/definitions/ResponseTemplate'
-      - type: object
-        properties:
-          data:
-              $ref: '#/definitions/Video'
-  GetVideosResponse:
-     allOf:
-        - $ref: '#/definitions/ResponseTemplate'
-        - type: object
-          properties:
-            data:
-             type: array
-             items:
-                $ref: '#/definitions/Video'
-        - properties:
-             pageSize:
-                type: integer
-                format: int64
-             pageNumber:
-                type: integer
-                format: int64
-        
   Comments:
     type: object
     properties:
@@ -970,31 +867,6 @@ definitions:
         format: int64
       comments:
         type: string
-  CreateCommentResponse:
-    allOf:
-      - $ref: '#/definitions/ResponseTemplate'
-      - type: object
-        properties:
-          data:
-              $ref: '#/definitions/Comments'
-  GetCommentsResponse:
-     allOf:
-        - $ref: '#/definitions/ResponseTemplate'
-        - type: object
-          properties:
-            data:
-             type: array
-             items:
-                $ref: '#/definitions/Comments'
-        - properties:
-             pageSize:
-                type: integer
-                format: int64
-             pageNumber:
-                type: integer
-                format: int64      
-        
-        
   Post:
     type: object
     properties:
@@ -1019,33 +891,61 @@ definitions:
         description: Player Id
       post:
         type: string
-  CreatePostResponse:
-       allOf:
-          - $ref: '#/definitions/ResponseTemplate'
-          - type: object
-            properties:
-              data:
-                $ref: '#/definitions/Post'
-  GetAllPostsResponse:
-     allOf:
-        - $ref: '#/definitions/ResponseTemplate'
-        - type: object
+  Followers:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      followers:
+        type: array
+        items:
+          type: object
           properties:
-             data:
-               type: array
-               items: 
-                 $ref: '#/definitions/Post'
-        - type: object
+            playerId:
+              type: integer
+              format: int64
+            followTimestamp:
+              type: string
+              format: date-time
+  FollowerRequest:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      followerId:
+        type: integer
+        format: int64
+  Follows:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      follows:
+        type: array
+        items:
+          type: object
           properties:
-             pageSize:
-                type: integer
-                format: int64
-             pageNumber:
-                type: integer
-                format: int64              
-        
-        
- 
+            playerId:
+              type: integer
+              format: int64
+            followTimestamp:
+              type: string
+              format: date-time
+  FollowsRequest:
+    type: object
+    properties:
+      playerId:
+        type: integer
+        format: int64
+      followsId:
+        type: integer
+        format: int64
+      followsTimestamp:
+        type: string
+        format: date-time
       
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
