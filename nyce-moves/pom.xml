@@ -11,15 +11,45 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<springfox-version>2.7.0</springfox-version>
+		<default.package>com.nyce.moves</default.package>
 	</properties>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
 	</parent>
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
+		<!-- <pluginManagement> -->
 		<plugins>
+
+
+			<!-- <plugin> <artifactId>maven-clean-plugin</artifactId> <executions> 
+				<execution> <id>clean-additional-generated-files</id> <phase>initialize</phase> 
+				<goals> <goal>clean</goal> </goals> <configuration> <excludeDefaultDirectories>true</excludeDefaultDirectories> 
+				<filesets> <fileset> <directory>src/main/java</directory> <followSymlinks>false</followSymlinks> 
+				</fileset> </filesets> </configuration> </execution> <execution> <id>clean-target-files</id> 
+				<phase>process-sources</phase> <goals> <goal>clean</goal> </goals> <configuration> 
+				<excludeDefaultDirectories>true</excludeDefaultDirectories> <filesets> <fileset> 
+				<directory>${basedir}/target/generated</directory> <followSymlinks>false</followSymlinks> 
+				</fileset> </filesets> </configuration> </execution> </executions> </plugin> 
+				<plugin> <groupId>io.swagger</groupId> <artifactId>swagger-codegen-maven-plugin</artifactId> 
+				<version>2.3.1</version> <executions> <execution> <phase>generate-sources</phase> 
+				<goals> <goal>generate</goal> </goals> <configuration> <inputSpec>src/main/resources/nycemoves.yml</inputSpec> 
+				<language>spring</language> <output>${basedir}/target/generated</output> 
+				<basePackage>${default.package}</basePackage> <modelPackage>${default.package}.model</modelPackage> 
+				<apiPackage>${default.package}.api</apiPackage> <invokerPackage>${default.package}.invoker</invokerPackage> 
+				<configOptions> <interfaceOnly>true</interfaceOnly> <dateLibrary>java8</dateLibrary> 
+				<java8>true</java8> <library>spring-boot</library> <serializableModel>true</serializableModel> 
+				<sourceFolder>src/main/java</sourceFolder> </configOptions> </configuration> 
+				</execution> </executions> </plugin> <plugin> <artifactId>maven-resources-plugin</artifactId> 
+				<version>3.0.2</version> <executions> <execution> <id>copy-resources</id> 
+				<phase>generate-sources</phase> <goals> <goal>clean</goal> </goals> <configuration> 
+				<outputDirectory>${basedir}/src/main/java</outputDirectory> <resources> <resource> 
+				<directory>${basedir}/target/generated/src/main/java</directory> </resource> 
+				</resources> </configuration> </execution> </executions> </plugin> -->
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -31,8 +61,20 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- <plugin> <groupId>io.swagger</groupId> <artifactId>swagger-codegen-maven-plugin</artifactId> 
+				<version>2.3.1</version> <executions> <execution> <goals> <goal>generate</goal> 
+				</goals> <configuration> <inputSpec>src/main/resources/nycemoves.yml</inputSpec> 
+				<language>spring</language> <basePackage>${default.package}</basePackage> 
+				<modelPackage>${default.package}.model</modelPackage> <apiPackage>${default.package}.api</apiPackage> 
+				<invokerPackage>${default.package}.invoker</invokerPackage> <configOptions> 
+				<interfaceOnly>true</interfaceOnly> <dateLibrary>java8</dateLibrary> <java8>true</java8> 
+				<library>spring-boot</library> <serializableModel>true</serializableModel> 
+				<sourceFolder>src/main/java</sourceFolder> </configOptions> </configuration> 
+				</execution> </executions> </plugin> -->
+
 		</plugins>
 	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

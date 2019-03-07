@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
  * PlayerRequest
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-22T15:38:48.275+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 
 public class PlayerRequest   {
   @JsonProperty("email")
@@ -85,6 +85,9 @@ public class PlayerRequest   {
 
   @JsonProperty("dob")
   private LocalDate dob = null;
+
+  @JsonProperty("profileImageUrl")
+  private String profileImageUrl = null;
 
   public PlayerRequest email(String email) {
     this.email = email;
@@ -307,6 +310,26 @@ public class PlayerRequest   {
     this.dob = dob;
   }
 
+  public PlayerRequest profileImageUrl(String profileImageUrl) {
+    this.profileImageUrl = profileImageUrl;
+    return this;
+  }
+
+  /**
+   * Get profileImageUrl
+   * @return profileImageUrl
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getProfileImageUrl() {
+    return profileImageUrl;
+  }
+
+  public void setProfileImageUrl(String profileImageUrl) {
+    this.profileImageUrl = profileImageUrl;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -327,12 +350,13 @@ public class PlayerRequest   {
         Objects.equals(this.gender, playerRequest.gender) &&
         Objects.equals(this.school, playerRequest.school) &&
         Objects.equals(this.primarySport, playerRequest.primarySport) &&
-        Objects.equals(this.dob, playerRequest.dob);
+        Objects.equals(this.dob, playerRequest.dob) &&
+        Objects.equals(this.profileImageUrl, playerRequest.profileImageUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, firstName, lastName, password, displayName, city, country, gender, school, primarySport, dob);
+    return Objects.hash(email, firstName, lastName, password, displayName, city, country, gender, school, primarySport, dob, profileImageUrl);
   }
 
   @Override
@@ -351,6 +375,7 @@ public class PlayerRequest   {
     sb.append("    school: ").append(toIndentedString(school)).append("\n");
     sb.append("    primarySport: ").append(toIndentedString(primarySport)).append("\n");
     sb.append("    dob: ").append(toIndentedString(dob)).append("\n");
+    sb.append("    profileImageUrl: ").append(toIndentedString(profileImageUrl)).append("\n");
     sb.append("}");
     return sb.toString();
   }

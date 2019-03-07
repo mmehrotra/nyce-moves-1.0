@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * Image
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-22T15:38:48.275+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 
 public class Image   {
   @JsonProperty("imageId")
@@ -33,7 +33,7 @@ public class Image   {
   private String description = null;
 
   @JsonProperty("applauds")
-  private Integer applauds = null;
+  private Long applauds = null;
 
   @JsonProperty("postedTimestamp")
   private OffsetDateTime postedTimestamp = null;
@@ -138,7 +138,7 @@ public class Image   {
     this.description = description;
   }
 
-  public Image applauds(Integer applauds) {
+  public Image applauds(Long applauds) {
     this.applauds = applauds;
     return this;
   }
@@ -150,11 +150,11 @@ public class Image   {
   @ApiModelProperty(value = "")
 
 
-  public Integer getApplauds() {
+  public Long getApplauds() {
     return applauds;
   }
 
-  public void setApplauds(Integer applauds) {
+  public void setApplauds(Long applauds) {
     this.applauds = applauds;
   }
 

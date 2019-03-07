@@ -1,0 +1,211 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Nycemoves-players",
+		"_postman_id": "8818e333-0dbc-607a-232c-c5d82f9fa642",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PlayerRegisteration01",
+			"request": {
+				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"city\": \"newyork\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Mark Twain\",\r\n  \"email\": \"mark.twain@gmail.com\",\r\n  \"firstName\": \"Mark\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Twain\",\r\n  \"password\": \"mark\",\r\n  \"primarySport\": \"basketball\",\r\n  \"dob\": \"2001-02-11\",\r\n  \"school\": \"New Orleans\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PlayerRegisteration02",
+			"request": {
+				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"city\": \"boston\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Napolean Hill\",\r\n  \"email\": \"napolean.hill@gmail.com\",\r\n  \"firstName\": \"Napolean\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Hill\",\r\n  \"password\": \"hill\",\r\n  \"primarySport\": \"football\",\r\n  \"dob\": \"2003-08-23\",\r\n  \"school\": \"New England\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PlayerLogin",
+			"request": {
+				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players/login",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "username",
+						"value": "string",
+						"description": ""
+					},
+					{
+						"key": "password",
+						"value": "string",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePlayer",
+			"request": {
+				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"city\": \"newyork\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Mark Twain\",\r\n  \"email\": \"mark.twain@gmail.com\",\r\n  \"firstName\": \"Mark\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Twain\",\r\n  \"password\": \"mark\",\r\n  \"primarySport\": \"basketball\",\r\n  \"dob\": \"2001-01-11\",\r\n  \"school\": \"New Orleans Updated\"\r\n  \r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GetPlayer",
+			"request": {
+				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePlayer",
+			"request": {
+				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players/1",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePost",
+			"request": {
+				"url": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"post\": \"This is my second post\",\r\n  \"postedBy\": 1\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPosts",
+			"request": {
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1?pageSize=5&pageNumber=1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"posts",
+						"1"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "5",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "pageNumber",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPosts",
+			"request": {
+				"url": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "postId",
+						"value": "1",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

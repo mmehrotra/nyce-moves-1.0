@@ -1,158 +1,163 @@
 package com.nyce.moves.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.OffsetDateTime;
-import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+
+import org.springframework.validation.annotation.Validated;
+import java.time.OffsetDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Post
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-22T15:38:48.275+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
+@Entity
+public class Post {
 
-public class Post   {
-  @JsonProperty("postId")
-  private Long postId = null;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonProperty("postId")
+	private Long postId = null;
 
-  @JsonProperty("postedBy")
-  private Long postedBy = null;
+	@JsonProperty("postedBy")
+	private Long postedBy = null;
 
-  @JsonProperty("post")
-  private String post = null;
+	@JsonProperty("post")
+	private String post = null;
 
-  @JsonProperty("postedTimestamp")
-  private OffsetDateTime postedTimestamp = null;
+	@JsonProperty("postedTimestamp")
+	private OffsetDateTime postedTimestamp = null;
 
-  public Post postId(Long postId) {
-    this.postId = postId;
-    return this;
-  }
+	public Post postId(Long postId) {
+		this.postId = postId;
+		return this;
+	}
 
-  /**
-   * Get postId
-   * @return postId
-  **/
-  @ApiModelProperty(value = "")
+	/**
+	 * Get postId
+	 * 
+	 * @return postId
+	 **/
+	@ApiModelProperty(value = "")
 
+	public Long getPostId() {
+		return postId;
+	}
 
-  public Long getPostId() {
-    return postId;
-  }
+	public void setPostId(Long postId) {
+		this.postId = postId;
+	}
 
-  public void setPostId(Long postId) {
-    this.postId = postId;
-  }
+	public Post postedBy(Long postedBy) {
+		this.postedBy = postedBy;
+		return this;
+	}
 
-  public Post postedBy(Long postedBy) {
-    this.postedBy = postedBy;
-    return this;
-  }
+	/**
+	 * Player Id
+	 * 
+	 * @return postedBy
+	 **/
+	@ApiModelProperty(value = "Player Id")
 
-  /**
-   * Player Id
-   * @return postedBy
-  **/
-  @ApiModelProperty(value = "Player Id")
+	public Long getPostedBy() {
+		return postedBy;
+	}
 
+	public void setPostedBy(Long postedBy) {
+		this.postedBy = postedBy;
+	}
 
-  public Long getPostedBy() {
-    return postedBy;
-  }
+	public Post post(String post) {
+		this.post = post;
+		return this;
+	}
 
-  public void setPostedBy(Long postedBy) {
-    this.postedBy = postedBy;
-  }
+	/**
+	 * Get post
+	 * 
+	 * @return post
+	 **/
+	@ApiModelProperty(value = "")
 
-  public Post post(String post) {
-    this.post = post;
-    return this;
-  }
+	public String getPost() {
+		return post;
+	}
 
-  /**
-   * Get post
-   * @return post
-  **/
-  @ApiModelProperty(value = "")
+	public void setPost(String post) {
+		this.post = post;
+	}
 
+	public Post postedTimestamp(OffsetDateTime postedTimestamp) {
+		this.postedTimestamp = postedTimestamp;
+		return this;
+	}
 
-  public String getPost() {
-    return post;
-  }
+	/**
+	 * Get postedTimestamp
+	 * 
+	 * @return postedTimestamp
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setPost(String post) {
-    this.post = post;
-  }
+	@Valid
 
-  public Post postedTimestamp(OffsetDateTime postedTimestamp) {
-    this.postedTimestamp = postedTimestamp;
-    return this;
-  }
+	public OffsetDateTime getPostedTimestamp() {
+		return postedTimestamp;
+	}
 
-  /**
-   * Get postedTimestamp
-   * @return postedTimestamp
-  **/
-  @ApiModelProperty(value = "")
+	public void setPostedTimestamp(OffsetDateTime postedTimestamp) {
+		this.postedTimestamp = postedTimestamp;
+	}
 
-  @Valid
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Post post = (Post) o;
+		return Objects.equals(this.postId, post.postId) && Objects.equals(this.postedBy, post.postedBy)
+				&& Objects.equals(this.post, post.post) && Objects.equals(this.postedTimestamp, post.postedTimestamp);
+	}
 
-  public OffsetDateTime getPostedTimestamp() {
-    return postedTimestamp;
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(postId, postedBy, post, postedTimestamp);
+	}
 
-  public void setPostedTimestamp(OffsetDateTime postedTimestamp) {
-    this.postedTimestamp = postedTimestamp;
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Post {\n");
 
+		sb.append("    postId: ").append(toIndentedString(postId)).append("\n");
+		sb.append("    postedBy: ").append(toIndentedString(postedBy)).append("\n");
+		sb.append("    post: ").append(toIndentedString(post)).append("\n");
+		sb.append("    postedTimestamp: ").append(toIndentedString(postedTimestamp)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Post post = (Post) o;
-    return Objects.equals(this.postId, post.postId) &&
-        Objects.equals(this.postedBy, post.postedBy) &&
-        Objects.equals(this.post, post.post) &&
-        Objects.equals(this.postedTimestamp, post.postedTimestamp);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(postId, postedBy, post, postedTimestamp);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Post {\n");
-    
-    sb.append("    postId: ").append(toIndentedString(postId)).append("\n");
-    sb.append("    postedBy: ").append(toIndentedString(postedBy)).append("\n");
-    sb.append("    post: ").append(toIndentedString(post)).append("\n");
-    sb.append("    postedTimestamp: ").append(toIndentedString(postedTimestamp)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }
-

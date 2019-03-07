@@ -6,6 +6,8 @@
 package com.nyce.moves.api;
 
 import java.math.BigDecimal;
+import com.nyce.moves.model.CreatePostResponse;
+import com.nyce.moves.model.GetAllPostsResponse;
 import com.nyce.moves.model.PostRequest;
 import com.nyce.moves.model.ResponseTemplate;
 import io.swagger.annotations.*;
@@ -23,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-22T15:38:48.275+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 
 @Api(value = "posts", description = "the posts API")
 public interface PostsApi {
@@ -36,25 +38,25 @@ public interface PostsApi {
     @RequestMapping(value = "/posts/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<ResponseTemplate> deletePost(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") String playerId,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "postId", required = true) String postId);
+    ResponseEntity<ResponseTemplate> deletePost(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="postId", required=true) Long postId);
 
 
-    @ApiOperation(value = "Get the posts submitted by the user ordered by timestamp desc", nickname = "getPosts", notes = "", tags={ "posts", })
+    @ApiOperation(value = "Get the posts submitted by the user ordered by timestamp desc", nickname = "getPosts", notes = "", response = GetAllPostsResponse.class, tags={ "posts", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(code = 200, message = "successful operation", response = GetAllPostsResponse.class) })
     @RequestMapping(value = "/posts/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Void> getPosts(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Integer playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+    ResponseEntity<GetAllPostsResponse> getPosts(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
 
 
-    @ApiOperation(value = "Player Submit a Post", nickname = "submitPost", notes = "", tags={ "posts", })
+    @ApiOperation(value = "Player Submit a Post", nickname = "submitPost", notes = "", response = CreatePostResponse.class, tags={ "posts", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation"),
+        @ApiResponse(code = 200, message = "successful operation", response = CreatePostResponse.class),
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/posts/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<Void> submitPost(@ApiParam(value = "",required=true) @PathVariable("playerId") Integer playerId,@ApiParam(value = "Created post object" ,required=true )  @Valid @RequestBody PostRequest body);
+    ResponseEntity<CreatePostResponse> submitPost(@ApiParam(value = "",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "Created post object" ,required=true )  @Valid @RequestBody PostRequest body);
 
 }

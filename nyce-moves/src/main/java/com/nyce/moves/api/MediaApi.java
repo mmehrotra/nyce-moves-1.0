@@ -6,6 +6,10 @@
 package com.nyce.moves.api;
 
 import java.math.BigDecimal;
+import com.nyce.moves.model.CreateImageResponse;
+import com.nyce.moves.model.CreateVideoResponse;
+import com.nyce.moves.model.GetImagesResponse;
+import com.nyce.moves.model.GetVideosResponse;
 import com.nyce.moves.model.ImageRequest;
 import com.nyce.moves.model.ResponseTemplate;
 import com.nyce.moves.model.VideoRequest;
@@ -24,18 +28,18 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-22T15:38:48.275+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 
 @Api(value = "media", description = "the media API")
 public interface MediaApi {
 
-    @ApiOperation(value = "Get the posts submitted by the user ordered by timestamp desc", nickname = "applaudImageByImageId", notes = "", response = ResponseTemplate.class, tags={ "images", })
+    @ApiOperation(value = "Applaud - like the image", nickname = "applaudImageByImageId", notes = "", response = ResponseTemplate.class, tags={ "images", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class) })
     @RequestMapping(value = "/media/images/{imageId}/appluad",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image",required=true) @PathVariable("imageId") Integer imageId);
+    ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image",required=true) @PathVariable("imageId") Long imageId);
 
 
     @ApiOperation(value = "Applaud / Like the by video id", nickname = "applaudVideosByVideoId", notes = "", response = ResponseTemplate.class, tags={ "videos", })
@@ -44,7 +48,7 @@ public interface MediaApi {
     @RequestMapping(value = "/media/videos/{videoId}/appluad",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched",required=true) @PathVariable("videoId") Integer videoId);
+    ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched",required=true) @PathVariable("videoId") Long videoId);
 
 
     @ApiOperation(value = "Delete a image", nickname = "deleteImage", notes = "Delete a image", response = ResponseTemplate.class, tags={ "images", })
@@ -55,7 +59,7 @@ public interface MediaApi {
     @RequestMapping(value = "/media/images/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<ResponseTemplate> deleteImage(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") String playerId,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "imageId", required = true) String imageId);
+    ResponseEntity<ResponseTemplate> deleteImage(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="imageId", required=true) Long imageId);
 
 
     @ApiOperation(value = "Delete a video", nickname = "deleteVideo", notes = "Delete a video", response = ResponseTemplate.class, tags={ "videos", })
@@ -66,62 +70,62 @@ public interface MediaApi {
     @RequestMapping(value = "/media/videos/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<ResponseTemplate> deleteVideo(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") String playerId,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "videoId", required = true) String videoId);
+    ResponseEntity<ResponseTemplate> deleteVideo(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="videoId", required=true) Long videoId);
 
 
-    @ApiOperation(value = "Get the posts submitted by the user ordered by timestamp desc", nickname = "getImages", notes = "", tags={ "images", })
+    @ApiOperation(value = "Get the posts submitted by the user ordered by timestamp desc", nickname = "getImages", notes = "", response = GetImagesResponse.class, tags={ "images", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(code = 200, message = "successful operation", response = GetImagesResponse.class) })
     @RequestMapping(value = "/media/images/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Void> getImages(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Integer playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+    ResponseEntity<GetImagesResponse> getImages(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
 
 
-    @ApiOperation(value = "Get the posts submitted by the user ordered by timestamp desc", nickname = "getImagesByImageId", notes = "", tags={ "images", })
+    @ApiOperation(value = "Get the image with the help of image id", nickname = "getImagesByImageId", notes = "", response = CreateImageResponse.class, tags={ "images", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(code = 200, message = "successful operation", response = CreateImageResponse.class) })
     @RequestMapping(value = "/media/images/{imageId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Void> getImagesByImageId(@ApiParam(value = "The ImageId of the image",required=true) @PathVariable("imageId") Integer imageId);
+    ResponseEntity<CreateImageResponse> getImagesByImageId(@ApiParam(value = "The ImageId of the image",required=true) @PathVariable("imageId") Long imageId);
 
 
-    @ApiOperation(value = "Get the videos submitted by the user ordered by timestamp desc", nickname = "getVideos", notes = "", tags={ "videos", })
+    @ApiOperation(value = "Get the videos submitted by the user ordered by timestamp desc", nickname = "getVideos", notes = "", response = GetVideosResponse.class, tags={ "videos", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(code = 200, message = "successful operation", response = GetVideosResponse.class) })
     @RequestMapping(value = "/media/videos/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Void> getVideos(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Integer playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+    ResponseEntity<GetVideosResponse> getVideos(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
 
 
-    @ApiOperation(value = "Get the videos by video id", nickname = "getVideosByVideoId", notes = "", tags={ "videos", })
+    @ApiOperation(value = "Get the videos by video id", nickname = "getVideosByVideoId", notes = "", response = CreateVideoResponse.class, tags={ "videos", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(code = 200, message = "successful operation", response = CreateVideoResponse.class) })
     @RequestMapping(value = "/media/videos/{videoId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Void> getVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched",required=true) @PathVariable("videoId") Integer videoId);
+    ResponseEntity<CreateVideoResponse> getVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched",required=true) @PathVariable("videoId") Long videoId);
 
 
-    @ApiOperation(value = "Player Submit a Image", nickname = "submitImage", notes = "", tags={ "images", })
+    @ApiOperation(value = "Player Submit a Image", nickname = "submitImage", notes = "", response = CreateImageResponse.class, tags={ "images", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation"),
+        @ApiResponse(code = 200, message = "successful operation", response = CreateImageResponse.class),
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/media/images/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<Void> submitImage(@ApiParam(value = "",required=true) @PathVariable("playerId") Integer playerId,@ApiParam(value = "Created image object" ,required=true )  @Valid @RequestBody ImageRequest body);
+    ResponseEntity<CreateImageResponse> submitImage(@ApiParam(value = "",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "Created image object" ,required=true )  @Valid @RequestBody ImageRequest body);
 
 
-    @ApiOperation(value = "Player Submit a Video", nickname = "submitVideo", notes = "", tags={ "videos", })
+    @ApiOperation(value = "Player Submit a Video", nickname = "submitVideo", notes = "", response = CreateVideoResponse.class, tags={ "videos", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation"),
+        @ApiResponse(code = 200, message = "successful operation", response = CreateVideoResponse.class),
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/media/videos/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<Void> submitVideo(@ApiParam(value = "",required=true) @PathVariable("playerId") Integer playerId,@ApiParam(value = "Created Video object" ,required=true )  @Valid @RequestBody VideoRequest body);
+    ResponseEntity<CreateVideoResponse> submitVideo(@ApiParam(value = "",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "Created Video object" ,required=true )  @Valid @RequestBody VideoRequest body);
 
 }

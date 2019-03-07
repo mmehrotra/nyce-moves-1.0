@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * Video
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-22T15:38:48.275+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 
 public class Video   {
   @JsonProperty("videoId")
@@ -36,7 +36,7 @@ public class Video   {
   private OffsetDateTime postedTimestamp = null;
 
   @JsonProperty("applauds")
-  private Integer applauds = null;
+  private Long applauds = null;
 
   public Video videoId(Long videoId) {
     this.videoId = videoId;
@@ -159,7 +159,7 @@ public class Video   {
     this.postedTimestamp = postedTimestamp;
   }
 
-  public Video applauds(Integer applauds) {
+  public Video applauds(Long applauds) {
     this.applauds = applauds;
     return this;
   }
@@ -171,11 +171,11 @@ public class Video   {
   @ApiModelProperty(value = "")
 
 
-  public Integer getApplauds() {
+  public Long getApplauds() {
     return applauds;
   }
 
-  public void setApplauds(Integer applauds) {
+  public void setApplauds(Long applauds) {
     this.applauds = applauds;
   }
 
