@@ -3,6 +3,7 @@ package com.nyce.moves.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nyce.moves.model.CommentsRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.threeten.bp.OffsetDateTime;
@@ -14,12 +15,9 @@ import javax.validation.constraints.*;
  * Comments
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T16:07:52.516+05:30")
 
 public class Comments   {
-  @JsonProperty("commentId")
-  private Long commentId = null;
-
   @JsonProperty("postedBy")
   private Long postedBy = null;
 
@@ -35,28 +33,11 @@ public class Comments   {
   @JsonProperty("comments")
   private String comments = null;
 
+  @JsonProperty("commentId")
+  private Long commentId = null;
+
   @JsonProperty("postedTimestamp")
   private OffsetDateTime postedTimestamp = null;
-
-  public Comments commentId(Long commentId) {
-    this.commentId = commentId;
-    return this;
-  }
-
-  /**
-   * Get commentId
-   * @return commentId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getCommentId() {
-    return commentId;
-  }
-
-  public void setCommentId(Long commentId) {
-    this.commentId = commentId;
-  }
 
   public Comments postedBy(Long postedBy) {
     this.postedBy = postedBy;
@@ -158,6 +139,26 @@ public class Comments   {
     this.comments = comments;
   }
 
+  public Comments commentId(Long commentId) {
+    this.commentId = commentId;
+    return this;
+  }
+
+  /**
+   * Get commentId
+   * @return commentId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getCommentId() {
+    return commentId;
+  }
+
+  public void setCommentId(Long commentId) {
+    this.commentId = commentId;
+  }
+
   public Comments postedTimestamp(OffsetDateTime postedTimestamp) {
     this.postedTimestamp = postedTimestamp;
     return this;
@@ -189,18 +190,18 @@ public class Comments   {
       return false;
     }
     Comments comments = (Comments) o;
-    return Objects.equals(this.commentId, comments.commentId) &&
-        Objects.equals(this.postedBy, comments.postedBy) &&
+    return Objects.equals(this.postedBy, comments.postedBy) &&
         Objects.equals(this.imageId, comments.imageId) &&
         Objects.equals(this.videoId, comments.videoId) &&
         Objects.equals(this.postId, comments.postId) &&
         Objects.equals(this.comments, comments.comments) &&
+        Objects.equals(this.commentId, comments.commentId) &&
         Objects.equals(this.postedTimestamp, comments.postedTimestamp);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(commentId, postedBy, imageId, videoId, postId, comments, postedTimestamp);
+    return Objects.hash(postedBy, imageId, videoId, postId, comments, commentId, postedTimestamp);
   }
 
   @Override
@@ -208,12 +209,12 @@ public class Comments   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Comments {\n");
     
-    sb.append("    commentId: ").append(toIndentedString(commentId)).append("\n");
     sb.append("    postedBy: ").append(toIndentedString(postedBy)).append("\n");
     sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
     sb.append("    videoId: ").append(toIndentedString(videoId)).append("\n");
     sb.append("    postId: ").append(toIndentedString(postId)).append("\n");
     sb.append("    comments: ").append(toIndentedString(comments)).append("\n");
+    sb.append("    commentId: ").append(toIndentedString(commentId)).append("\n");
     sb.append("    postedTimestamp: ").append(toIndentedString(postedTimestamp)).append("\n");
     sb.append("}");
     return sb.toString();

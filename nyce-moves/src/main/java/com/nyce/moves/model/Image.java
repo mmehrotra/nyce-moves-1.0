@@ -1,25 +1,27 @@
 package com.nyce.moves.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.OffsetDateTime;
-import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+
+import org.springframework.validation.annotation.Validated;
+import java.time.OffsetDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Image
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T16:07:52.516+05:30")
+@Entity
 public class Image   {
-  @JsonProperty("imageId")
-  private Long imageId = null;
-
   @JsonProperty("playerId")
   private Long playerId = null;
 
@@ -32,31 +34,16 @@ public class Image   {
   @JsonProperty("description")
   private String description = null;
 
+  @JsonProperty("imageId")
+  @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
+  private Long imageId = null;
+
   @JsonProperty("applauds")
   private Long applauds = null;
 
   @JsonProperty("postedTimestamp")
   private OffsetDateTime postedTimestamp = null;
-
-  public Image imageId(Long imageId) {
-    this.imageId = imageId;
-    return this;
-  }
-
-  /**
-   * Get imageId
-   * @return imageId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getImageId() {
-    return imageId;
-  }
-
-  public void setImageId(Long imageId) {
-    this.imageId = imageId;
-  }
 
   public Image playerId(Long playerId) {
     this.playerId = playerId;
@@ -138,6 +125,26 @@ public class Image   {
     this.description = description;
   }
 
+  public Image imageId(Long imageId) {
+    this.imageId = imageId;
+    return this;
+  }
+
+  /**
+   * Get imageId
+   * @return imageId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getImageId() {
+    return imageId;
+  }
+
+  public void setImageId(Long imageId) {
+    this.imageId = imageId;
+  }
+
   public Image applauds(Long applauds) {
     this.applauds = applauds;
     return this;
@@ -189,18 +196,18 @@ public class Image   {
       return false;
     }
     Image image = (Image) o;
-    return Objects.equals(this.imageId, image.imageId) &&
-        Objects.equals(this.playerId, image.playerId) &&
+    return Objects.equals(this.playerId, image.playerId) &&
         Objects.equals(this.title, image.title) &&
         Objects.equals(this.imageUrl, image.imageUrl) &&
         Objects.equals(this.description, image.description) &&
+        Objects.equals(this.imageId, image.imageId) &&
         Objects.equals(this.applauds, image.applauds) &&
         Objects.equals(this.postedTimestamp, image.postedTimestamp);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(imageId, playerId, title, imageUrl, description, applauds, postedTimestamp);
+    return Objects.hash(playerId, title, imageUrl, description, imageId, applauds, postedTimestamp);
   }
 
   @Override
@@ -208,11 +215,11 @@ public class Image   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Image {\n");
     
-    sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
     sb.append("    playerId: ").append(toIndentedString(playerId)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    imageUrl: ").append(toIndentedString(imageUrl)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
     sb.append("    applauds: ").append(toIndentedString(applauds)).append("\n");
     sb.append("    postedTimestamp: ").append(toIndentedString(postedTimestamp)).append("\n");
     sb.append("}");

@@ -111,8 +111,14 @@ public class Player {
 	@JsonProperty("numberOfConnections")
 	private Long numberOfConnections = null;
 
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Post> posts;
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	private List<Image> images;
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	private List<Video> videos;
 
 	public Player email(String email) {
 		this.email = email;
@@ -448,6 +454,22 @@ public class Player {
 		this.posts = posts;
 	}
 
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public List<Video> getVideos() {
+		return videos;
+	}
+
+	public void setVideos(List<Video> videos) {
+		this.videos = videos;
+	}
+
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {
@@ -457,22 +479,12 @@ public class Player {
 			return false;
 		}
 		Player player = (Player) o;
-		return Objects.equals(this.email, player.email) && Objects.equals(this.firstName, player.firstName)
-				&& Objects.equals(this.lastName, player.lastName) && Objects.equals(this.password, player.password)
-				&& Objects.equals(this.displayName, player.displayName) && Objects.equals(this.city, player.city)
-				&& Objects.equals(this.country, player.country) && Objects.equals(this.gender, player.gender)
-				&& Objects.equals(this.school, player.school) && Objects.equals(this.primarySport, player.primarySport)
-				&& Objects.equals(this.dob, player.dob) && Objects.equals(this.profileImageUrl, player.profileImageUrl)
-				&& Objects.equals(this.playerId, player.playerId)
-				&& Objects.equals(this.creationTime, player.creationTime)
-				&& Objects.equals(this.updateTime, player.updateTime)
-				&& Objects.equals(this.numberOfConnections, player.numberOfConnections);
+		return Objects.equals(this.email, player.email) && Objects.equals(this.firstName, player.firstName) && Objects.equals(this.lastName, player.lastName) && Objects.equals(this.password, player.password) && Objects.equals(this.displayName, player.displayName) && Objects.equals(this.city, player.city) && Objects.equals(this.country, player.country) && Objects.equals(this.gender, player.gender) && Objects.equals(this.school, player.school) && Objects.equals(this.primarySport, player.primarySport) && Objects.equals(this.dob, player.dob) && Objects.equals(this.profileImageUrl, player.profileImageUrl) && Objects.equals(this.playerId, player.playerId) && Objects.equals(this.creationTime, player.creationTime) && Objects.equals(this.updateTime, player.updateTime) && Objects.equals(this.numberOfConnections, player.numberOfConnections);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstName, lastName, password, displayName, city, country, gender, school,
-				primarySport, dob, profileImageUrl, playerId, creationTime, updateTime, numberOfConnections);
+		return Objects.hash(email, firstName, lastName, password, displayName, city, country, gender, school, primarySport, dob, profileImageUrl, playerId, creationTime, updateTime, numberOfConnections);
 	}
 
 	@Override

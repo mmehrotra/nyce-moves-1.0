@@ -1,25 +1,27 @@
 package com.nyce.moves.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.OffsetDateTime;
-import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+
+import org.springframework.validation.annotation.Validated;
+import java.time.OffsetDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Video
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T16:07:52.516+05:30")
+@Entity
 public class Video   {
-  @JsonProperty("videoId")
-  private Long videoId = null;
-
   @JsonProperty("playerId")
   private Long playerId = null;
 
@@ -29,34 +31,19 @@ public class Video   {
   @JsonProperty("videoUrl")
   private String videoUrl = null;
 
-  @JsonProperty("descriptioin")
-  private String descriptioin = null;
+  @JsonProperty("description")
+  private String description = null;
+
+  @JsonProperty("videoId")
+  @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
+  private Long videoId = null;
 
   @JsonProperty("postedTimestamp")
   private OffsetDateTime postedTimestamp = null;
 
   @JsonProperty("applauds")
   private Long applauds = null;
-
-  public Video videoId(Long videoId) {
-    this.videoId = videoId;
-    return this;
-  }
-
-  /**
-   * Get videoId
-   * @return videoId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getVideoId() {
-    return videoId;
-  }
-
-  public void setVideoId(Long videoId) {
-    this.videoId = videoId;
-  }
 
   public Video playerId(Long playerId) {
     this.playerId = playerId;
@@ -118,24 +105,44 @@ public class Video   {
     this.videoUrl = videoUrl;
   }
 
-  public Video descriptioin(String descriptioin) {
-    this.descriptioin = descriptioin;
+  public Video description(String description) {
+    this.description = description;
     return this;
   }
 
   /**
-   * Get descriptioin
-   * @return descriptioin
+   * Get description
+   * @return description
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDescriptioin() {
-    return descriptioin;
+  public String getDescription() {
+    return description;
   }
 
-  public void setDescriptioin(String descriptioin) {
-    this.descriptioin = descriptioin;
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Video videoId(Long videoId) {
+    this.videoId = videoId;
+    return this;
+  }
+
+  /**
+   * Get videoId
+   * @return videoId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getVideoId() {
+    return videoId;
+  }
+
+  public void setVideoId(Long videoId) {
+    this.videoId = videoId;
   }
 
   public Video postedTimestamp(OffsetDateTime postedTimestamp) {
@@ -189,18 +196,18 @@ public class Video   {
       return false;
     }
     Video video = (Video) o;
-    return Objects.equals(this.videoId, video.videoId) &&
-        Objects.equals(this.playerId, video.playerId) &&
+    return Objects.equals(this.playerId, video.playerId) &&
         Objects.equals(this.title, video.title) &&
         Objects.equals(this.videoUrl, video.videoUrl) &&
-        Objects.equals(this.descriptioin, video.descriptioin) &&
+        Objects.equals(this.description, video.description) &&
+        Objects.equals(this.videoId, video.videoId) &&
         Objects.equals(this.postedTimestamp, video.postedTimestamp) &&
         Objects.equals(this.applauds, video.applauds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(videoId, playerId, title, videoUrl, descriptioin, postedTimestamp, applauds);
+    return Objects.hash(playerId, title, videoUrl, description, videoId, postedTimestamp, applauds);
   }
 
   @Override
@@ -208,11 +215,11 @@ public class Video   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Video {\n");
     
-    sb.append("    videoId: ").append(toIndentedString(videoId)).append("\n");
     sb.append("    playerId: ").append(toIndentedString(playerId)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    videoUrl: ").append(toIndentedString(videoUrl)).append("\n");
-    sb.append("    descriptioin: ").append(toIndentedString(descriptioin)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    videoId: ").append(toIndentedString(videoId)).append("\n");
     sb.append("    postedTimestamp: ").append(toIndentedString(postedTimestamp)).append("\n");
     sb.append("    applauds: ").append(toIndentedString(applauds)).append("\n");
     sb.append("}");
