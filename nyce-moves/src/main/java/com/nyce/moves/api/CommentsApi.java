@@ -57,6 +57,6 @@ public interface CommentsApi {
     @RequestMapping(value = "/comments",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="imageId", required=true) Long imageId,@ApiParam(value = "" ,required=true) @RequestHeader(value="videoId", required=true) Long videoId,@ApiParam(value = "" ,required=true) @RequestHeader(value="postId", required=true) Long postId,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body);
+    ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body,@ApiParam(value = "" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "" ) @RequestHeader(value="postId", required=false) Long postId);
 
 }

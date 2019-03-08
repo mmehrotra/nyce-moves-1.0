@@ -1,29 +1,29 @@
 package com.nyce.moves.api;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nyce.moves.model.CommentsRequest;
 import com.nyce.moves.model.CreateCommentResponse;
 import com.nyce.moves.model.GetCommentsResponse;
 import com.nyce.moves.model.ResponseTemplate;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
+import com.nyce.moves.service.CommentsService;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.List;
+import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 
 @Controller
@@ -34,6 +34,9 @@ public class CommentsApiController implements CommentsApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
+    
+    @Autowired
+    private CommentsService commentsService;
 
     @org.springframework.beans.factory.annotation.Autowired
     public CommentsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -52,7 +55,9 @@ public class CommentsApiController implements CommentsApi {
             }
         }
 
-        return new ResponseEntity<ResponseTemplate>(HttpStatus.NOT_IMPLEMENTED);
+        ResponseTemplate responseTemplate = new ResponseTemplate();
+        responseTemplate = commentsService.deleteComments(playerId, commentId, responseTemplate);
+        return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
     }
 
     public ResponseEntity<GetCommentsResponse> getComments(@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "ImageId for which comments need to be fetched" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "VideoId for which comments need to be fetched" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "PostId for which comments need to be fetched" ) @RequestHeader(value="postId", required=false) Long postId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber) {
@@ -66,10 +71,12 @@ public class CommentsApiController implements CommentsApi {
             }
         }
 
-        return new ResponseEntity<GetCommentsResponse>(HttpStatus.NOT_IMPLEMENTED);
+        GetCommentsResponse getCommentsResponse =  new GetCommentsResponse();
+        getCommentsResponse = commentsService.getComments(playerId, imageId, videoId, postId, pageSize, pageNumber, getCommentsResponse);
+        return new ResponseEntity<GetCommentsResponse>(getCommentsResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="imageId", required=true) Long imageId,@ApiParam(value = "" ,required=true) @RequestHeader(value="videoId", required=true) Long videoId,@ApiParam(value = "" ,required=true) @RequestHeader(value="postId", required=true) Long postId,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body) {
+    public ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body,@ApiParam(value = "" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "" ) @RequestHeader(value="postId", required=false) Long postId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -80,7 +87,9 @@ public class CommentsApiController implements CommentsApi {
             }
         }
 
-        return new ResponseEntity<CreateCommentResponse>(HttpStatus.NOT_IMPLEMENTED);
+        CreateCommentResponse createCommentResponse = new CreateCommentResponse();
+        createCommentResponse = commentsService.addComments(playerId, imageId, videoId, postId, body, createCommentResponse);
+        return new ResponseEntity<CreateCommentResponse>(createCommentResponse,HttpStatus.OK);
     }
 
 }

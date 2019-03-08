@@ -412,6 +412,84 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "CreateComments",
+			"request": {
+				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"My second Image\",\r\n  \"imageUrl\": \"http://s3-location2\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My Second image\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllComments",
+			"request": {
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1?pageSize=5&pageNumber=1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"images",
+						"players",
+						"1"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "5",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "pageNumber",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteVideoByPlayerIdVideoId copy",
+			"request": {
+				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "videoId",
+						"value": "1",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

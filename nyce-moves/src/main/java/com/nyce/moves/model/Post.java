@@ -1,11 +1,14 @@
 package com.nyce.moves.model;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import org.springframework.validation.annotation.Validated;
@@ -36,6 +39,9 @@ public class Post {
 
 	@JsonProperty("postedTimestamp")
 	private OffsetDateTime postedTimestamp = null;
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	private List<Comments> comments;
 
 	public Post postId(Long postId) {
 		this.postId = postId;
@@ -119,6 +125,14 @@ public class Post {
 		this.postedTimestamp = postedTimestamp;
 	}
 
+	public List<Comments> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {
@@ -128,8 +142,7 @@ public class Post {
 			return false;
 		}
 		Post post = (Post) o;
-		return Objects.equals(this.postId, post.postId) && Objects.equals(this.postedBy, post.postedBy)
-				&& Objects.equals(this.post, post.post) && Objects.equals(this.postedTimestamp, post.postedTimestamp);
+		return Objects.equals(this.postId, post.postId) && Objects.equals(this.postedBy, post.postedBy) && Objects.equals(this.post, post.post) && Objects.equals(this.postedTimestamp, post.postedTimestamp);
 	}
 
 	@Override
