@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nyce.moves.model.Player;
@@ -15,6 +16,9 @@ public class PlayerService {
 
 	@Autowired
 	PlayerRepository playerRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public Player addPlayer(PlayerRequest playerRequest) {
 
@@ -23,7 +27,7 @@ public class PlayerService {
 		playerObject.setEmail(playerRequest.getEmail());
 		playerObject.setFirstName(playerRequest.getFirstName());
 		playerObject.setLastName(playerRequest.getLastName());
-		playerObject.setPassword(playerRequest.getPassword());
+		playerObject.setPassword(bCryptPasswordEncoder.encode(playerRequest.getPassword()));
 		playerObject.setDisplayName(playerRequest.getDisplayName());
 		playerObject.setCity(playerRequest.getCity());
 		playerObject.setCountry(playerRequest.getCountry());
@@ -32,6 +36,7 @@ public class PlayerService {
 		playerObject.setDob(playerRequest.getDob());
 		playerObject.setNumberOfConnections(0L);
 		playerObject.setCreationTime(OffsetDateTime.now());
+		playerObject.setProfileImageUrl(playerRequest.getProfileImageUrl());
 		if(playerRequest.getGender() != null && playerRequest.getGender().toString().equalsIgnoreCase(Player.GenderEnum.MALE.toString())){
 			playerObject.setGender(Player.GenderEnum.MALE);
 		}else if(playerRequest.getGender() != null && playerRequest.getGender().toString().equalsIgnoreCase(Player.GenderEnum.FEMALE.toString())){
@@ -43,6 +48,7 @@ public class PlayerService {
 	}
 
 	public Player updatePlayer(Player player) {
+		player.setPassword(bCryptPasswordEncoder.encode(player.getPassword()));
 		return playerRepository.save(player);
 	}
 
@@ -53,7 +59,7 @@ public class PlayerService {
 		if (players != null && players.size() > 0) {
 			String passwordInSystem = players.get(0).getPassword();
 			if (passwordInSystem != null && passwordInSystem.length() > 0) {
-				if (passwordInSystem.equals(password)) {
+				if (bCryptPasswordEncoder.matches(password, passwordInSystem)) {
 					return players.get(0);
 				}
 			}

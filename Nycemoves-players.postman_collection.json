@@ -490,6 +490,75 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "uploadFile",
+			"request": {
+				"url": "http://localhost:8082/nycemoves/utilties/players/1/uploadFile",
+				"method": "POST",
+				"header": [
+					{
+						"key": "fileType",
+						"value": "image",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "1.PNG"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "uploadFile-serviceStatus",
+			"request": {
+				"url": "http://localhost:8082/nycemoves/utilties/service-status",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "1.PNG"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "deleteFile",
+			"request": {
+				"url": "http://localhost:8082/nycemoves/utilties/deleteFile",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "url",
+							"value": "https://s3.ap-south-1.amazonaws.com/nycemoves/1_image_1552929765463-1.PNG",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
