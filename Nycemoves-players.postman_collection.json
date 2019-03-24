@@ -348,7 +348,7 @@
 			"name": "GetAllVideosByPlayerId",
 			"request": {
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1?pageSize=5&pageNumber=1",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1?pageSize=5&pageNumber=1",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -358,7 +358,7 @@
 						"players-api",
 						"1.0.0",
 						"media",
-						"images",
+						"videos",
 						"players",
 						"1"
 					],
