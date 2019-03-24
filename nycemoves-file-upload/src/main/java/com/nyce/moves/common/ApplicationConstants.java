@@ -1,4 +1,4 @@
-package com.nycemoves.common;
+package com.nyce.moves.common;
 
 public class ApplicationConstants {
 

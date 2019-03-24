@@ -28,7 +28,10 @@ public class VideoService {
 	@Autowired
 	VideoRepository videoRepository;
 
-	public CreateVideoResponse addVideo(Long playerId, VideoRequest videoRequest,CreateVideoResponse createVideoResponse) {
+	@Autowired
+	private AmazonClient amazonClient;
+
+	public CreateVideoResponse addVideo(Long playerId, VideoRequest videoRequest, CreateVideoResponse createVideoResponse) {
 
 		Video video = new Video();
 		video.setApplauds(0l);
@@ -51,6 +54,11 @@ public class VideoService {
 			}
 			createVideoResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			createVideoResponse.setMessage("Video has been successfully submitted for player [" + playerId + "]");
+			if (video.getVideoUrl() != null && video.getVideoUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(video.getVideoUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				video.setPreSignedVideoUrl(presignedUrl);
+			}
 			createVideoResponse.setData(video);
 			createVideoResponse.setStatus(CreateVideoResponse.StatusEnum.SUCCESS);
 		} else {
@@ -63,32 +71,32 @@ public class VideoService {
 	}
 
 	public Player deleteVideo(Long playerId, Long videoId, ResponseTemplate responseTemplate) {
-		
+
 		Player player = playerRepository.findOne(playerId);
 		Player returnPlayer = null;
-		if(player != null){
+		if (player != null) {
 			List<Video> videos = player.getVideos();
-			
+
 			boolean deleteIndicator = videos.removeIf(p -> p.getVideoId() == videoId);
-			if(deleteIndicator){
+			if (deleteIndicator) {
 				player.setVideos(videos);
 				returnPlayer = playerRepository.save(player);
 				videoRepository.delete(videoId);
 				responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
 				responseTemplate.setMessage("Video has been deleted successfully with video id [" + videoId + "] and playerId [" + playerId + "]");
-			}else{
+			} else {
 				responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 				responseTemplate.setMessage("Video was not found in the system against the player id [" + playerId + "] and videoId [" + videoId + "]");
 			}
-			
-		}else{
+
+		} else {
 			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 			responseTemplate.setMessage("Player was not found in the system against the player id [" + playerId + "]");
 		}
-		
+
 		return returnPlayer;
 	}
 
@@ -107,7 +115,7 @@ public class VideoService {
 			getVideosResponse.setPageNumber(pageNumber.longValue());
 			getVideosResponse.setPageSize(pageSize.longValue());
 			getVideosResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
-			getVideosResponse.setData((List<Video>) paginationReturn.getReturnList());
+			getVideosResponse.setData(modifyPreSignedUrls((List<Video>) paginationReturn.getReturnList()));
 		} else {
 			getVideosResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			getVideosResponse.setMessage("No records are present for the playerId [" + playerId + "]");
@@ -119,44 +127,60 @@ public class VideoService {
 
 		return getVideosResponse;
 	}
-	
+
 	public CreateVideoResponse getVideoByVideoId(Long videoId, CreateVideoResponse createVideoResponse) {
 
 		Video video = videoRepository.findOne(videoId);
-		
-		if(video != null){
+
+		if (video != null) {
 			createVideoResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			if (video.getVideoUrl() != null && video.getVideoUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(video.getVideoUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				video.setPreSignedVideoUrl(presignedUrl);
+			}
 			createVideoResponse.setData(video);
 			createVideoResponse.setMessage("Video has been successfully fetched against the video id [" + videoId + "]");
 			createVideoResponse.setStatus(StatusEnum.SUCCESS);
-		}else{
+		} else {
 			createVideoResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			createVideoResponse.setMessage("Video has not been successfully fetched against the video id [" + videoId + "]");
 			createVideoResponse.setStatus(StatusEnum.FAILURE);
 		}
-		
+
 		return createVideoResponse;
 	}
-	
-	
+
 	public ResponseTemplate applaudVideoByVideoId(Long videoId, ResponseTemplate responseTemplate) {
 
 		Video video = videoRepository.findOne(videoId);
-		
-		if(video != null){
+
+		if (video != null) {
 			video.setApplauds(video.getApplauds() + 1);
 			videoRepository.save(video);
 			responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			responseTemplate.setMessage("Applaud on videoId [" + videoId + "] has been increased by 1, Now, the applaud count is [" + video.getApplauds() + "]");
 			responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
-		}else{
+		} else {
 			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			responseTemplate.setMessage("No Video was found against the videoId [" + videoId + "], hence applaud has not been applied");
 			responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 		}
-		
+
 		return responseTemplate;
 	}
-	
+
+	public List<Video> modifyPreSignedUrls(List<Video> videos) {
+
+		for (Video video : videos) {
+			if (video.getVideoUrl() != null && video.getVideoUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(video.getVideoUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				video.setPreSignedVideoUrl(presignedUrl);
+			}
+		}
+
+		return videos;
+	}
 
 }

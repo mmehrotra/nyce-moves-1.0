@@ -34,6 +34,9 @@ public class Image {
 	@JsonProperty("imageUrl")
 	private String imageUrl = null;
 
+	@JsonProperty("preSignedImageUrl")
+	private String preSignedImageUrl = null;
+
 	@JsonProperty("description")
 	private String description = null;
 
@@ -244,4 +247,13 @@ public class Image {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
+
+	public String getPreSignedImageUrl() {
+		return preSignedImageUrl;
+	}
+
+	public void setPreSignedImageUrl(String preSignedImageUrl) {
+		this.preSignedImageUrl = preSignedImageUrl;
+	}
+
 }

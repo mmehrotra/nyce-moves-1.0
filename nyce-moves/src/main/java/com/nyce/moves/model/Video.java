@@ -1,5 +1,6 @@
 package com.nyce.moves.model;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,11 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import org.springframework.validation.annotation.Validated;
-import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,6 +34,9 @@ public class Video {
 
 	@JsonProperty("videoUrl")
 	private String videoUrl = null;
+	
+	@JsonProperty("preSignedVideoUrl")
+	private String preSignedVideoUrl = null;
 
 	@JsonProperty("description")
 	private String description = null;
@@ -244,4 +248,14 @@ public class Video {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
+
+	public String getPreSignedVideoUrl() {
+		return preSignedVideoUrl;
+	}
+
+	public void setPreSignedVideoUrl(String preSignedVideoUrl) {
+		this.preSignedVideoUrl = preSignedVideoUrl;
+	}
+	
+	
 }

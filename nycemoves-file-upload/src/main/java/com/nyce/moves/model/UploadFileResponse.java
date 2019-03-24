@@ -1,11 +1,12 @@
-package com.nycemoves.model;
+package com.nyce.moves.model;
 
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-public class ResponseTemplate {
+public class UploadFileResponse {
 	/**
 	 * Gets or Sets status
 	 */
@@ -21,6 +22,7 @@ public class ResponseTemplate {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return String.valueOf(value);
 		}
@@ -45,7 +47,18 @@ public class ResponseTemplate {
 	@JsonProperty("message")
 	private String message = null;
 
-	public ResponseTemplate status(StatusEnum status) {
+	@JsonProperty("fileObject")
+	private FileObject fileObject = null;
+
+	public FileObject getFileObject() {
+		return fileObject;
+	}
+
+	public void setFileObject(FileObject fileObject) {
+		this.fileObject = fileObject;
+	}
+
+	public UploadFileResponse status(StatusEnum status) {
 		this.status = status;
 		return this;
 	}
@@ -58,7 +71,7 @@ public class ResponseTemplate {
 		this.status = status;
 	}
 
-	public ResponseTemplate code(String code) {
+	public UploadFileResponse code(String code) {
 		this.code = code;
 		return this;
 	}
@@ -71,7 +84,7 @@ public class ResponseTemplate {
 		this.code = code;
 	}
 
-	public ResponseTemplate message(String message) {
+	public UploadFileResponse message(String message) {
 		this.message = message;
 		return this;
 	}
@@ -85,30 +98,35 @@ public class ResponseTemplate {
 	}
 
 	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		ResponseTemplate responseTemplate = (ResponseTemplate) o;
-		return Objects.equals(this.status, responseTemplate.status) && Objects.equals(this.code, responseTemplate.code) && Objects.equals(this.message, responseTemplate.message);
-	}
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    UploadFileResponse uploadFileResponse = (UploadFileResponse) o;
+    return Objects.equals(this.status, uploadFileResponse.status) &&
+        Objects.equals(this.code, uploadFileResponse.code) &&
+        Objects.equals(this.message, uploadFileResponse.message) &&
+        Objects.equals(this.fileObject, uploadFileResponse.getFileObject());
+    
+  }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(status, code, message);
+		return Objects.hash(status, code, message, fileObject);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("class ResponseTemplate {\n");
+		sb.append("class GetImagesResponse {\n");
 
 		sb.append("    status: ").append(toIndentedString(status)).append("\n");
 		sb.append("    code: ").append(toIndentedString(code)).append("\n");
 		sb.append("    message: ").append(toIndentedString(message)).append("\n");
+		sb.append("    data: ").append(toIndentedString(fileObject)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}

@@ -1,4 +1,4 @@
-package com.nycemoves.controller;
+package com.nyce.moves.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nycemoves.common.ApplicationConstants;
-import com.nycemoves.model.FileObject;
-import com.nycemoves.model.ResponseTemplate;
-import com.nycemoves.model.ResponseTemplate.StatusEnum;
-import com.nycemoves.model.UploadFileResponse;
-import com.nycemoves.service.AmazonClient;
+import com.nyce.moves.common.ApplicationConstants;
+import com.nyce.moves.model.FileObject;
+import com.nyce.moves.model.ResponseTemplate;
+import com.nyce.moves.model.UploadFileResponse;
+import com.nyce.moves.model.ResponseTemplate.StatusEnum;
+import com.nyce.moves.service.AmazonClient;
 
 @RestController
 public class UploadController {
@@ -45,7 +45,7 @@ public class UploadController {
 		uploadFileResponse.setStatus(UploadFileResponse.StatusEnum.SUCCESS);
 		uploadFileResponse.setMessage("File has been loaded successfully");
 		FileObject fileObject = new FileObject();
-		fileObject.setFinalS3Path(this.amazonClient.uploadFile(file, playerId, fileType));
+		fileObject = this.amazonClient.uploadFile(file, playerId, fileType, fileObject);
 		uploadFileResponse.setFileObject(fileObject);
 
 		return uploadFileResponse;

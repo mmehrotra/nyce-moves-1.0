@@ -27,6 +27,9 @@ public class ImageService {
 
 	@Autowired
 	ImageRepository imageRepository;
+	
+	@Autowired
+	private AmazonClient amazonClient;
 
 	public CreateImageResponse addImage(Long playerId, ImageRequest imageRequest,CreateImageResponse createImageResponse) {
 
@@ -51,6 +54,11 @@ public class ImageService {
 			}
 			createImageResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			createImageResponse.setMessage("Image has been successfully submitted for player [" + playerId + "]");
+			if (image.getImageUrl() != null && image.getImageUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(image.getImageUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				image.setPreSignedImageUrl(presignedUrl);
+			}
 			createImageResponse.setData(image);
 			createImageResponse.setStatus(CreateImageResponse.StatusEnum.SUCCESS);
 		} else {
@@ -107,7 +115,7 @@ public class ImageService {
 			getImagesResponse.setPageNumber(pageNumber.longValue());
 			getImagesResponse.setPageSize(pageSize.longValue());
 			getImagesResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
-			getImagesResponse.setData((List<Image>) paginationReturn.getReturnList());
+			getImagesResponse.setData(modifyPreSignedUrls((List<Image>) paginationReturn.getReturnList()));
 		} else {
 			getImagesResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			getImagesResponse.setMessage("No records are present for the playerId [" + playerId + "]");
@@ -126,6 +134,11 @@ public class ImageService {
 		
 		if(image != null){
 			createImageResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			if (image.getImageUrl() != null && image.getImageUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(image.getImageUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				image.setPreSignedImageUrl(presignedUrl);
+			}
 			createImageResponse.setData(image);
 			createImageResponse.setMessage("Image has been successfully fetched against the image id [" + imageId + "]");
 			createImageResponse.setStatus(StatusEnum.SUCCESS);
@@ -157,6 +170,20 @@ public class ImageService {
 		
 		return responseTemplate;
 	}
+	
+	public List<Image> modifyPreSignedUrls(List<Image> images) {
+
+		for (Image image : images) {
+			if (image.getImageUrl() != null && image.getImageUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(image.getImageUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				image.setPreSignedImageUrl(presignedUrl);
+			}
+		}
+
+		return images;
+	}
+
 	
 
 }

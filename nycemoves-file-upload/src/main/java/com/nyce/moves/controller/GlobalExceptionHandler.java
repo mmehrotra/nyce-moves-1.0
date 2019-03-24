@@ -1,4 +1,4 @@
-package com.nycemoves.controller;
+package com.nyce.moves.controller;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
