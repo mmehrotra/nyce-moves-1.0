@@ -49,7 +49,7 @@ public class PostsApiController implements PostsApi {
 		this.request = request;
 	}
 
-	public ResponseEntity<ResponseTemplate> deletePost(@ApiParam(value = "The playerId for which post needs to be deleted", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", required = true) @RequestHeader(value = "postId", required = true) Long postId) {
+	public ResponseEntity<ResponseTemplate> deletePost(@ApiParam(value = "The playerId for which post needs to be deleted", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", required = true) @RequestHeader(value = "postId", required = true) Long postId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -65,7 +65,7 @@ public class PostsApiController implements PostsApi {
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<GetAllPostsResponse> getPosts(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
+	public ResponseEntity<GetAllPostsResponse> getPosts(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -82,7 +82,7 @@ public class PostsApiController implements PostsApi {
 		return new ResponseEntity<GetAllPostsResponse>(getAllPostsReponse, HttpStatus.OK);
 	}
 
-	public ResponseEntity<CreatePostResponse> submitPost(@ApiParam(value = "", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "Created post object", required = true) @Valid @RequestBody PostRequest body) {
+	public ResponseEntity<CreatePostResponse> submitPost(@ApiParam(value = "", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "Created post object", required = true) @Valid @RequestBody PostRequest body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {

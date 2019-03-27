@@ -53,7 +53,7 @@ public class MediaApiController implements MediaApi {
 		this.request = request;
 	}
 
-	public ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image", required = true) @PathVariable("imageId") Long imageId) {
+	public ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image", required = true) @PathVariable("imageId") Long imageId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -69,7 +69,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched", required = true) @PathVariable("videoId") Long videoId) {
+	public ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched", required = true) @PathVariable("videoId") Long videoId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -85,7 +85,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<ResponseTemplate> deleteImage(@ApiParam(value = "The playerId for which post needs to be deleted", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", required = true) @RequestHeader(value = "imageId", required = true) Long imageId) {
+	public ResponseEntity<ResponseTemplate> deleteImage(@ApiParam(value = "The playerId for which post needs to be deleted", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", required = true) @RequestHeader(value = "imageId", required = true) Long imageId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -101,7 +101,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<ResponseTemplate> deleteVideo(@ApiParam(value = "The playerId for which post needs to be deleted", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", required = true) @RequestHeader(value = "videoId", required = true) Long videoId) {
+	public ResponseEntity<ResponseTemplate> deleteVideo(@ApiParam(value = "The playerId for which post needs to be deleted", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", required = true) @RequestHeader(value = "videoId", required = true) Long videoId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -117,7 +117,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<GetImagesResponse> getImages(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
+	public ResponseEntity<GetImagesResponse> getImages(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -133,7 +133,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<GetImagesResponse>(getImagesReponse, HttpStatus.OK);
 	}
 
-	public ResponseEntity<CreateImageResponse> getImagesByImageId(@ApiParam(value = "The ImageId of the image", required = true) @PathVariable("imageId") Long imageId) {
+	public ResponseEntity<CreateImageResponse> getImagesByImageId(@ApiParam(value = "The ImageId of the image", required = true) @PathVariable("imageId") Long imageId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -149,7 +149,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<CreateImageResponse>(createImageResponse, HttpStatus.OK);
 	}
 
-	public ResponseEntity<GetVideosResponse> getVideos(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
+	public ResponseEntity<GetVideosResponse> getVideos(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -165,7 +165,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<GetVideosResponse>(getVideosReponse, HttpStatus.OK);
 	}
 
-	public ResponseEntity<CreateVideoResponse> getVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched", required = true) @PathVariable("videoId") Long videoId) {
+	public ResponseEntity<CreateVideoResponse> getVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched", required = true) @PathVariable("videoId") Long videoId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -182,7 +182,7 @@ public class MediaApiController implements MediaApi {
 
 	}
 
-	public ResponseEntity<CreateImageResponse> submitImage(@ApiParam(value = "", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "Created image object", required = true) @Valid @RequestBody ImageRequest body) {
+	public ResponseEntity<CreateImageResponse> submitImage(@ApiParam(value = "", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "Created image object", required = true) @Valid @RequestBody ImageRequest body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -198,7 +198,7 @@ public class MediaApiController implements MediaApi {
 		return new ResponseEntity<CreateImageResponse>(createImageResponse, HttpStatus.OK);
 	}
 
-	public ResponseEntity<CreateVideoResponse> submitVideo(@ApiParam(value = "", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "Created Video object", required = true) @Valid @RequestBody VideoRequest body) {
+	public ResponseEntity<CreateVideoResponse> submitVideo(@ApiParam(value = "", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "Created Video object", required = true) @Valid @RequestBody VideoRequest body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {

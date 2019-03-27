@@ -6,28 +6,32 @@
 package com.nyce.moves.api;
 
 import java.math.BigDecimal;
-import com.nyce.moves.model.GetFriendsResponse;
-import com.nyce.moves.model.GetPendingFriendsRequestsResponse;
-import com.nyce.moves.model.Player;
-import com.nyce.moves.model.PlayerRequest;
-import com.nyce.moves.model.PlayerResponse;
-import com.nyce.moves.model.ResponseTemplate;
-import io.swagger.annotations.*;
+
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
+import com.nyce.moves.model.ChangeEmailRequest;
+import com.nyce.moves.model.ChangePasswordRequest;
+import com.nyce.moves.model.GetFriendsResponse;
+import com.nyce.moves.model.GetPendingFriendsRequestsResponse;
+import com.nyce.moves.model.PlayerRequest;
+import com.nyce.moves.model.PlayerResponse;
+import com.nyce.moves.model.ResponseTemplate;
+import com.nyce.moves.model.UpdatePlayerRequest;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-26T12:15:36.477+05:30")
 
 @Api(value = "players", description = "the players API")
 public interface PlayersApi {
@@ -38,7 +42,26 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}/approveFriendRequest",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<ResponseTemplate> approveFriendRequest(@ApiParam(value = "The playerId of the current player who is sending the request",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "PlayerId of the player with whom friendship is been seeken" ,required=true) @RequestHeader(value="friendId", required=true) Long friendId);
+    ResponseEntity<ResponseTemplate> approveFriendRequest(@ApiParam(value = "The playerId of the current player who is sending the request",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "PlayerId of the player with whom friendship is been seeken" ,required=true) @RequestHeader(value="friendId", required=true) Long friendId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
+
+    @ApiOperation(value = "Change Primary Email Address", nickname = "changeEmailAddress", notes = "This API will be used to change the primary email address", response = ResponseTemplate.class, tags={ "players", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class),
+        @ApiResponse(code = 403, message = "Unauthorized"),
+        @ApiResponse(code = 200, message = "successful operation") })
+    @RequestMapping(value = "/players/{playerId}/changePrimaryEmail",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<ResponseTemplate> changeEmailAddress(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody ChangeEmailRequest body);
+
+
+    @ApiOperation(value = "Player changes its password", nickname = "changePassword", notes = "This API will enable the users to change their password", response = ResponseTemplate.class, tags={ "players", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class) })
+    @RequestMapping(value = "/players/{playerId}/changePassword",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<ResponseTemplate> changePassword(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("identifier") Long identifier,@ApiParam(value = "Change Password" ,required=true )  @Valid @RequestBody ChangePasswordRequest body);
 
 
     @ApiOperation(value = "Player Registration", nickname = "createPlayer", notes = "This API will be used to registers players within the system.", response = PlayerResponse.class, tags={ "players", })
@@ -60,7 +83,7 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<ResponseTemplate> deletePlayer(@ApiParam(value = "The Id of the player which need to be deleted",required=true) @PathVariable("playerId") Long playerId);
+    ResponseEntity<ResponseTemplate> deletePlayer(@ApiParam(value = "The Id of the player which need to be deleted",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
 
 
     @ApiOperation(value = "Followers of a player", nickname = "getFriends", notes = "", response = GetFriendsResponse.class, tags={ "players", })
@@ -69,7 +92,7 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}/friends",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<GetFriendsResponse> getFriends(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+    ResponseEntity<GetFriendsResponse> getFriends(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
 
 
     @ApiOperation(value = "Pending Friend Requests", nickname = "getPendingFriendRequests", notes = "", response = GetPendingFriendsRequestsResponse.class, tags={ "players", })
@@ -78,7 +101,7 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}/pendingFriendRequests",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<GetPendingFriendsRequestsResponse> getPendingFriendRequests(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId);
+    ResponseEntity<GetPendingFriendsRequestsResponse> getPendingFriendRequests(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
 
 
     @ApiOperation(value = "Get the details of a player based on player id session", nickname = "getPlayer", notes = "Player Information.", response = PlayerResponse.class, tags={ "players", })
@@ -87,7 +110,7 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<PlayerResponse> getPlayer(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId);
+    ResponseEntity<PlayerResponse> getPlayer(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
 
 
     @ApiOperation(value = "Logs player into the system", nickname = "loginUser", notes = "", response = PlayerResponse.class, tags={ "players", })
@@ -106,7 +129,17 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}/logout",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<ResponseTemplate> logoutUser(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId);
+    ResponseEntity<ResponseTemplate> logoutUser(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
+
+
+    @ApiOperation(value = "Player forgot the password and want to reset it", nickname = "resetPassword", notes = "", response = ResponseTemplate.class, tags={ "players", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class),
+        @ApiResponse(code = 400, message = "Invalid username/password supplied") })
+    @RequestMapping(value = "/players/resetPassword",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<ResponseTemplate> resetPassword(@ApiParam(value = "The user name for login" ,required=true) @RequestHeader(value="username", required=true) String username);
 
 
     @ApiOperation(value = "Player sending the friend request", nickname = "sendFriendRequest", notes = "", response = ResponseTemplate.class, tags={ "players", })
@@ -115,7 +148,7 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}/friendRequest",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<ResponseTemplate> sendFriendRequest(@ApiParam(value = "The playerId of the current player who is sending the request",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "PlayerId of the player with whom friendship is been seeken" ,required=true) @RequestHeader(value="friendId", required=true) Long friendId);
+    ResponseEntity<ResponseTemplate> sendFriendRequest(@ApiParam(value = "The playerId of the current player who is sending the request",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "PlayerId of the player with whom friendship is been seeken" ,required=true) @RequestHeader(value="friendId", required=true) Long friendId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
 
 
     @ApiOperation(value = "Update player", nickname = "updatePlayer", notes = "This will enable logged in player to update its information.", response = PlayerResponse.class, tags={ "players", })
@@ -126,6 +159,6 @@ public interface PlayersApi {
     @RequestMapping(value = "/players/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.PUT)
-    ResponseEntity<PlayerResponse> updatePlayer(@ApiParam(value = "player that need to be updated",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "Updated player object" ,required=true )  @Valid @RequestBody Player body);
+    ResponseEntity<PlayerResponse> updatePlayer(@ApiParam(value = "player that need to be updated",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Updated player object" ,required=true )  @Valid @RequestBody UpdatePlayerRequest body);
 
 }

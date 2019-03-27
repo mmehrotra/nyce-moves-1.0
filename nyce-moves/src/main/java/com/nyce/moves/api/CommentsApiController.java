@@ -44,7 +44,7 @@ public class CommentsApiController implements CommentsApi {
         this.request = request;
     }
 
-    public ResponseEntity<ResponseTemplate> deleteComment(@ApiParam(value = "The playerId for which comment needs to be deleted" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="commentId", required=true) Long commentId) {
+    public ResponseEntity<ResponseTemplate> deleteComment(@ApiParam(value = "The playerId for which comment needs to be deleted" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="commentId", required=true) Long commentId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -60,7 +60,7 @@ public class CommentsApiController implements CommentsApi {
         return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
     }
 
-    public ResponseEntity<GetCommentsResponse> getComments(@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "ImageId for which comments need to be fetched" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "VideoId for which comments need to be fetched" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "PostId for which comments need to be fetched" ) @RequestHeader(value="postId", required=false) Long postId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber) {
+    public ResponseEntity<GetCommentsResponse> getComments(@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "ImageId for which comments need to be fetched" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "VideoId for which comments need to be fetched" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "PostId for which comments need to be fetched" ) @RequestHeader(value="postId", required=false) Long postId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -76,7 +76,7 @@ public class CommentsApiController implements CommentsApi {
         return new ResponseEntity<GetCommentsResponse>(getCommentsResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body,@ApiParam(value = "" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "" ) @RequestHeader(value="postId", required=false) Long postId) {
+    public ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body,@ApiParam(value = "" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "" ) @RequestHeader(value="postId", required=false) Long postId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

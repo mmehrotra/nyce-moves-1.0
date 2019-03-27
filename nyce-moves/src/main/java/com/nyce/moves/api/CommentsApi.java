@@ -6,26 +6,27 @@
 package com.nyce.moves.api;
 
 import java.math.BigDecimal;
-import com.nyce.moves.model.CommentsRequest;
-import com.nyce.moves.model.CreateCommentResponse;
-import com.nyce.moves.model.GetCommentsResponse;
-import com.nyce.moves.model.ResponseTemplate;
-import io.swagger.annotations.*;
+
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
+import com.nyce.moves.model.CommentsRequest;
+import com.nyce.moves.model.CreateCommentResponse;
+import com.nyce.moves.model.GetCommentsResponse;
+import com.nyce.moves.model.ResponseTemplate;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-26T15:39:33.678+05:30")
 
 @Api(value = "comments", description = "the comments API")
 public interface CommentsApi {
@@ -38,7 +39,7 @@ public interface CommentsApi {
     @RequestMapping(value = "/comments",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<ResponseTemplate> deleteComment(@ApiParam(value = "The playerId for which comment needs to be deleted" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="commentId", required=true) Long commentId);
+    ResponseEntity<ResponseTemplate> deleteComment(@ApiParam(value = "The playerId for which comment needs to be deleted" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="commentId", required=true) Long commentId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
 
 
     @ApiOperation(value = "Get the comments submitted by the user ordered by timestamp desc", nickname = "getComments", notes = "", response = GetCommentsResponse.class, tags={ "comments", })
@@ -47,7 +48,7 @@ public interface CommentsApi {
     @RequestMapping(value = "/comments",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<GetCommentsResponse> getComments(@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "ImageId for which comments need to be fetched" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "VideoId for which comments need to be fetched" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "PostId for which comments need to be fetched" ) @RequestHeader(value="postId", required=false) Long postId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+    ResponseEntity<GetCommentsResponse> getComments(@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "ImageId for which comments need to be fetched" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "VideoId for which comments need to be fetched" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "PostId for which comments need to be fetched" ) @RequestHeader(value="postId", required=false) Long postId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
 
 
     @ApiOperation(value = "Player Submit a Comment based on the image id / video id, here first image id field will be checked if filled the comment will go against that otherwise against the video id.", nickname = "submitComment", notes = "", response = CreateCommentResponse.class, tags={ "comments", })
@@ -57,6 +58,6 @@ public interface CommentsApi {
     @RequestMapping(value = "/comments",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body,@ApiParam(value = "" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "" ) @RequestHeader(value="postId", required=false) Long postId);
+    ResponseEntity<CreateCommentResponse> submitComment(@ApiParam(value = "" ,required=true) @RequestHeader(value="playerId", required=true) Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Created Comment object" ,required=true )  @Valid @RequestBody CommentsRequest body,@ApiParam(value = "" ) @RequestHeader(value="imageId", required=false) Long imageId,@ApiParam(value = "" ) @RequestHeader(value="videoId", required=false) Long videoId,@ApiParam(value = "" ) @RequestHeader(value="postId", required=false) Long postId);
 
 }

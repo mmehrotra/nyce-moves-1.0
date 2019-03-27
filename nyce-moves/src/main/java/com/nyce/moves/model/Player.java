@@ -96,6 +96,9 @@ public class Player {
 
 	@JsonProperty("profileImageUrl")
 	private String profileImageUrl = null;
+	
+	@JsonProperty("profileImagePreSignedUrl")
+	private String profileImagePreSignedUrl = null;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -522,4 +525,14 @@ public class Player {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
+
+	public String getProfileImagePreSignedUrl() {
+		return profileImagePreSignedUrl;
+	}
+
+	public void setProfileImagePreSignedUrl(String profileImagePreSignedUrl) {
+		this.profileImagePreSignedUrl = profileImagePreSignedUrl;
+	}
+	
+	
 }

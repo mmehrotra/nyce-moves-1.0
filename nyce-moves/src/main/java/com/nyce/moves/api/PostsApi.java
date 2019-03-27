@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-26T11:19:56.351+05:30")
 
 @Api(value = "posts", description = "the posts API")
 public interface PostsApi {
@@ -38,7 +38,7 @@ public interface PostsApi {
     @RequestMapping(value = "/posts/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<ResponseTemplate> deletePost(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="postId", required=true) Long postId);
+    ResponseEntity<ResponseTemplate> deletePost(@ApiParam(value = "The playerId for which post needs to be deleted",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "" ,required=true) @RequestHeader(value="postId", required=true) Long postId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
 
 
     @ApiOperation(value = "Get the posts submitted by the user ordered by timestamp desc", nickname = "getPosts", notes = "", response = GetAllPostsResponse.class, tags={ "posts", })
@@ -47,7 +47,7 @@ public interface PostsApi {
     @RequestMapping(value = "/posts/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<GetAllPostsResponse> getPosts(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+    ResponseEntity<GetAllPostsResponse> getPosts(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
 
 
     @ApiOperation(value = "Player Submit a Post", nickname = "submitPost", notes = "", response = CreatePostResponse.class, tags={ "posts", })
@@ -57,6 +57,6 @@ public interface PostsApi {
     @RequestMapping(value = "/posts/{playerId}",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<CreatePostResponse> submitPost(@ApiParam(value = "",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "Created post object" ,required=true )  @Valid @RequestBody PostRequest body);
+    ResponseEntity<CreatePostResponse> submitPost(@ApiParam(value = "",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Created post object" ,required=true )  @Valid @RequestBody PostRequest body);
 
 }

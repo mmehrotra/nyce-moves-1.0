@@ -15,8 +15,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @EnableJpaRepositories("com.nyce.moves.repository")
-//@ComponentScan(basePackages = { "com.nyce.moves.invoker", "com.nyce.moves.api", "com.nyce.moves.service", "com.nyce.moves.security"})
-@ComponentScan(basePackages = { "com.nyce.moves.invoker", "com.nyce.moves.api", "com.nyce.moves.service"})
+@ComponentScan(basePackages = { "com.nyce.moves.invoker", "com.nyce.moves.api", "com.nyce.moves.service", "com.nyce.moves.security"})
+//@ComponentScan(basePackages = { "com.nyce.moves.invoker", "com.nyce.moves.api", "com.nyce.moves.service"})
 @EntityScan("com.nyce.moves.model") 
 public class NyceMovesApp implements CommandLineRunner {
 	
