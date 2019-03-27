@@ -288,13 +288,13 @@ public class PlayerService {
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("mohit.mehrotra19@gmail.com", "mohit@19");
+				return new PasswordAuthentication("XXXXX@gmail.com", "XXXXXXXXX@19");
 			}
 		});
 		Message msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress("nycemoves@gmail.com", false));
 
-		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("mohit.mehrotra19@gmail.com"));
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("XXXXXXXXXXXXXXX@gmail.com"));
 		msg.setSubject("NyceMoves :: Password Reset Request");
 		msg.setContent("Your new password is " + newPassword, "text/html");
 		msg.setSentDate(new Date());
