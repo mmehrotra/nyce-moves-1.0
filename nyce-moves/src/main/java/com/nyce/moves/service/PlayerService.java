@@ -344,7 +344,7 @@ public class PlayerService {
 				player.setEmail(changeEmailRequest.getNewEmail());
 				playerRepository.save(player);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
-				responseTemplate.setMessage("Player with playerId [" + playerId + "] has been successfully update with new email address [" + changeEmailRequest.getNewEmail() + "]");
+				responseTemplate.setMessage("Player with playerId [" + playerId + "] has been successfully updated with new email address [" + changeEmailRequest.getNewEmail() + "]");
 				responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			} else {
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);

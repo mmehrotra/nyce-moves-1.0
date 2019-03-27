@@ -72,19 +72,21 @@ public class PlayersApiController implements PlayersApi {
 		return new ResponseEntity<ResponseTemplate>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<ResponseTemplate> changeEmailAddress(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody ChangeEmailRequest body) {
-	        String accept = request.getHeader("Accept");
-	        if (accept != null && accept.contains("application/json")) {
-	            try {
-	                return new ResponseEntity<ResponseTemplate>(objectMapper.readValue("{  \"code\" : \"code\",  \"message\" : \"message\",  \"status\" : \"SUCCESS\"}", ResponseTemplate.class), HttpStatus.NOT_IMPLEMENTED);
-	            } catch (IOException e) {
-	                log.error("Couldn't serialize response for content type application/json", e);
-	                return new ResponseEntity<ResponseTemplate>(HttpStatus.INTERNAL_SERVER_ERROR);
-	            }
-	        }
-
-	        return new ResponseEntity<ResponseTemplate>(HttpStatus.NOT_IMPLEMENTED);
-	    }
+	public ResponseEntity<ResponseTemplate> changeEmailAddress(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody ChangeEmailRequest body) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<ResponseTemplate>(objectMapper.readValue("{  \"code\" : \"code\",  \"message\" : \"message\",  \"status\" : \"SUCCESS\"}", ResponseTemplate.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<ResponseTemplate>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        
+        ResponseTemplate responseTemplate = new ResponseTemplate();
+        responseTemplate = playerService.changePrimaryEmail(playerId, body, responseTemplate);
+        return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
+    }
 	
 	public ResponseEntity<ResponseTemplate> changePassword(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @PathVariable("identifier") Long identifier, @ApiParam(value = "Change Password", required = true) @Valid @RequestBody ChangePasswordRequest body) {
 		String accept = request.getHeader("Accept");
