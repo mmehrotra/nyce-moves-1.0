@@ -1,159 +1,566 @@
 {
-	"variables": [],
 	"info": {
-		"name": "Nycemoves-players",
 		"_postman_id": "8818e333-0dbc-607a-232c-c5d82f9fa642",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"name": "Nycemoves-players",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "PlayerRegisteration01",
 			"request": {
-				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"city\": \"newyork\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Mark Twain\",\r\n  \"email\": \"mark.twain@gmail.com\",\r\n  \"firstName\": \"Mark\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Twain\",\r\n  \"password\": \"mark\",\r\n  \"primarySport\": \"basketball\",\r\n  \"dob\": \"2001-02-11\",\r\n  \"school\": \"New Orleans\"\r\n}"
+					"raw": "{\r\n  \"city\": \"newyork\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Mark Twain\",\r\n  \"email\": \"mark.twain@gmail.com\",\r\n  \"firstName\": \"Mark\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Twain\",\r\n  \"password\": \"mark\",\r\n  \"primarySport\": \"basketball\",\r\n  \"dob\": \"2001-02-11\",\r\n  \"school\": \"New Orleans\",\r\n  \"profileImageUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/images/1_image_1554201726100-1.PNG\"\r\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players"
+					]
+				}
 			},
-			"response": []
+			"response": [
+				{
+					"id": "cab99451-076b-4231-a402-7dd0a4d3f3f3",
+					"name": "PlayerRegisteration01",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"city\": \"newyork\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Mark Twain\",\r\n  \"email\": \"mark.twain@gmail.com\",\r\n  \"firstName\": \"Mark\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Twain\",\r\n  \"password\": \"mark\",\r\n  \"primarySport\": \"basketball\",\r\n  \"dob\": \"2001-02-11\",\r\n  \"school\": \"New Orleans\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 24 Mar 2019 10:16:25 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been successfully created\",\"data\":{\"posts\":null,\"images\":null,\"videos\":null,\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$6a16P4jf6rT2lNCRrHRME.P.ZlIUh2juB.lMBNZRitNe0Ri7M3g52\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":\"male\",\"school\":\"New Orleans\",\"primarySport\":\"basketball\",\"dob\":\"2001-02-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-03-24T10:16:24.941Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
 		},
 		{
 			"name": "PlayerRegisteration02",
 			"request": {
-				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"city\": \"boston\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Napolean Hill\",\r\n  \"email\": \"napolean.hill@gmail.com\",\r\n  \"firstName\": \"Napolean\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Hill\",\r\n  \"password\": \"hill\",\r\n  \"primarySport\": \"football\",\r\n  \"dob\": \"2003-08-23\",\r\n  \"school\": \"New England\"\r\n}"
+					"raw": "{\r\n  \"city\": \"boston\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Napolean Hill\",\r\n  \"email\": \"napolean.hill@gmail.com\",\r\n  \"firstName\": \"Napolean\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Hill\",\r\n  \"password\": \"hill\",\r\n  \"primarySport\": \"football\",\r\n  \"dob\": \"2003-08-23\",\r\n  \"school\": \"New England\",\r\n  \"profileImageUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/images/1_image_1554201726100-1.PNG\"\r\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "PlayerLogin",
+			"name": "PlayerLogin 1",
 			"request": {
-				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players/login",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
 					},
 					{
 						"key": "username",
-						"value": "string",
-						"description": ""
+						"value": "mark.twain@gmail.com"
 					},
 					{
 						"key": "password",
-						"value": "string",
-						"description": ""
+						"value": "mark"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/login",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"login"
+					]
+				}
 			},
-			"response": []
+			"response": [
+				{
+					"id": "03a77382-0099-4727-8fe7-34e05849ae4b",
+					"name": "PlayerLogin",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "username",
+								"value": "mark.twain@gmail.com",
+								"warning": ""
+							},
+							{
+								"key": "password",
+								"value": "mark",
+								"warning": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/login",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:21:07 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Successful Login\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$56/A5BIS9xE/WqWJbJ0rxO.yJjVTeA2x6bWXRzmXJ7QS9ukvOXYVG\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":\"male\",\"school\":\"New Orleans\",\"primarySport\":\"basketball\",\"dob\":\"2001-02-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-03-18T18:21:00.881Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
 		},
 		{
-			"name": "UpdatePlayer",
+			"name": "PlayerLogin 2",
 			"request": {
-				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players",
-				"method": "PUT",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
+					},
+					{
+						"key": "username",
+						"value": "napolean.hill@gmail.com"
+					},
+					{
+						"key": "password",
+						"value": "hill"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"city\": \"newyork\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Mark Twain\",\r\n  \"email\": \"mark.twain@gmail.com\",\r\n  \"firstName\": \"Mark\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Twain\",\r\n  \"password\": \"mark\",\r\n  \"primarySport\": \"basketball\",\r\n  \"dob\": \"2001-01-11\",\r\n  \"school\": \"New Orleans Updated\"\r\n  \r\n}"
+					"raw": ""
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/login",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "dd1a6bd4-4e8d-4611-9607-ddbed1951391",
+					"name": "PlayerLogin",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "username",
+								"value": "mark.twain@gmail.com",
+								"warning": ""
+							},
+							{
+								"key": "password",
+								"value": "mark",
+								"warning": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/login",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:21:07 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Successful Login\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$56/A5BIS9xE/WqWJbJ0rxO.yJjVTeA2x6bWXRzmXJ7QS9ukvOXYVG\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":\"male\",\"school\":\"New Orleans\",\"primarySport\":\"basketball\",\"dob\":\"2001-02-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-03-18T18:21:00.881Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "UpdatePlayer",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Mark\",\r\n  \"city\": \"newyork\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Mark Twain\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Twain\",\r\n  \"primarySport\": \"cricket\",\r\n  \"dob\": \"2001-01-11\",\r\n  \"school\": \"New Orleans Updated\",\r\n  \"profileImageUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/images/1_image_1554201726100-1.PNG\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"1",
+						""
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "GetPlayer",
 			"request": {
-				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players/1",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"1"
+					]
+				}
 			},
-			"response": []
+			"response": [
+				{
+					"id": "72d090b6-a83e-485f-b54b-303a9d6e8b8e",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
 		},
 		{
 			"name": "DeletePlayer",
 			"request": {
-				"url": "http://localhost:8080/nycemoves/players-api/1.0.0/players/1",
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "CreatePost",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"post\": \"This is my second post\",\r\n  \"postedBy\": 1\r\n}"
+					"raw": "{\r\n  \"post\": \"This is my thrid post\",\r\n  \"postedBy\": 1\r\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"posts",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "GetAllPosts",
 			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1?pageSize=5&pageNumber=1",
 					"protocol": "http",
@@ -170,80 +577,179 @@
 					"query": [
 						{
 							"key": "pageSize",
-							"value": "5",
-							"equals": true,
-							"description": ""
+							"value": "5"
 						},
 						{
 							"key": "pageNumber",
-							"value": "1",
-							"equals": true,
-							"description": ""
+							"value": "1"
 						}
-					],
-					"variable": []
-				},
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "GetAllPosts",
+			"name": "DeletePost",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1",
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "postId",
-						"value": "1",
-						"description": ""
+						"value": "1"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"posts",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "CreateImage",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"description\": \"My second Image\",\r\n  \"imageUrl\": \"http://s3-location2\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My Second image\"\r\n}"
+					"raw": "{\r\n  \"description\": \"My third Image\",\r\n  \"imageUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/images/1_image_1554201726100-1.PNG\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My Second image\"\r\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"images",
+						"players",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "ApplaudImageByImageId",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/1/appluad",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/1/appluad",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"images",
+						"1",
+						"appluad"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetImagesByImageId",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"images",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "GetAllImagesByPlayerId",
 			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1?pageSize=5&pageNumber=1",
 					"protocol": "http",
@@ -262,91 +768,148 @@
 					"query": [
 						{
 							"key": "pageSize",
-							"value": "5",
-							"equals": true,
-							"description": ""
+							"value": "5"
 						},
 						{
 							"key": "pageNumber",
-							"value": "1",
-							"equals": true,
-							"description": ""
+							"value": "1"
 						}
-					],
-					"variable": []
-				},
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "GetImagesByImageId",
-			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/1",
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "DeleteImageByPlayerIdImageId",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "imageId",
-						"value": "1",
-						"description": ""
+						"value": "1"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"images",
+						"players",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "CreateVideo",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"description\": \"My second Image\",\r\n  \"imageUrl\": \"http://s3-location2\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My Second image\"\r\n}"
+					"raw": "{\r\n  \"description\": \"My third video\",\r\n  \"videoUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/videos/1_video_1554201781075-abc.mp4\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My third video\"\r\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"videos",
+						"players",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "ApplaudVideoByVideoId",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/1/appluad",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/1/appluad",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"videos",
+						"1",
+						"appluad"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "GetAllVideosByPlayerId",
 			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1?pageSize=5&pageNumber=1",
 					"protocol": "http",
@@ -365,79 +928,34 @@
 					"query": [
 						{
 							"key": "pageSize",
-							"value": "5",
-							"equals": true,
-							"description": ""
+							"value": "5"
 						},
 						{
 							"key": "pageNumber",
-							"value": "1",
-							"equals": true,
-							"description": ""
+							"value": "1"
 						}
-					],
-					"variable": []
-				},
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "GetVideosByVideoId",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/1",
 				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "DeleteVideoByPlayerIdVideoId",
-			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1",
-				"method": "DELETE",
 				"header": [
 					{
-						"key": "videoId",
-						"value": "1",
-						"description": ""
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "CreateComments",
-			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"description\": \"My second Image\",\r\n  \"imageUrl\": \"http://s3-location2\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My Second image\"\r\n}"
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "GetAllComments",
-			"request": {
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1?pageSize=5&pageNumber=1",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/1",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -447,60 +965,328 @@
 						"players-api",
 						"1.0.0",
 						"media",
-						"images",
-						"players",
+						"videos",
 						"1"
-					],
-					"query": [
-						{
-							"key": "pageSize",
-							"value": "5",
-							"equals": true,
-							"description": ""
-						},
-						{
-							"key": "pageNumber",
-							"value": "1",
-							"equals": true,
-							"description": ""
-						}
-					],
-					"variable": []
-				},
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "DeleteVideoByPlayerIdVideoId copy",
+			"name": "DeleteVideoByPlayerIdVideoId",
 			"request": {
-				"url": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1",
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "videoId",
-						"value": "1",
-						"description": ""
+						"value": "1"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
 					}
 				],
 				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"media",
+						"videos",
+						"players",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateComments",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "playerId",
+						"value": "1"
+					},
+					{
+						"key": "imageId",
+						"value": "2"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"postedBy\": 1,\r\n  \"imageId\" : 2,\r\n  \"comments\" : \"My second comment\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/comments/",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"comments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllComments",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "playerId",
+						"value": "1"
+					},
+					{
+						"key": "imageId",
+						"value": "2"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/comments?pageSize=5&pageNumber=1",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "pageNumber",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteCommentByCommentId",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "commentId",
+						"value": "1"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "playerId",
+						"value": "1"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/comments",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Player Reset Password",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "username",
+						"value": "mark.twain@gmail.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/resetPassword",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"resetPassword"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "d8dd01cb-650d-44c1-bbc9-665975b1fdaa",
+					"name": "PlayerLogin",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "username",
+								"value": "mark.twain@gmail.com",
+								"warning": ""
+							},
+							{
+								"key": "password",
+								"value": "mark",
+								"warning": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/login",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:21:07 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Successful Login\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$56/A5BIS9xE/WqWJbJ0rxO.yJjVTeA2x6bWXRzmXJ7QS9ukvOXYVG\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":\"male\",\"school\":\"New Orleans\",\"primarySport\":\"basketball\",\"dob\":\"2001-02-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-03-18T18:21:00.881Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "uploadFile-serviceStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "1.PNG"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{upload-url}}/nycemoves/utilties/service-status",
+					"protocol": "http",
+					"host": [
+						"{{upload-url}}"
+					],
+					"path": [
+						"nycemoves",
+						"utilties",
+						"service-status"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "uploadFile",
 			"request": {
-				"url": "http://localhost:8082/nycemoves/utilties/players/1/uploadFile",
 				"method": "POST",
 				"header": [
 					{
 						"key": "fileType",
-						"value": "image",
-						"description": ""
+						"value": "video"
 					}
 				],
 				"body": {
@@ -509,40 +1295,30 @@
 						{
 							"key": "file",
 							"description": "",
-							"type": "file",
-							"src": "1.PNG"
+							"type": "file"
 						}
 					]
 				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "uploadFile-serviceStatus",
-			"request": {
-				"url": "http://localhost:8082/nycemoves/utilties/service-status",
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"description": "",
-							"type": "file",
-							"src": "1.PNG"
-						}
+				"url": {
+					"raw": "http://{{upload-url}}/nycemoves/utilties/players/1/uploadFile",
+					"protocol": "http",
+					"host": [
+						"{{upload-url}}"
+					],
+					"path": [
+						"nycemoves",
+						"utilties",
+						"players",
+						"1",
+						"uploadFile"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "deleteFile",
 			"request": {
-				"url": "http://localhost:8082/nycemoves/utilties/deleteFile",
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -551,14 +1327,626 @@
 						{
 							"key": "url",
 							"value": "https://s3.ap-south-1.amazonaws.com/nycemoves/1_image_1552929765463-1.PNG",
-							"description": "",
 							"type": "text"
 						}
 					]
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{upload-url}}/nycemoves/utilties/deleteFile",
+					"protocol": "http",
+					"host": [
+						"{{upload-url}}"
+					],
+					"path": [
+						"nycemoves",
+						"utilties",
+						"deleteFile"
+					]
+				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetPlayer Timeline",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/timeline",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"1",
+						"timeline"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "c4f26cbf-3a84-4955-af46-20ec4eae83df",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "GetPlayer Dashboard",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/dashboard",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"1",
+						"dashboard"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "6deaf245-60cb-480b-99f8-d83d000e25ab",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "sendFriendRequest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "friendId",
+						"value": "2"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/friendRequest",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"1",
+						"friendRequest"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "59ebec44-3b63-4b1d-8e65-4ec098e2046f",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "getPendingFriendRequest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "playerId",
+						"value": "2"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/pendingFriendRequests",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"2",
+						"pendingFriendRequests"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "1254888b-35ec-4131-96cb-7b36dae4f855",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "approveFriendRequest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "friendId",
+						"value": "1"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/approveFriendRequest",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"2",
+						"approveFriendRequest"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "9e81e182-cb78-4ba5-8363-6344335b6a7d",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "getAllFriends",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "pageSize",
+						"value": "5"
+					},
+					{
+						"key": "pageNumber",
+						"value": "1"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/friends",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"2",
+						"friends"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "2723c9e9-0cc1-41f4-954e-d8cc79eec5f8",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
 		}
 	]
 }
