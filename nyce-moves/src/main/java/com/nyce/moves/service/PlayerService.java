@@ -500,9 +500,9 @@ public class PlayerService {
 
 			if (friend != null) {
 				Friend friendObject = new Friend();
-				friendObject.setPlayerId(friendId);
-				friendObject.setName(friend.getDisplayName());
-				friendObject.setDisplayImageUrl(friend.getProfileImageUrl());
+				friendObject.setPlayerId(playerId);
+				friendObject.setName(player.getDisplayName());
+				friendObject.setDisplayImageUrl(player.getProfileImageUrl());
 				friend.addPendingFriendRequestsItem(friendObject);
 
 				playerRepository.save(friend);
@@ -536,7 +536,7 @@ public class PlayerService {
 			getPendingFriendsRequestsResponse.setStatus(GetPendingFriendsRequestsResponse.StatusEnum.SUCCESS);
 			if (player.getPendingFriendRequests() != null && player.getPendingFriendRequests().size() > 0) {
 				getPendingFriendsRequestsResponse.setNumberOfPendingRequests(new Long(player.getPendingFriendRequests().size()));
-				getPendingFriendsRequestsResponse.setData(player.getPendingFriendRequests());
+				getPendingFriendsRequestsResponse.setData(addPreSignedUrlsToFriends(player.getPendingFriendRequests()));
 				getPendingFriendsRequestsResponse.setMessage("Successfully fetched [" + player.getPendingFriendRequests().size() + "] pending freind requests");
 			} else {
 				getPendingFriendsRequestsResponse.setNumberOfPendingRequests(0l);
@@ -562,12 +562,20 @@ public class PlayerService {
 				boolean friendRequestExists = player.getPendingFriendRequests().removeIf(f -> f.getPlayerId().longValue() == friendId);
 
 				if (friendRequestExists) {
-					Friend friendObject = new Friend();
-					friendObject.setPlayerId(friendId);
-					friendObject.setName(friend.getDisplayName());
-					friendObject.setDisplayImageUrl(friend.getProfileImageUrl());
-					player.addFriendsItem(friendObject);
-					playerRepository.save(friend);
+					Friend friendObjectA = new Friend();
+					friendObjectA.setPlayerId(friendId);
+					friendObjectA.setName(friend.getDisplayName());
+					friendObjectA.setDisplayImageUrl(friend.getProfileImageUrl());
+					player.addFriendsItem(friendObjectA);
+					playerRepository.save(player);
+					
+					Friend friendObjectB = new Friend();
+					friendObjectB.setPlayerId(playerId);
+					friendObjectB.setName(player.getDisplayName());
+					friendObjectB.setDisplayImageUrl(player.getProfileImageUrl());
+					friend.addFriendsItem(friendObjectB);
+					playerRepository.save(friend);					
+					
 					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 					responseTemplate.setMessage("Friend with id [" + friendId + "] has been  successfully added in the list of friends of player with id [" + playerId + "]");
 					responseTemplate.setStatus(StatusEnum.SUCCESS);
