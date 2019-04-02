@@ -4,7 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.nyce.moves.model.Player;
+import com.nyce.moves.model.Friend;
 import com.nyce.moves.model.ResponseTemplate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +18,7 @@ import javax.validation.constraints.*;
  * GetPendingFriendsRequestsResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-02T15:09:35.250+05:30")
 
 public class GetPendingFriendsRequestsResponse   {
   /**
@@ -63,7 +63,10 @@ public class GetPendingFriendsRequestsResponse   {
 
   @JsonProperty("data")
   @Valid
-  private List<Player> data = null;
+  private List<Friend> data = null;
+
+  @JsonProperty("numberOfPendingRequests")
+  private Long numberOfPendingRequests = null;
 
   public GetPendingFriendsRequestsResponse status(StatusEnum status) {
     this.status = status;
@@ -125,14 +128,14 @@ public class GetPendingFriendsRequestsResponse   {
     this.message = message;
   }
 
-  public GetPendingFriendsRequestsResponse data(List<Player> data) {
+  public GetPendingFriendsRequestsResponse data(List<Friend> data) {
     this.data = data;
     return this;
   }
 
-  public GetPendingFriendsRequestsResponse addDataItem(Player dataItem) {
+  public GetPendingFriendsRequestsResponse addDataItem(Friend dataItem) {
     if (this.data == null) {
-      this.data = new ArrayList<Player>();
+      this.data = new ArrayList<Friend>();
     }
     this.data.add(dataItem);
     return this;
@@ -146,12 +149,32 @@ public class GetPendingFriendsRequestsResponse   {
 
   @Valid
 
-  public List<Player> getData() {
+  public List<Friend> getData() {
     return data;
   }
 
-  public void setData(List<Player> data) {
+  public void setData(List<Friend> data) {
     this.data = data;
+  }
+
+  public GetPendingFriendsRequestsResponse numberOfPendingRequests(Long numberOfPendingRequests) {
+    this.numberOfPendingRequests = numberOfPendingRequests;
+    return this;
+  }
+
+  /**
+   * Get numberOfPendingRequests
+   * @return numberOfPendingRequests
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getNumberOfPendingRequests() {
+    return numberOfPendingRequests;
+  }
+
+  public void setNumberOfPendingRequests(Long numberOfPendingRequests) {
+    this.numberOfPendingRequests = numberOfPendingRequests;
   }
 
 
@@ -167,12 +190,13 @@ public class GetPendingFriendsRequestsResponse   {
     return Objects.equals(this.status, getPendingFriendsRequestsResponse.status) &&
         Objects.equals(this.code, getPendingFriendsRequestsResponse.code) &&
         Objects.equals(this.message, getPendingFriendsRequestsResponse.message) &&
-        Objects.equals(this.data, getPendingFriendsRequestsResponse.data);
+        Objects.equals(this.data, getPendingFriendsRequestsResponse.data) &&
+        Objects.equals(this.numberOfPendingRequests, getPendingFriendsRequestsResponse.numberOfPendingRequests);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, code, message, data);
+    return Objects.hash(status, code, message, data, numberOfPendingRequests);
   }
 
   @Override
@@ -184,6 +208,7 @@ public class GetPendingFriendsRequestsResponse   {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
+    sb.append("    numberOfPendingRequests: ").append(toIndentedString(numberOfPendingRequests)).append("\n");
     sb.append("}");
     return sb.toString();
   }

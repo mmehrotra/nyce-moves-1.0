@@ -2,6 +2,7 @@ package com.nyce.moves.model;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,7 +97,7 @@ public class Player {
 
 	@JsonProperty("profileImageUrl")
 	private String profileImageUrl = null;
-	
+
 	@JsonProperty("profileImagePreSignedUrl")
 	private String profileImagePreSignedUrl = null;
 
@@ -122,6 +123,15 @@ public class Player {
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Video> videos;
+
+	@JsonProperty("friends")
+	@OneToMany(cascade = { CascadeType.ALL })
+	private List<Friend> friends = null;
+	
+	@JsonProperty("pendingFriendRequests")
+	@OneToMany(cascade = { CascadeType.ALL })
+	private List<Friend> pendingFriendRequests = null;
+	
 
 	public Player email(String email) {
 		this.email = email;
@@ -473,6 +483,65 @@ public class Player {
 		this.videos = videos;
 	}
 
+	public Player friends(List<Friend> friends) {
+		this.friends = friends;
+		return this;
+	}
+
+	public Player addFriendsItem(Friend friendsItem) {
+		if (this.friends == null) {
+			this.friends = new ArrayList<Friend>();
+		}
+		this.friends.add(friendsItem);
+		return this;
+	}
+
+	/**
+	 * Get friends
+	 * 
+	 * @return friends
+	 **/
+	@ApiModelProperty(value = "")
+
+	@Valid
+
+	public List<Friend> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Friend> friends) {
+		this.friends = friends;
+	}
+
+	public Player pendingFriendRequests(List<Friend> pendingFriendRequests) {
+	    this.pendingFriendRequests = pendingFriendRequests;
+	    return this;
+	  }
+
+	  public Player addPendingFriendRequestsItem(Friend pendingFriendRequestsItem) {
+	    if (this.pendingFriendRequests == null) {
+	      this.pendingFriendRequests = new ArrayList<Friend>();
+	    }
+	    this.pendingFriendRequests.add(pendingFriendRequestsItem);
+	    return this;
+	  }
+
+	  /**
+	   * Get pendingFriendRequests
+	   * @return pendingFriendRequests
+	  **/
+	  @ApiModelProperty(value = "")
+
+	  @Valid
+
+	  public List<Friend> getPendingFriendRequests() {
+	    return pendingFriendRequests;
+	  }
+
+	  public void setPendingFriendRequests(List<Friend> pendingFriendRequests) {
+	    this.pendingFriendRequests = pendingFriendRequests;
+	  }
+	
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {
@@ -533,6 +602,5 @@ public class Player {
 	public void setProfileImagePreSignedUrl(String profileImagePreSignedUrl) {
 		this.profileImagePreSignedUrl = profileImagePreSignedUrl;
 	}
-	
-	
+
 }

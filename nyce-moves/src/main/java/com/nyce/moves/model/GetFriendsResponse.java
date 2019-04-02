@@ -4,7 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.nyce.moves.model.Player;
+import com.nyce.moves.model.Friend;
 import com.nyce.moves.model.ResponseTemplate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +18,7 @@ import javax.validation.constraints.*;
  * GetFriendsResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T15:45:23.162+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-02T15:47:19.016+05:30")
 
 public class GetFriendsResponse   {
   /**
@@ -63,7 +63,7 @@ public class GetFriendsResponse   {
 
   @JsonProperty("data")
   @Valid
-  private List<Player> data = null;
+  private List<Friend> data = null;
 
   @JsonProperty("pageSize")
   private Long pageSize = null;
@@ -134,14 +134,14 @@ public class GetFriendsResponse   {
     this.message = message;
   }
 
-  public GetFriendsResponse data(List<Player> data) {
+  public GetFriendsResponse data(List<Friend> data) {
     this.data = data;
     return this;
   }
 
-  public GetFriendsResponse addDataItem(Player dataItem) {
+  public GetFriendsResponse addDataItem(Friend dataItem) {
     if (this.data == null) {
-      this.data = new ArrayList<Player>();
+      this.data = new ArrayList<Friend>();
     }
     this.data.add(dataItem);
     return this;
@@ -155,11 +155,11 @@ public class GetFriendsResponse   {
 
   @Valid
 
-  public List<Player> getData() {
+  public List<Friend> getData() {
     return data;
   }
 
-  public void setData(List<Player> data) {
+  public void setData(List<Friend> data) {
     this.data = data;
   }
 

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nyce.moves.model.ChangeEmailRequest;
 import com.nyce.moves.model.ChangePasswordRequest;
+import com.nyce.moves.model.GetDashBoardResponse;
 import com.nyce.moves.model.GetFriendsResponse;
 import com.nyce.moves.model.GetPendingFriendsRequestsResponse;
 import com.nyce.moves.model.PlayerRequest;
@@ -69,25 +70,27 @@ public class PlayersApiController implements PlayersApi {
 			}
 		}
 
-		return new ResponseEntity<ResponseTemplate>(HttpStatus.NOT_IMPLEMENTED);
+		ResponseTemplate responseTemplate = new ResponseTemplate();
+		responseTemplate = playerService.approveFriendRequest(playerId, friendId, responseTemplate);		
+		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<ResponseTemplate> changeEmailAddress(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody ChangeEmailRequest body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<ResponseTemplate>(objectMapper.readValue("{  \"code\" : \"code\",  \"message\" : \"message\",  \"status\" : \"SUCCESS\"}", ResponseTemplate.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<ResponseTemplate>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-        
-        ResponseTemplate responseTemplate = new ResponseTemplate();
-        responseTemplate = playerService.changePrimaryEmail(playerId, body, responseTemplate);
-        return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
-    }
-	
+	public ResponseEntity<ResponseTemplate> changeEmailAddress(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "Created user object", required = true) @Valid @RequestBody ChangeEmailRequest body) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				return new ResponseEntity<ResponseTemplate>(objectMapper.readValue("{  \"code\" : \"code\",  \"message\" : \"message\",  \"status\" : \"SUCCESS\"}", ResponseTemplate.class), HttpStatus.NOT_IMPLEMENTED);
+			} catch (IOException e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<ResponseTemplate>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		ResponseTemplate responseTemplate = new ResponseTemplate();
+		responseTemplate = playerService.changePrimaryEmail(playerId, body, responseTemplate);
+		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
+	}
+
 	public ResponseEntity<ResponseTemplate> changePassword(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @PathVariable("identifier") Long identifier, @ApiParam(value = "Change Password", required = true) @Valid @RequestBody ChangePasswordRequest body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
@@ -135,6 +138,22 @@ public class PlayersApiController implements PlayersApi {
 		responseTemplate = playerService.deletePlayer(playerId, responseTemplate);
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
+	
+	public ResponseEntity<GetDashBoardResponse> getDashboard(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<GetDashBoardResponse>(objectMapper.readValue("\"\"", GetDashBoardResponse.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<GetDashBoardResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        GetDashBoardResponse getDashboardResponse = new GetDashBoardResponse();
+		getDashboardResponse = playerService.getTimeline(playerId, pageSize, pageNumber, getDashboardResponse);
+		return new ResponseEntity<GetDashBoardResponse>(getDashboardResponse, HttpStatus.OK);
+    }
 
 	public ResponseEntity<GetFriendsResponse> getFriends(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
 		String accept = request.getHeader("Accept");
@@ -147,7 +166,9 @@ public class PlayersApiController implements PlayersApi {
 			}
 		}
 
-		return new ResponseEntity<GetFriendsResponse>(HttpStatus.NOT_IMPLEMENTED);
+		GetFriendsResponse getFriendsResponse = new GetFriendsResponse();
+		getFriendsResponse = playerService.getFriends(playerId, pageSize, pageNumber, getFriendsResponse);
+		return new ResponseEntity<GetFriendsResponse>(getFriendsResponse, HttpStatus.OK);
 	}
 
 	public ResponseEntity<GetPendingFriendsRequestsResponse> getPendingFriendRequests(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
@@ -161,7 +182,9 @@ public class PlayersApiController implements PlayersApi {
 			}
 		}
 
-		return new ResponseEntity<GetPendingFriendsRequestsResponse>(HttpStatus.NOT_IMPLEMENTED);
+		GetPendingFriendsRequestsResponse getPendingFriendsRequestsResponse = new GetPendingFriendsRequestsResponse();
+		getPendingFriendsRequestsResponse = playerService.getPendingFriendsRequest(playerId, getPendingFriendsRequestsResponse);
+		return new ResponseEntity<GetPendingFriendsRequestsResponse>(getPendingFriendsRequestsResponse, HttpStatus.OK);
 	}
 
 	public ResponseEntity<PlayerResponse> getPlayer(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
@@ -178,6 +201,22 @@ public class PlayersApiController implements PlayersApi {
 		PlayerResponse playerResponse = new PlayerResponse();
 		playerResponse = playerService.getPlayer(playerId, playerResponse);
 		return new ResponseEntity<PlayerResponse>(playerResponse, HttpStatus.OK);
+	}
+
+	public ResponseEntity<GetDashBoardResponse> getTimeline(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				return new ResponseEntity<GetDashBoardResponse>(objectMapper.readValue("\"\"", GetDashBoardResponse.class), HttpStatus.NOT_IMPLEMENTED);
+			} catch (IOException e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<GetDashBoardResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		GetDashBoardResponse getDashboardResponse = new GetDashBoardResponse();
+		getDashboardResponse = playerService.getTimeline(playerId, pageSize, pageNumber, getDashboardResponse);
+		return new ResponseEntity<GetDashBoardResponse>(getDashboardResponse, HttpStatus.OK);
 	}
 
 	public ResponseEntity<PlayerResponse> loginUser(@ApiParam(value = "The user name for login", required = true) @RequestHeader(value = "username", required = true) String username, @ApiParam(value = "The password for login in clear text", required = true) @RequestHeader(value = "password", required = true) String password) {
@@ -232,7 +271,9 @@ public class PlayersApiController implements PlayersApi {
 			}
 		}
 
-		return new ResponseEntity<ResponseTemplate>(HttpStatus.NOT_IMPLEMENTED);
+		ResponseTemplate responseTemplate = new ResponseTemplate();
+		responseTemplate = playerService.sendFriendRequest(playerId, friendId, responseTemplate);
+		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
 	public ResponseEntity<ResponseTemplate> resetPassword(@ApiParam(value = "The user name for login", required = true) @RequestHeader(value = "username", required = true) String username) {
@@ -245,11 +286,11 @@ public class PlayersApiController implements PlayersApi {
 				return new ResponseEntity<ResponseTemplate>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
-		
+
 		ResponseTemplate responseTemplate = new ResponseTemplate();
 		responseTemplate = playerService.resetPassword(username, responseTemplate);
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
-		
+
 	}
 
 	public ResponseEntity<PlayerResponse> updatePlayer(@ApiParam(value = "player that need to be updated", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "Updated player object", required = true) @Valid @RequestBody UpdatePlayerRequest body) {

@@ -1,7 +1,9 @@
 package com.nyce.moves.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -20,21 +22,44 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nyce.moves.common.ApplicationConstants;
+import com.nyce.moves.common.UtilityFunctions;
 import com.nyce.moves.model.ChangeEmailRequest;
 import com.nyce.moves.model.ChangePasswordRequest;
+import com.nyce.moves.model.DashboardElement;
+import com.nyce.moves.model.DashboardElement.DashboardElementTypeEnum;
+import com.nyce.moves.model.Friend;
+import com.nyce.moves.model.GetDashBoardResponse;
+import com.nyce.moves.model.GetFriendsResponse;
+import com.nyce.moves.model.GetImagesResponse;
+import com.nyce.moves.model.GetPendingFriendsRequestsResponse;
+import com.nyce.moves.model.Image;
 import com.nyce.moves.model.Player;
 import com.nyce.moves.model.PlayerRequest;
 import com.nyce.moves.model.PlayerResponse;
+import com.nyce.moves.model.Post;
 import com.nyce.moves.model.ResponseTemplate;
 import com.nyce.moves.model.ResponseTemplate.StatusEnum;
 import com.nyce.moves.model.UpdatePlayerRequest;
+import com.nyce.moves.model.Video;
+import com.nyce.moves.repository.ImageRepository;
 import com.nyce.moves.repository.PlayerRepository;
+import com.nyce.moves.repository.PostRepository;
+import com.nyce.moves.repository.VideoRepository;
 
 @Service
 public class PlayerService {
 
 	@Autowired
 	PlayerRepository playerRepository;
+
+	@Autowired
+	ImageRepository imageRepository;
+
+	@Autowired
+	VideoRepository videoRepository;
+
+	@Autowired
+	PostRepository postRepository;
 
 	@Autowired
 	private AmazonClient amazonClient;
@@ -362,4 +387,250 @@ public class PlayerService {
 
 	}
 
+	public GetDashBoardResponse getTimeline(Long playerId, BigDecimal pageSize, BigDecimal pageNumber, GetDashBoardResponse getDashBoardResponse) {
+
+		List<DashboardElement> dashboardElements = new ArrayList<DashboardElement>();
+
+		List<Image> images = imageRepository.findByPlayerId(playerId);
+		if (images != null && images.size() > 0) {
+			for (Image image : images) {
+				DashboardElement dashboardElement = new DashboardElement();
+				dashboardElement.setDashboardElementId(image.getImageId());
+				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
+				dashboardElement.setDescription(image.getDescription());
+				dashboardElement.setApplauds(image.getApplauds());
+				dashboardElement.setPlayerId(image.getPlayerId());
+				dashboardElement.setPostedTimestamp(image.getPostedTimestamp());
+				dashboardElement.setUrl(image.getImageUrl());
+				dashboardElement.setTitle(image.getTitle());
+				if (image.getComments() != null && image.getComments().size() > 0) {
+					dashboardElement.setNumberOfComments(new Long(image.getComments().size()));
+				} else {
+					dashboardElement.setNumberOfComments(0L);
+				}
+				dashboardElements.add(dashboardElement);
+
+			}
+		}
+
+		List<Video> videos = videoRepository.findByPlayerId(playerId);
+		if (videos != null && videos.size() > 0) {
+			for (Video video : videos) {
+				DashboardElement dashboardElement = new DashboardElement();
+				dashboardElement.setDashboardElementId(video.getVideoId());
+				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
+				dashboardElement.setDescription(video.getDescription());
+				dashboardElement.setApplauds(video.getApplauds());
+				dashboardElement.setPlayerId(video.getPlayerId());
+				dashboardElement.setPostedTimestamp(video.getPostedTimestamp());
+				dashboardElement.setUrl(video.getVideoUrl());
+				dashboardElement.setTitle(video.getTitle());
+				if (video.getComments() != null && video.getComments().size() > 0) {
+					dashboardElement.setNumberOfComments(new Long(video.getComments().size()));
+				} else {
+					dashboardElement.setNumberOfComments(0L);
+				}
+				dashboardElements.add(dashboardElement);
+
+			}
+		}
+
+		List<Post> posts = postRepository.findByPostedBy(playerId);
+		if (posts != null && posts.size() > 0) {
+			for (Post post : posts) {
+				DashboardElement dashboardElement = new DashboardElement();
+				dashboardElement.setDashboardElementId(post.getPostId());
+				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
+				dashboardElement.setDescription(post.getPost());
+				// dashboardElement.setApplauds(post.getApplauds());
+				dashboardElement.setPlayerId(post.getPostedBy());
+				dashboardElement.setPostedTimestamp(post.getPostedTimestamp());
+				if (post.getComments() != null && post.getComments().size() > 0) {
+					dashboardElement.setNumberOfComments(new Long(post.getComments().size()));
+				} else {
+					dashboardElement.setNumberOfComments(0L);
+				}
+				dashboardElements.add(dashboardElement);
+			}
+		}
+
+		if (dashboardElements != null && dashboardElements.size() > 0) {
+			// Sort the list based on posted time stamp
+			dashboardElements.sort((DashboardElement i1, DashboardElement i2) -> i2.getPostedTimestamp().compareTo(i1.getPostedTimestamp()));
+			UtilityFunctions.PaginationReturn paginationReturn = UtilityFunctions.getPaginatedList(pageSize.intValue(), pageNumber.intValue(), dashboardElements);
+
+			getDashBoardResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			getDashBoardResponse.setMessage(paginationReturn.getReturnMessage());
+			getDashBoardResponse.setStatus(GetDashBoardResponse.StatusEnum.SUCCESS);
+			getDashBoardResponse.setPageNumber(pageNumber.longValue());
+			getDashBoardResponse.setPageSize(pageSize.longValue());
+			getDashBoardResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
+			getDashBoardResponse.setData(modifyPreSignedUrls((List<DashboardElement>) paginationReturn.getReturnList()));
+		} else {
+			getDashBoardResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			getDashBoardResponse.setMessage("No records are present for the playerId [" + playerId + "]");
+			getDashBoardResponse.setStatus(GetDashBoardResponse.StatusEnum.FAILURE);
+			getDashBoardResponse.setPageNumber(pageNumber.longValue());
+			getDashBoardResponse.setPageSize(pageSize.longValue());
+			getDashBoardResponse.setTotalNumberofPagesAvailable(0l);
+		}
+
+		return getDashBoardResponse;
+	}
+
+	public List<DashboardElement> modifyPreSignedUrls(List<DashboardElement> dashboardElements) {
+
+		for (DashboardElement dashboardElement : dashboardElements) {
+			if (dashboardElement.getUrl() != null && dashboardElement.getUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(dashboardElement.getUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				dashboardElement.setPreSignedUrl(presignedUrl);
+			}
+		}
+
+		return dashboardElements;
+	}
+
+	public ResponseTemplate sendFriendRequest(Long playerId, Long friendId, ResponseTemplate responseTemplate) {
+
+		Player player = playerRepository.findOne(playerId);
+
+		if (player != null) {
+			Player friend = playerRepository.findOne(friendId);
+
+			if (friend != null) {
+				Friend friendObject = new Friend();
+				friendObject.setPlayerId(friendId);
+				friendObject.setName(friend.getDisplayName());
+				friendObject.setDisplayImageUrl(friend.getProfileImageUrl());
+				friend.addPendingFriendRequestsItem(friendObject);
+
+				playerRepository.save(friend);
+
+				responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+				responseTemplate.setMessage("Friend Request has been successfully placed to player with id [" + friendId + "] by player with id [" + playerId + "]");
+				responseTemplate.setStatus(StatusEnum.SUCCESS);
+				return responseTemplate;
+			} else {
+				responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+				responseTemplate.setMessage("Friend Request failed. No player exist with friend Id [" + friendId + "]");
+				responseTemplate.setStatus(StatusEnum.FAILURE);
+				return responseTemplate;
+			}
+
+		} else {
+			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			responseTemplate.setMessage("Friend Request failed. Incorrect requesting player, no existing in the system [" + playerId + "]");
+			responseTemplate.setStatus(StatusEnum.FAILURE);
+			return responseTemplate;
+		}
+
+	}
+
+	public GetPendingFriendsRequestsResponse getPendingFriendsRequest(Long playerId, GetPendingFriendsRequestsResponse getPendingFriendsRequestsResponse) {
+
+		Player player = playerRepository.findOne(playerId);
+
+		if (player != null) {
+			getPendingFriendsRequestsResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			getPendingFriendsRequestsResponse.setStatus(GetPendingFriendsRequestsResponse.StatusEnum.SUCCESS);
+			if (player.getPendingFriendRequests() != null && player.getPendingFriendRequests().size() > 0) {
+				getPendingFriendsRequestsResponse.setNumberOfPendingRequests(new Long(player.getPendingFriendRequests().size()));
+				getPendingFriendsRequestsResponse.setData(player.getPendingFriendRequests());
+				getPendingFriendsRequestsResponse.setMessage("Successfully fetched [" + player.getPendingFriendRequests().size() + "] pending freind requests");
+			} else {
+				getPendingFriendsRequestsResponse.setNumberOfPendingRequests(0l);
+				getPendingFriendsRequestsResponse.setMessage("Successfully fetched [" + 0 + "] pending freind requests");
+			}
+		} else {
+			getPendingFriendsRequestsResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			getPendingFriendsRequestsResponse.setStatus(GetPendingFriendsRequestsResponse.StatusEnum.FAILURE);
+			getPendingFriendsRequestsResponse.setMessage("Invalid player Id specified, does not exist within the system [" + playerId + "].");
+		}
+
+		return getPendingFriendsRequestsResponse;
+	}
+
+	public ResponseTemplate approveFriendRequest(Long playerId, Long friendId, ResponseTemplate responseTemplate) {
+
+		Player player = playerRepository.findOne(playerId);
+
+		if (player != null) {
+			Player friend = playerRepository.findOne(friendId);
+
+			if (friend != null) {
+				boolean friendRequestExists = player.getPendingFriendRequests().removeIf(f -> f.getPlayerId().longValue() == friendId);
+
+				if (friendRequestExists) {
+					Friend friendObject = new Friend();
+					friendObject.setPlayerId(friendId);
+					friendObject.setName(friend.getDisplayName());
+					friendObject.setDisplayImageUrl(friend.getProfileImageUrl());
+					player.addFriendsItem(friendObject);
+					playerRepository.save(friend);
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Friend with id [" + friendId + "] has been  successfully added in the list of friends of player with id [" + playerId + "]");
+					responseTemplate.setStatus(StatusEnum.SUCCESS);
+					return responseTemplate;
+
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Friend Request does not exists with friendId [" + friendId + "] for player [" + playerId + "]");
+					responseTemplate.setStatus(StatusEnum.FAILURE);
+					return responseTemplate;
+				}
+			} else {
+				responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+				responseTemplate.setMessage("Friend Approval Request failed. Incorrect friend, not existing in the system [" + friendId + "]");
+				responseTemplate.setStatus(StatusEnum.FAILURE);
+				return responseTemplate;
+			}
+
+		} else {
+			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			responseTemplate.setMessage("Friend Approval Request failed. Incorrect requesting player, no existing in the system [" + playerId + "]");
+			responseTemplate.setStatus(StatusEnum.FAILURE);
+			return responseTemplate;
+		}
+
+	}
+	
+	public GetFriendsResponse getFriends(Long playerId, BigDecimal pageSize, BigDecimal pageNumber, GetFriendsResponse getFriendsResponse) {
+
+		Player player = playerRepository.findOne(playerId);
+
+		if (player != null  && player.getFriends() != null && player.getFriends().size() > 0) {
+			
+			UtilityFunctions.PaginationReturn paginationReturn = UtilityFunctions.getPaginatedList(pageSize.intValue(), pageNumber.intValue(), player.getFriends());
+			getFriendsResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			getFriendsResponse.setMessage(paginationReturn.getReturnMessage());
+			getFriendsResponse.setStatus(GetFriendsResponse.StatusEnum.SUCCESS);
+			getFriendsResponse.setPageNumber(pageNumber.longValue());
+			getFriendsResponse.setPageSize(pageSize.longValue());
+			getFriendsResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
+			getFriendsResponse.setData(addPreSignedUrlsToFriends((List<Friend>) paginationReturn.getReturnList()));
+		} else {
+			getFriendsResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			getFriendsResponse.setMessage("No records are present for the playerId [" + playerId + "]");
+			getFriendsResponse.setStatus(GetFriendsResponse.StatusEnum.FAILURE);
+			getFriendsResponse.setPageNumber(pageNumber.longValue());
+			getFriendsResponse.setPageSize(pageSize.longValue());
+			getFriendsResponse.setTotalNumberofPagesAvailable(0l);
+		}
+
+		return getFriendsResponse;
+	}
+	
+	public List<Friend> addPreSignedUrlsToFriends(List<Friend> friends) {
+
+		for (Friend friend : friends) {
+			if (friend.getDisplayImageUrl() != null && friend.getDisplayImageUrl() != "") {
+				String objectName = amazonClient.getObjectNameFromS3Url(friend.getDisplayImageUrl());
+				String presignedUrl = amazonClient.generatePreSignedUrl(objectName);
+				friend.setDisplayImagePreSignedUrl(presignedUrl);
+			}
+		}
+
+		return friends;
+	}
 }

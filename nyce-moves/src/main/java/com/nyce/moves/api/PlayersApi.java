@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nyce.moves.model.ChangeEmailRequest;
 import com.nyce.moves.model.ChangePasswordRequest;
+import com.nyce.moves.model.GetDashBoardResponse;
 import com.nyce.moves.model.GetFriendsResponse;
 import com.nyce.moves.model.GetPendingFriendsRequestsResponse;
 import com.nyce.moves.model.PlayerRequest;
@@ -86,6 +87,15 @@ public interface PlayersApi {
     ResponseEntity<ResponseTemplate> deletePlayer(@ApiParam(value = "The Id of the player which need to be deleted",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
 
 
+    @ApiOperation(value = "Get the dashboard for a particular player", nickname = "getDashboard", notes = "", response = GetDashBoardResponse.class, tags={ "players", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = GetDashBoardResponse.class) })
+    @RequestMapping(value = "/players/{playerId}/dashboard",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<GetDashBoardResponse> getDashboard(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+
+    
     @ApiOperation(value = "Followers of a player", nickname = "getFriends", notes = "", response = GetFriendsResponse.class, tags={ "players", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = GetFriendsResponse.class) })
@@ -160,5 +170,14 @@ public interface PlayersApi {
         produces = { "application/json" }, 
         method = RequestMethod.PUT)
     ResponseEntity<PlayerResponse> updatePlayer(@ApiParam(value = "player that need to be updated",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "Updated player object" ,required=true )  @Valid @RequestBody UpdatePlayerRequest body);
+   
+    @ApiOperation(value = "Get the timeline for a particular player", nickname = "getTimeline", notes = "", response = GetDashBoardResponse.class, tags={ "players", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = GetDashBoardResponse.class) })
+    @RequestMapping(value = "/players/{playerId}/timeline",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<GetDashBoardResponse> getTimeline(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+
 
 }
