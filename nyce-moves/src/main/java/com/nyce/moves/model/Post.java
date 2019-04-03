@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
@@ -24,6 +25,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 @Entity
+@NamedQuery(name = "Post.fetchPostsByPlayerIdList", query = "SELECT e FROM Post e WHERE e.postedBy IN (:inclList) ORDER BY e.postedTimestamp DESC")
 public class Post {
 
 	@Id

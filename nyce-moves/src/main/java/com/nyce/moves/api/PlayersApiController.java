@@ -151,7 +151,7 @@ public class PlayersApiController implements PlayersApi {
         }
 
         GetDashBoardResponse getDashboardResponse = new GetDashBoardResponse();
-		getDashboardResponse = playerService.getTimeline(playerId, pageSize, pageNumber, getDashboardResponse);
+		getDashboardResponse = playerService.getDashboard(playerId, pageSize, pageNumber, getDashboardResponse);
 		return new ResponseEntity<GetDashBoardResponse>(getDashboardResponse, HttpStatus.OK);
     }
 

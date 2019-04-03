@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
@@ -25,6 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T16:07:52.516+05:30")
 @Entity
+@NamedQuery(name = "Video.fetchVideosByPlayerIdList", query = "SELECT e FROM Video e WHERE e.playerId IN (:inclList) ORDER BY e.postedTimestamp DESC")
 public class Video {
 	@JsonProperty("playerId")
 	private Long playerId = null;

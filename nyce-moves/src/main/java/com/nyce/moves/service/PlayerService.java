@@ -230,6 +230,9 @@ public class PlayerService {
 
 		if (player != null) {
 			player = populatePreSignedUrl(player);
+			if(player.getFriends() != null && player.getFriends().size() > 0){
+				player.setNumberOfConnections(new Long(player.getFriends().size()));
+			}
 			playerResponse.setData(player);
 			playerResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			playerResponse.setMessage("Player has been fetched successfully");
@@ -582,6 +585,7 @@ public class PlayerService {
 					friendObjectA.setName(friend.getDisplayName());
 					friendObjectA.setDisplayImageUrl(friend.getProfileImageUrl());
 					player.addFriendsItem(friendObjectA);
+					player.setNumberOfConnections(player.getNumberOfConnections() + 1);
 					playerRepository.save(player);
 
 					Friend friendObjectB = new Friend();
@@ -589,6 +593,7 @@ public class PlayerService {
 					friendObjectB.setName(player.getDisplayName());
 					friendObjectB.setDisplayImageUrl(player.getProfileImageUrl());
 					friend.addFriendsItem(friendObjectB);
+					friend.setNumberOfConnections(friend.getNumberOfConnections() + 1);
 					playerRepository.save(friend);
 
 					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
@@ -655,6 +660,121 @@ public class PlayerService {
 		}
 
 		return friends;
+	}
+	
+	public GetDashBoardResponse getDashboard(Long playerId, BigDecimal pageSize, BigDecimal pageNumber, GetDashBoardResponse getDashBoardResponse) {
+
+		List<DashboardElement> dashboardElements = new ArrayList<DashboardElement>();
+		Player player = playerRepository.findOne(playerId);
+		List<Long> playerIdList = new ArrayList<Long>();
+		
+		
+		if(player != null && player.getFriends() != null && player.getFriends().size() > 0){
+			
+			for(Friend friend : player.getFriends()){
+				playerIdList.add(friend.getPlayerId());
+			}
+			
+			List<Image> images = imageRepository.fetchImagesByPlayerIdList(playerIdList);
+			if (images != null && images.size() > 0) {
+				for (Image image : images) {
+					DashboardElement dashboardElement = new DashboardElement();
+					dashboardElement.setDashboardElementId(image.getImageId());
+					dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
+					dashboardElement.setDescription(image.getDescription());
+					dashboardElement.setApplauds(image.getApplauds());
+					dashboardElement.setPlayerId(image.getPlayerId());
+					dashboardElement.setPostedTimestamp(image.getPostedTimestamp());
+					dashboardElement.setUrl(image.getImageUrl());
+					dashboardElement.setTitle(image.getTitle());
+					if (image.getComments() != null && image.getComments().size() > 0) {
+						dashboardElement.setNumberOfComments(new Long(image.getComments().size()));
+					} else {
+						dashboardElement.setNumberOfComments(0L);
+					}
+					dashboardElements.add(dashboardElement);
+
+				}
+			}
+
+			List<Video> videos = videoRepository.fetchVideosByPlayerIdList(playerIdList);
+			if (videos != null && videos.size() > 0) {
+				for (Video video : videos) {
+					DashboardElement dashboardElement = new DashboardElement();
+					dashboardElement.setDashboardElementId(video.getVideoId());
+					dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
+					dashboardElement.setDescription(video.getDescription());
+					dashboardElement.setApplauds(video.getApplauds());
+					dashboardElement.setPlayerId(video.getPlayerId());
+					dashboardElement.setPostedTimestamp(video.getPostedTimestamp());
+					dashboardElement.setUrl(video.getVideoUrl());
+					dashboardElement.setTitle(video.getTitle());
+					if (video.getComments() != null && video.getComments().size() > 0) {
+						dashboardElement.setNumberOfComments(new Long(video.getComments().size()));
+					} else {
+						dashboardElement.setNumberOfComments(0L);
+					}
+					dashboardElements.add(dashboardElement);
+
+				}
+			}
+
+			List<Post> posts = postRepository.fetchPostsByPlayerIdList(playerIdList);
+			if (posts != null && posts.size() > 0) {
+				for (Post post : posts) {
+					DashboardElement dashboardElement = new DashboardElement();
+					dashboardElement.setDashboardElementId(post.getPostId());
+					dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
+					dashboardElement.setDescription(post.getPost());
+					// dashboardElement.setApplauds(post.getApplauds());
+					dashboardElement.setPlayerId(post.getPostedBy());
+					dashboardElement.setPostedTimestamp(post.getPostedTimestamp());
+					if (post.getComments() != null && post.getComments().size() > 0) {
+						dashboardElement.setNumberOfComments(new Long(post.getComments().size()));
+					} else {
+						dashboardElement.setNumberOfComments(0L);
+					}
+					dashboardElements.add(dashboardElement);
+				}
+			}
+		}
+
+		if (dashboardElements != null && dashboardElements.size() > 0) {
+			// Sort the list based on posted time stamp
+			dashboardElements.sort((DashboardElement i1, DashboardElement i2) -> i2.getPostedTimestamp().compareTo(i1.getPostedTimestamp()));
+			UtilityFunctions.PaginationReturn paginationReturn = UtilityFunctions.getPaginatedList(pageSize.intValue(), pageNumber.intValue(), dashboardElements);
+
+			getDashBoardResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			getDashBoardResponse.setMessage(paginationReturn.getReturnMessage());
+			getDashBoardResponse.setStatus(GetDashBoardResponse.StatusEnum.SUCCESS);
+			getDashBoardResponse.setPageNumber(pageNumber.longValue());
+			getDashBoardResponse.setPageSize(pageSize.longValue());
+			getDashBoardResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
+			List<DashboardElement> returnDashboardElements = (List<DashboardElement>) paginationReturn.getReturnList();
+			
+			for(DashboardElement dashboardElement : returnDashboardElements){
+				Long elementPlayerId = dashboardElement.getPlayerId();
+				Player elementPlayer = playerRepository.findOne(elementPlayerId);
+				if(elementPlayer != null){
+					dashboardElement.setDisplayName(elementPlayer.getDisplayName());
+					dashboardElement.setProfileImageUrl(player.getProfileImageUrl());
+					dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));					
+				}
+				if(dashboardElement.getUrl() != null){
+					dashboardElement.setPreSignedUrl(amazonClient.getPreSignUrlFromUrl(dashboardElement.getUrl()));
+				}				
+			}
+			getDashBoardResponse.setData(modifyPreSignedUrls(returnDashboardElements));
+		} else {
+			getDashBoardResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			getDashBoardResponse.setMessage("No records are present for the playerId [" + playerId + "]");
+			getDashBoardResponse.setStatus(GetDashBoardResponse.StatusEnum.FAILURE);
+			getDashBoardResponse.setPageNumber(pageNumber.longValue());
+			getDashBoardResponse.setPageSize(pageSize.longValue());
+			getDashBoardResponse.setTotalNumberofPagesAvailable(0l);
+		}
+
+		return getDashBoardResponse;
 	}
 	
 }

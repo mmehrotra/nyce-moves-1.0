@@ -2,6 +2,7 @@ package com.nyce.moves.service;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,7 @@ public class ImageService {
 			getImagesResponse.setPageSize(pageSize.longValue());
 			getImagesResponse.setTotalNumberofPagesAvailable(0l);
 		}
-
+		
 		return getImagesResponse;
 	}
 	
@@ -182,7 +183,7 @@ public class ImageService {
 				image.setPreSignedImageUrl(presignedUrl);
 			}
 		}
-
+		
 		return images;
 	}
 
