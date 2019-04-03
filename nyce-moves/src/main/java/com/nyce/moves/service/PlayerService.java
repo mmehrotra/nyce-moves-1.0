@@ -390,6 +390,7 @@ public class PlayerService {
 	public GetDashBoardResponse getTimeline(Long playerId, BigDecimal pageSize, BigDecimal pageNumber, GetDashBoardResponse getDashBoardResponse) {
 
 		List<DashboardElement> dashboardElements = new ArrayList<DashboardElement>();
+		Player player = playerRepository.findOne(playerId);
 
 		List<Image> images = imageRepository.findByPlayerId(playerId);
 		if (images != null && images.size() > 0) {
@@ -465,7 +466,21 @@ public class PlayerService {
 			getDashBoardResponse.setPageNumber(pageNumber.longValue());
 			getDashBoardResponse.setPageSize(pageSize.longValue());
 			getDashBoardResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
-			getDashBoardResponse.setData(modifyPreSignedUrls((List<DashboardElement>) paginationReturn.getReturnList()));
+			List<DashboardElement> returnDashboardElements = (List<DashboardElement>) paginationReturn.getReturnList();
+			
+			for(DashboardElement dashboardElement : returnDashboardElements){
+				Long elementPlayerId = dashboardElement.getPlayerId();
+				Player elementPlayer = playerRepository.findOne(elementPlayerId);
+				if(elementPlayer != null){
+					dashboardElement.setDisplayName(elementPlayer.getDisplayName());
+					dashboardElement.setProfileImageUrl(player.getProfileImageUrl());
+					dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));					
+				}
+				if(dashboardElement.getUrl() != null){
+					dashboardElement.setPreSignedUrl(amazonClient.getPreSignUrlFromUrl(dashboardElement.getUrl()));
+				}				
+			}
+			getDashBoardResponse.setData(modifyPreSignedUrls(returnDashboardElements));
 		} else {
 			getDashBoardResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			getDashBoardResponse.setMessage("No records are present for the playerId [" + playerId + "]");
@@ -568,14 +583,14 @@ public class PlayerService {
 					friendObjectA.setDisplayImageUrl(friend.getProfileImageUrl());
 					player.addFriendsItem(friendObjectA);
 					playerRepository.save(player);
-					
+
 					Friend friendObjectB = new Friend();
 					friendObjectB.setPlayerId(playerId);
 					friendObjectB.setName(player.getDisplayName());
 					friendObjectB.setDisplayImageUrl(player.getProfileImageUrl());
 					friend.addFriendsItem(friendObjectB);
-					playerRepository.save(friend);					
-					
+					playerRepository.save(friend);
+
 					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 					responseTemplate.setMessage("Friend with id [" + friendId + "] has been  successfully added in the list of friends of player with id [" + playerId + "]");
 					responseTemplate.setStatus(StatusEnum.SUCCESS);
@@ -602,13 +617,13 @@ public class PlayerService {
 		}
 
 	}
-	
+
 	public GetFriendsResponse getFriends(Long playerId, BigDecimal pageSize, BigDecimal pageNumber, GetFriendsResponse getFriendsResponse) {
 
 		Player player = playerRepository.findOne(playerId);
 
-		if (player != null  && player.getFriends() != null && player.getFriends().size() > 0) {
-			
+		if (player != null && player.getFriends() != null && player.getFriends().size() > 0) {
+
 			UtilityFunctions.PaginationReturn paginationReturn = UtilityFunctions.getPaginatedList(pageSize.intValue(), pageNumber.intValue(), player.getFriends());
 			getFriendsResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			getFriendsResponse.setMessage(paginationReturn.getReturnMessage());
@@ -628,7 +643,7 @@ public class PlayerService {
 
 		return getFriendsResponse;
 	}
-	
+
 	public List<Friend> addPreSignedUrlsToFriends(List<Friend> friends) {
 
 		for (Friend friend : friends) {
@@ -641,4 +656,5 @@ public class PlayerService {
 
 		return friends;
 	}
+	
 }

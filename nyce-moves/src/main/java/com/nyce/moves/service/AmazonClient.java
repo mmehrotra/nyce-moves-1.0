@@ -126,5 +126,10 @@ public class AmazonClient {
 		return url.toString();
 
 	}
+	
+	public String getPreSignUrlFromUrl(String url) {
+		String objectName = getObjectNameFromS3Url(url);
+		return generatePreSignedUrl(objectName);
+	}
 
 }

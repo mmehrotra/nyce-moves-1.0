@@ -14,6 +14,7 @@ import com.nyce.moves.model.CommentsRequest;
 import com.nyce.moves.model.CreateCommentResponse;
 import com.nyce.moves.model.GetCommentsResponse;
 import com.nyce.moves.model.Image;
+import com.nyce.moves.model.Player;
 import com.nyce.moves.model.Post;
 import com.nyce.moves.model.ResponseTemplate;
 import com.nyce.moves.model.ResponseTemplate.StatusEnum;
@@ -41,6 +42,9 @@ public class CommentsService {
 
 	@Autowired
 	PostRepository postRepository;
+	
+	@Autowired
+	private AmazonClient amazonClient;
 
 	public CreateCommentResponse addComments(Long playerId, Long imageId, Long videoId, Long postId, CommentsRequest commentsRequest, CreateCommentResponse createCommentResponse) {
 
@@ -210,7 +214,18 @@ public class CommentsService {
 			getCommentsResponse.setPageNumber(pageNumber.longValue());
 			getCommentsResponse.setPageSize(pageSize.longValue());
 			getCommentsResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
-			getCommentsResponse.setData((List<Comments>) paginationReturn.getReturnList());
+			List<Comments> returnComments = (List<Comments>) paginationReturn.getReturnList();
+			
+			for(Comments comment : returnComments){
+				Long commentPostedBy = comment.getPostedBy();
+				Player player = playerRepository.findOne(commentPostedBy);
+				if(player != null){
+					comment.setDisplayName(player.getDisplayName());
+					comment.setProfileImageUrl(player.getProfileImageUrl());
+					comment.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));
+				}
+			}
+			getCommentsResponse.setData(returnComments);
 		}else{
 			getCommentsResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			getCommentsResponse.setMessage("No records are present for the imageId [" + imageId + "], videoId [" + videoId + "], postId [" + postId + "]");

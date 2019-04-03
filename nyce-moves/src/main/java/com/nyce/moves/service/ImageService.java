@@ -40,6 +40,8 @@ public class ImageService {
 		image.setPlayerId(playerId);
 		image.setPostedTimestamp(OffsetDateTime.now());
 		image.setTitle(imageRequest.getTitle());
+		image.setHeight(imageRequest.getHeight());
+		image.setWidth(imageRequest.getWidth());
 		long imageId = 0L;
 
 		Player player = playerRepository.findOne(playerId);

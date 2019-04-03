@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.nyce.moves.common.ApplicationConstants;
 import com.nyce.moves.common.UtilityFunctions;
 import com.nyce.moves.model.GetAllPostsResponse;
+import com.nyce.moves.model.Image;
 import com.nyce.moves.model.Player;
 import com.nyce.moves.model.Post;
 import com.nyce.moves.model.PostRequest;
@@ -32,6 +33,7 @@ public class PostService {
 		post.setPost(postRequest.getPost());
 		post.setPostedBy(playerId);
 		post.setPostedTimestamp(OffsetDateTime.now());
+		post.setApplauds(0L);
 		long postId = 0L;
 
 		Player player = playerRepository.findOne(playerId);
@@ -107,6 +109,25 @@ public class PostService {
 		}
 
 		return getAllPostsResponse;
+	}
+	
+	public ResponseTemplate applaudPostByPostId(Long postId, ResponseTemplate responseTemplate) {
+
+		Post post = postRepository.findOne(postId);
+		
+		if(post != null){
+			post.setApplauds(post.getApplauds() + 1);
+			postRepository.save(post);
+			responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			responseTemplate.setMessage("Applaud on postId [" + postId + "] has been increased by 1, Now, the applaud count is [" + post.getApplauds() + "]");
+			responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+		}else{
+			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			responseTemplate.setMessage("No Post was found against the postId [" + postId + "], hence applaud has not been applied");
+			responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
+		}
+		
+		return responseTemplate;
 	}
 
 }

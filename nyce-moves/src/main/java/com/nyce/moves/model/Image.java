@@ -51,6 +51,12 @@ public class Image {
 	@JsonProperty("postedTimestamp")
 	private OffsetDateTime postedTimestamp = null;
 
+	@JsonProperty("height")
+	private Integer height = null;
+
+	@JsonProperty("width")
+	private Integer width = null;
+
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Comments> comments;
 
@@ -202,6 +208,46 @@ public class Image {
 
 	public void setComments(List<Comments> comments) {
 		this.comments = comments;
+	}
+
+	public Image height(Integer height) {
+		this.height = height;
+		return this;
+	}
+
+	/**
+	 * Get height
+	 * 
+	 * @return height
+	 **/
+	@ApiModelProperty(value = "")
+
+	public Integer getHeight() {
+		return height;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public Image width(Integer width) {
+		this.width = width;
+		return this;
+	}
+
+	/**
+	 * Get width
+	 * 
+	 * @return width
+	 **/
+	@ApiModelProperty(value = "")
+
+	public Integer getWidth() {
+		return width;
+	}
+
+	public void setWidth(Integer width) {
+		this.width = width;
 	}
 
 	@Override

@@ -30,7 +30,15 @@ import java.util.List;
 @Api(value = "posts", description = "the posts API")
 public interface PostsApi {
 
-    @ApiOperation(value = "Delete a post", nickname = "deletePost", notes = "Delete a post", response = ResponseTemplate.class, tags={ "posts", })
+    @ApiOperation(value = "Applaud / Like the post by post id", nickname = "applaudPostByPostId", notes = "", response = ResponseTemplate.class, tags={ "posts", })
+	@ApiResponses(value = { 
+	    @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class) })
+	    @RequestMapping(value = "/posts/{postId}/applaud",
+	        produces = { "application/json" }, 
+	        method = RequestMethod.POST)
+	ResponseEntity<ResponseTemplate> applaudPostByPostId(@ApiParam(value = "The post id of the post which need to be applauded",required=true) @PathVariable("postId") Long postId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
+	
+	@ApiOperation(value = "Delete a post", nickname = "deletePost", notes = "Delete a post", response = ResponseTemplate.class, tags={ "posts", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class),
         @ApiResponse(code = 400, message = "Invalid playerId supplied"),

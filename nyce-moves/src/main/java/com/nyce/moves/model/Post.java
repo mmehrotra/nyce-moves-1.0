@@ -37,6 +37,9 @@ public class Post {
 	@JsonProperty("post")
 	private String post = null;
 
+	@JsonProperty("applauds")
+	private Long applauds = null;
+
 	@JsonProperty("postedTimestamp")
 	private OffsetDateTime postedTimestamp = null;
 
@@ -131,6 +134,26 @@ public class Post {
 
 	public void setComments(List<Comments> comments) {
 		this.comments = comments;
+	}
+
+	public Post applauds(Long applauds) {
+		this.applauds = applauds;
+		return this;
+	}
+
+	/**
+	 * Get applauds
+	 * 
+	 * @return applauds
+	 **/
+	@ApiModelProperty(value = "")
+
+	public Long getApplauds() {
+		return applauds;
+	}
+
+	public void setApplauds(Long applauds) {
+		this.applauds = applauds;
 	}
 
 	@Override

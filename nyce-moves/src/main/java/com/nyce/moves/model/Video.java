@@ -34,7 +34,7 @@ public class Video {
 
 	@JsonProperty("videoUrl")
 	private String videoUrl = null;
-	
+
 	@JsonProperty("preSignedVideoUrl")
 	private String preSignedVideoUrl = null;
 
@@ -256,6 +256,5 @@ public class Video {
 	public void setPreSignedVideoUrl(String preSignedVideoUrl) {
 		this.preSignedVideoUrl = preSignedVideoUrl;
 	}
-	
-	
+
 }

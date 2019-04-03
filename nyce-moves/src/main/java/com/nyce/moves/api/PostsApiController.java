@@ -49,6 +49,22 @@ public class PostsApiController implements PostsApi {
 		this.request = request;
 	}
 
+	public ResponseEntity<ResponseTemplate> applaudPostByPostId(@ApiParam(value = "The post id of the post which need to be applauded", required = true) @PathVariable("postId") Long postId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				return new ResponseEntity<ResponseTemplate>(objectMapper.readValue("{  \"code\" : \"code\",  \"message\" : \"message\",  \"status\" : \"SUCCESS\"}", ResponseTemplate.class), HttpStatus.NOT_IMPLEMENTED);
+			} catch (IOException e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<ResponseTemplate>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		ResponseTemplate responseTemplate = new ResponseTemplate();
+		postService.applaudPostByPostId(postId, responseTemplate);
+		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
+	}
+
 	public ResponseEntity<ResponseTemplate> deletePost(@ApiParam(value = "The playerId for which post needs to be deleted", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "", required = true) @RequestHeader(value = "postId", required = true) Long postId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {

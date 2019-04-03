@@ -21,220 +21,282 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T16:07:52.516+05:30")
 @Entity
-public class Comments   {
-  @JsonProperty("postedBy")
-  private Long postedBy = null;
+public class Comments {
+	@JsonProperty("postedBy")
+	private Long postedBy = null;
 
-  @JsonProperty("imageId")
-  private Long imageId = null;
+	@JsonProperty("displayName")
+	private String displayName = null;
 
-  @JsonProperty("videoId")
-  private Long videoId = null;
+	@JsonProperty("profileImageUrl")
+	private String profileImageUrl = null;
 
-  @JsonProperty("postId")
-  private Long postId = null;
+	@JsonProperty("profilePreSignUrl")
+	private String profilePreSignUrl = null;
 
-  @JsonProperty("comments")
-  private String comments = null;
+	@JsonProperty("imageId")
+	private Long imageId = null;
 
-  @JsonProperty("commentId")
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long commentId = null;
+	@JsonProperty("videoId")
+	private Long videoId = null;
 
-  @JsonProperty("postedTimestamp")
-  private OffsetDateTime postedTimestamp = null;
+	@JsonProperty("postId")
+	private Long postId = null;
 
-  public Comments postedBy(Long postedBy) {
-    this.postedBy = postedBy;
-    return this;
-  }
+	@JsonProperty("comments")
+	private String comments = null;
 
-  /**
-   * Get postedBy
-   * @return postedBy
-  **/
-  @ApiModelProperty(value = "")
+	@JsonProperty("commentId")
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long commentId = null;
 
+	@JsonProperty("postedTimestamp")
+	private OffsetDateTime postedTimestamp = null;
 
-  public Long getPostedBy() {
-    return postedBy;
-  }
+	public Comments postedBy(Long postedBy) {
+		this.postedBy = postedBy;
+		return this;
+	}
 
-  public void setPostedBy(Long postedBy) {
-    this.postedBy = postedBy;
-  }
+	/**
+	 * Get postedBy
+	 * 
+	 * @return postedBy
+	 **/
+	@ApiModelProperty(value = "")
 
-  public Comments imageId(Long imageId) {
-    this.imageId = imageId;
-    return this;
-  }
+	public Long getPostedBy() {
+		return postedBy;
+	}
 
-  /**
-   * Get imageId
-   * @return imageId
-  **/
-  @ApiModelProperty(value = "")
+	public void setPostedBy(Long postedBy) {
+		this.postedBy = postedBy;
+	}
 
+	public Comments imageId(Long imageId) {
+		this.imageId = imageId;
+		return this;
+	}
 
-  public Long getImageId() {
-    return imageId;
-  }
+	/**
+	 * Get imageId
+	 * 
+	 * @return imageId
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setImageId(Long imageId) {
-    this.imageId = imageId;
-  }
+	public Long getImageId() {
+		return imageId;
+	}
 
-  public Comments videoId(Long videoId) {
-    this.videoId = videoId;
-    return this;
-  }
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+	}
 
-  /**
-   * Get videoId
-   * @return videoId
-  **/
-  @ApiModelProperty(value = "")
+	public Comments videoId(Long videoId) {
+		this.videoId = videoId;
+		return this;
+	}
 
+	/**
+	 * Get videoId
+	 * 
+	 * @return videoId
+	 **/
+	@ApiModelProperty(value = "")
 
-  public Long getVideoId() {
-    return videoId;
-  }
+	public Long getVideoId() {
+		return videoId;
+	}
 
-  public void setVideoId(Long videoId) {
-    this.videoId = videoId;
-  }
+	public void setVideoId(Long videoId) {
+		this.videoId = videoId;
+	}
 
-  public Comments postId(Long postId) {
-    this.postId = postId;
-    return this;
-  }
+	public Comments postId(Long postId) {
+		this.postId = postId;
+		return this;
+	}
 
-  /**
-   * Get postId
-   * @return postId
-  **/
-  @ApiModelProperty(value = "")
+	/**
+	 * Get postId
+	 * 
+	 * @return postId
+	 **/
+	@ApiModelProperty(value = "")
 
+	public Long getPostId() {
+		return postId;
+	}
 
-  public Long getPostId() {
-    return postId;
-  }
+	public void setPostId(Long postId) {
+		this.postId = postId;
+	}
 
-  public void setPostId(Long postId) {
-    this.postId = postId;
-  }
+	public Comments comments(String comments) {
+		this.comments = comments;
+		return this;
+	}
 
-  public Comments comments(String comments) {
-    this.comments = comments;
-    return this;
-  }
+	/**
+	 * Get comments
+	 * 
+	 * @return comments
+	 **/
+	@ApiModelProperty(value = "")
 
-  /**
-   * Get comments
-   * @return comments
-  **/
-  @ApiModelProperty(value = "")
+	public String getComments() {
+		return comments;
+	}
 
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 
-  public String getComments() {
-    return comments;
-  }
+	public Comments commentId(Long commentId) {
+		this.commentId = commentId;
+		return this;
+	}
 
-  public void setComments(String comments) {
-    this.comments = comments;
-  }
+	/**
+	 * Get commentId
+	 * 
+	 * @return commentId
+	 **/
+	@ApiModelProperty(value = "")
 
-  public Comments commentId(Long commentId) {
-    this.commentId = commentId;
-    return this;
-  }
+	public Long getCommentId() {
+		return commentId;
+	}
 
-  /**
-   * Get commentId
-   * @return commentId
-  **/
-  @ApiModelProperty(value = "")
+	public void setCommentId(Long commentId) {
+		this.commentId = commentId;
+	}
 
+	public Comments postedTimestamp(OffsetDateTime postedTimestamp) {
+		this.postedTimestamp = postedTimestamp;
+		return this;
+	}
 
-  public Long getCommentId() {
-    return commentId;
-  }
+	/**
+	 * Get postedTimestamp
+	 * 
+	 * @return postedTimestamp
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setCommentId(Long commentId) {
-    this.commentId = commentId;
-  }
+	@Valid
 
-  public Comments postedTimestamp(OffsetDateTime postedTimestamp) {
-    this.postedTimestamp = postedTimestamp;
-    return this;
-  }
+	public OffsetDateTime getPostedTimestamp() {
+		return postedTimestamp;
+	}
 
-  /**
-   * Get postedTimestamp
-   * @return postedTimestamp
-  **/
-  @ApiModelProperty(value = "")
+	public void setPostedTimestamp(OffsetDateTime postedTimestamp) {
+		this.postedTimestamp = postedTimestamp;
+	}
 
-  @Valid
+	public Comments displayName(String displayName) {
+		this.displayName = displayName;
+		return this;
+	}
 
-  public OffsetDateTime getPostedTimestamp() {
-    return postedTimestamp;
-  }
+	/**
+	 * Get displayName
+	 * 
+	 * @return displayName
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setPostedTimestamp(OffsetDateTime postedTimestamp) {
-    this.postedTimestamp = postedTimestamp;
-  }
+	public String getDisplayName() {
+		return displayName;
+	}
 
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Comments comments = (Comments) o;
-    return Objects.equals(this.postedBy, comments.postedBy) &&
-        Objects.equals(this.imageId, comments.imageId) &&
-        Objects.equals(this.videoId, comments.videoId) &&
-        Objects.equals(this.postId, comments.postId) &&
-        Objects.equals(this.comments, comments.comments) &&
-        Objects.equals(this.commentId, comments.commentId) &&
-        Objects.equals(this.postedTimestamp, comments.postedTimestamp);
-  }
+	public Comments profileImageUrl(String profileImageUrl) {
+		this.profileImageUrl = profileImageUrl;
+		return this;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(postedBy, imageId, videoId, postId, comments, commentId, postedTimestamp);
-  }
+	/**
+	 * Get profileImageUrl
+	 * 
+	 * @return profileImageUrl
+	 **/
+	@ApiModelProperty(value = "")
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Comments {\n");
-    
-    sb.append("    postedBy: ").append(toIndentedString(postedBy)).append("\n");
-    sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
-    sb.append("    videoId: ").append(toIndentedString(videoId)).append("\n");
-    sb.append("    postId: ").append(toIndentedString(postId)).append("\n");
-    sb.append("    comments: ").append(toIndentedString(comments)).append("\n");
-    sb.append("    commentId: ").append(toIndentedString(commentId)).append("\n");
-    sb.append("    postedTimestamp: ").append(toIndentedString(postedTimestamp)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+	public String getProfileImageUrl() {
+		return profileImageUrl;
+	}
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	public void setProfileImageUrl(String profileImageUrl) {
+		this.profileImageUrl = profileImageUrl;
+	}
+
+	public Comments profilePreSignUrl(String profilePreSignUrl) {
+		this.profilePreSignUrl = profilePreSignUrl;
+		return this;
+	}
+
+	/**
+	 * Get profilePreSignUrl
+	 * 
+	 * @return profilePreSignUrl
+	 **/
+	@ApiModelProperty(value = "")
+
+	public String getProfilePreSignUrl() {
+		return profilePreSignUrl;
+	}
+
+	public void setProfilePreSignUrl(String profilePreSignUrl) {
+		this.profilePreSignUrl = profilePreSignUrl;
+	}
+
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Comments comments = (Comments) o;
+		return Objects.equals(this.postedBy, comments.postedBy) && Objects.equals(this.imageId, comments.imageId) && Objects.equals(this.videoId, comments.videoId) && Objects.equals(this.postId, comments.postId) && Objects.equals(this.comments, comments.comments) && Objects.equals(this.commentId, comments.commentId) && Objects.equals(this.postedTimestamp, comments.postedTimestamp);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(postedBy, imageId, videoId, postId, comments, commentId, postedTimestamp);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Comments {\n");
+
+		sb.append("    postedBy: ").append(toIndentedString(postedBy)).append("\n");
+		sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
+		sb.append("    videoId: ").append(toIndentedString(videoId)).append("\n");
+		sb.append("    postId: ").append(toIndentedString(postId)).append("\n");
+		sb.append("    comments: ").append(toIndentedString(comments)).append("\n");
+		sb.append("    commentId: ").append(toIndentedString(commentId)).append("\n");
+		sb.append("    postedTimestamp: ").append(toIndentedString(postedTimestamp)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
+
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }
-
