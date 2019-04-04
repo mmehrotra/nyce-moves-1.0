@@ -84,6 +84,17 @@ public class PlayerService {
 				playerObject.setLastName(playerRequest.getLastName());
 				playerObject.setPassword(bCryptPasswordEncoder.encode(playerRequest.getPassword()));
 				playerObject.setDisplayName(playerRequest.getDisplayName());
+				if (playerObject.getDisplayName() == null) {
+					String displayName = "";
+					if (playerObject.getFirstName() != null && playerObject.getLastName() != null) {
+						displayName = playerObject.getFirstName() + " " + playerObject.getLastName();
+					} else if (playerObject.getFirstName() != null) {
+						displayName = playerObject.getFirstName();
+					} else if (playerObject.getLastName() != null) {
+						displayName = playerObject.getLastName();
+					}
+					playerObject.setDisplayName(displayName);
+				}
 				playerObject.setCity(playerRequest.getCity());
 				playerObject.setCountry(playerRequest.getCountry());
 				playerObject.setSchool(playerRequest.getSchool());
@@ -230,7 +241,7 @@ public class PlayerService {
 
 		if (player != null) {
 			player = populatePreSignedUrl(player);
-			if(player.getFriends() != null && player.getFriends().size() > 0){
+			if (player.getFriends() != null && player.getFriends().size() > 0) {
 				player.setNumberOfConnections(new Long(player.getFriends().size()));
 			}
 			playerResponse.setData(player);
@@ -407,6 +418,12 @@ public class PlayerService {
 				dashboardElement.setPostedTimestamp(image.getPostedTimestamp());
 				dashboardElement.setUrl(image.getImageUrl());
 				dashboardElement.setTitle(image.getTitle());
+				if (image.getHeight() != null) {
+					dashboardElement.setImageHeight(new Long(image.getHeight()));
+				}
+				if (image.getWidth() != null) {
+					dashboardElement.setImageWidth(new Long(image.getWidth()));
+				}
 				if (image.getComments() != null && image.getComments().size() > 0) {
 					dashboardElement.setNumberOfComments(new Long(image.getComments().size()));
 				} else {
@@ -470,18 +487,20 @@ public class PlayerService {
 			getDashBoardResponse.setPageSize(pageSize.longValue());
 			getDashBoardResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
 			List<DashboardElement> returnDashboardElements = (List<DashboardElement>) paginationReturn.getReturnList();
-			
-			for(DashboardElement dashboardElement : returnDashboardElements){
+
+			for (DashboardElement dashboardElement : returnDashboardElements) {
 				Long elementPlayerId = dashboardElement.getPlayerId();
 				Player elementPlayer = playerRepository.findOne(elementPlayerId);
-				if(elementPlayer != null){
+				if (elementPlayer != null) {
 					dashboardElement.setDisplayName(elementPlayer.getDisplayName());
 					dashboardElement.setProfileImageUrl(player.getProfileImageUrl());
-					dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));					
+					if (dashboardElement.getProfileImageUrl() != null) {
+						dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));
+					}
 				}
-				if(dashboardElement.getUrl() != null){
+				if (dashboardElement.getUrl() != null) {
 					dashboardElement.setPreSignedUrl(amazonClient.getPreSignUrlFromUrl(dashboardElement.getUrl()));
-				}				
+				}
 			}
 			getDashBoardResponse.setData(modifyPreSignedUrls(returnDashboardElements));
 		} else {
@@ -661,81 +680,86 @@ public class PlayerService {
 
 		return friends;
 	}
-	
+
 	public GetDashBoardResponse getDashboard(Long playerId, BigDecimal pageSize, BigDecimal pageNumber, GetDashBoardResponse getDashBoardResponse) {
 
 		List<DashboardElement> dashboardElements = new ArrayList<DashboardElement>();
 		Player player = playerRepository.findOne(playerId);
 		List<Long> playerIdList = new ArrayList<Long>();
-		
-		
-		if(player != null && player.getFriends() != null && player.getFriends().size() > 0){
-			
-			for(Friend friend : player.getFriends()){
+
+		if (player != null && player.getFriends() != null && player.getFriends().size() > 0) {
+			for (Friend friend : player.getFriends()) {
 				playerIdList.add(friend.getPlayerId());
 			}
-			
-			List<Image> images = imageRepository.fetchImagesByPlayerIdList(playerIdList);
-			if (images != null && images.size() > 0) {
-				for (Image image : images) {
-					DashboardElement dashboardElement = new DashboardElement();
-					dashboardElement.setDashboardElementId(image.getImageId());
-					dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
-					dashboardElement.setDescription(image.getDescription());
-					dashboardElement.setApplauds(image.getApplauds());
-					dashboardElement.setPlayerId(image.getPlayerId());
-					dashboardElement.setPostedTimestamp(image.getPostedTimestamp());
-					dashboardElement.setUrl(image.getImageUrl());
-					dashboardElement.setTitle(image.getTitle());
-					if (image.getComments() != null && image.getComments().size() > 0) {
-						dashboardElement.setNumberOfComments(new Long(image.getComments().size()));
-					} else {
-						dashboardElement.setNumberOfComments(0L);
-					}
-					dashboardElements.add(dashboardElement);
+		}
+		playerIdList.add(playerId);
 
+		List<Image> images = imageRepository.fetchImagesByPlayerIdList(playerIdList);
+		if (images != null && images.size() > 0) {
+			for (Image image : images) {
+				DashboardElement dashboardElement = new DashboardElement();
+				dashboardElement.setDashboardElementId(image.getImageId());
+				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
+				dashboardElement.setDescription(image.getDescription());
+				dashboardElement.setApplauds(image.getApplauds());
+				dashboardElement.setPlayerId(image.getPlayerId());
+				dashboardElement.setPostedTimestamp(image.getPostedTimestamp());
+				dashboardElement.setUrl(image.getImageUrl());
+				dashboardElement.setTitle(image.getTitle());
+				if (image.getHeight() != null) {
+					dashboardElement.setImageHeight(new Long(image.getHeight()));
 				}
+				if (image.getWidth() != null) {
+					dashboardElement.setImageWidth(new Long(image.getWidth()));
+				}
+				if (image.getComments() != null && image.getComments().size() > 0) {
+					dashboardElement.setNumberOfComments(new Long(image.getComments().size()));
+				} else {
+					dashboardElement.setNumberOfComments(0L);
+				}
+				dashboardElements.add(dashboardElement);
+
 			}
+		}
 
-			List<Video> videos = videoRepository.fetchVideosByPlayerIdList(playerIdList);
-			if (videos != null && videos.size() > 0) {
-				for (Video video : videos) {
-					DashboardElement dashboardElement = new DashboardElement();
-					dashboardElement.setDashboardElementId(video.getVideoId());
-					dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
-					dashboardElement.setDescription(video.getDescription());
-					dashboardElement.setApplauds(video.getApplauds());
-					dashboardElement.setPlayerId(video.getPlayerId());
-					dashboardElement.setPostedTimestamp(video.getPostedTimestamp());
-					dashboardElement.setUrl(video.getVideoUrl());
-					dashboardElement.setTitle(video.getTitle());
-					if (video.getComments() != null && video.getComments().size() > 0) {
-						dashboardElement.setNumberOfComments(new Long(video.getComments().size()));
-					} else {
-						dashboardElement.setNumberOfComments(0L);
-					}
-					dashboardElements.add(dashboardElement);
-
+		List<Video> videos = videoRepository.fetchVideosByPlayerIdList(playerIdList);
+		if (videos != null && videos.size() > 0) {
+			for (Video video : videos) {
+				DashboardElement dashboardElement = new DashboardElement();
+				dashboardElement.setDashboardElementId(video.getVideoId());
+				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
+				dashboardElement.setDescription(video.getDescription());
+				dashboardElement.setApplauds(video.getApplauds());
+				dashboardElement.setPlayerId(video.getPlayerId());
+				dashboardElement.setPostedTimestamp(video.getPostedTimestamp());
+				dashboardElement.setUrl(video.getVideoUrl());
+				dashboardElement.setTitle(video.getTitle());
+				if (video.getComments() != null && video.getComments().size() > 0) {
+					dashboardElement.setNumberOfComments(new Long(video.getComments().size()));
+				} else {
+					dashboardElement.setNumberOfComments(0L);
 				}
+				dashboardElements.add(dashboardElement);
+
 			}
+		}
 
-			List<Post> posts = postRepository.fetchPostsByPlayerIdList(playerIdList);
-			if (posts != null && posts.size() > 0) {
-				for (Post post : posts) {
-					DashboardElement dashboardElement = new DashboardElement();
-					dashboardElement.setDashboardElementId(post.getPostId());
-					dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
-					dashboardElement.setDescription(post.getPost());
-					// dashboardElement.setApplauds(post.getApplauds());
-					dashboardElement.setPlayerId(post.getPostedBy());
-					dashboardElement.setPostedTimestamp(post.getPostedTimestamp());
-					if (post.getComments() != null && post.getComments().size() > 0) {
-						dashboardElement.setNumberOfComments(new Long(post.getComments().size()));
-					} else {
-						dashboardElement.setNumberOfComments(0L);
-					}
-					dashboardElements.add(dashboardElement);
+		List<Post> posts = postRepository.fetchPostsByPlayerIdList(playerIdList);
+		if (posts != null && posts.size() > 0) {
+			for (Post post : posts) {
+				DashboardElement dashboardElement = new DashboardElement();
+				dashboardElement.setDashboardElementId(post.getPostId());
+				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
+				dashboardElement.setDescription(post.getPost());
+				// dashboardElement.setApplauds(post.getApplauds());
+				dashboardElement.setPlayerId(post.getPostedBy());
+				dashboardElement.setPostedTimestamp(post.getPostedTimestamp());
+				if (post.getComments() != null && post.getComments().size() > 0) {
+					dashboardElement.setNumberOfComments(new Long(post.getComments().size()));
+				} else {
+					dashboardElement.setNumberOfComments(0L);
 				}
+				dashboardElements.add(dashboardElement);
 			}
 		}
 
@@ -751,18 +775,20 @@ public class PlayerService {
 			getDashBoardResponse.setPageSize(pageSize.longValue());
 			getDashBoardResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
 			List<DashboardElement> returnDashboardElements = (List<DashboardElement>) paginationReturn.getReturnList();
-			
-			for(DashboardElement dashboardElement : returnDashboardElements){
+
+			for (DashboardElement dashboardElement : returnDashboardElements) {
 				Long elementPlayerId = dashboardElement.getPlayerId();
 				Player elementPlayer = playerRepository.findOne(elementPlayerId);
-				if(elementPlayer != null){
+				if (elementPlayer != null) {
 					dashboardElement.setDisplayName(elementPlayer.getDisplayName());
 					dashboardElement.setProfileImageUrl(player.getProfileImageUrl());
-					dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));					
+					if (player.getProfileImageUrl() != null) {
+						dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));
+					}
 				}
-				if(dashboardElement.getUrl() != null){
+				if (dashboardElement.getUrl() != null) {
 					dashboardElement.setPreSignedUrl(amazonClient.getPreSignUrlFromUrl(dashboardElement.getUrl()));
-				}				
+				}
 			}
 			getDashBoardResponse.setData(modifyPreSignedUrls(returnDashboardElements));
 		} else {
@@ -776,5 +802,48 @@ public class PlayerService {
 
 		return getDashBoardResponse;
 	}
-	
+
+	public GetFriendsResponse searchPlayersByString(Long playerId, String searchString, BigDecimal pageSize, BigDecimal pageNumber, GetFriendsResponse getFriendsResponse) {
+
+		String searchStringLower = searchString.toLowerCase();
+		List<Player> playerList = playerRepository.searchPlayersByString(searchStringLower, searchStringLower, searchStringLower, playerId);
+
+		if (playerList != null && playerList.size() > 0) {
+
+			UtilityFunctions.PaginationReturn paginationReturn = UtilityFunctions.getPaginatedList(pageSize.intValue(), pageNumber.intValue(), playerList);
+			List<Player> returnPlayerList = (List<Player>) paginationReturn.getReturnList();
+
+			List<Friend> friends = new ArrayList<Friend>();
+
+			for (Player player : returnPlayerList) {
+				Friend friend = new Friend();
+				friend.setName(player.getDisplayName());
+				friend.setPlayerId(player.getPlayerId());
+				friend.setDisplayImageUrl(player.getProfileImageUrl());
+				if (player.getProfileImageUrl() != null) {
+					friend.setDisplayImagePreSignedUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));
+				}
+				friends.add(friend);
+			}
+
+			getFriendsResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+			getFriendsResponse.setMessage(paginationReturn.getReturnMessage());
+			getFriendsResponse.setStatus(GetFriendsResponse.StatusEnum.SUCCESS);
+			getFriendsResponse.setPageNumber(pageNumber.longValue());
+			getFriendsResponse.setPageSize(pageSize.longValue());
+			getFriendsResponse.setTotalNumberofPagesAvailable(new Long(paginationReturn.getAvaialblePages()));
+			getFriendsResponse.setData(friends);
+		} else {
+			getFriendsResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
+			getFriendsResponse.setMessage("No records are present for the searchString [" + searchString + "]");
+			getFriendsResponse.setStatus(GetFriendsResponse.StatusEnum.FAILURE);
+			getFriendsResponse.setPageNumber(pageNumber.longValue());
+			getFriendsResponse.setPageSize(pageSize.longValue());
+			getFriendsResponse.setTotalNumberofPagesAvailable(0l);
+		}
+
+		return getFriendsResponse;
+
+	}
+
 }

@@ -35,7 +35,7 @@
 			},
 			"response": [
 				{
-					"id": "cab99451-076b-4231-a402-7dd0a4d3f3f3",
+					"id": "429c69a0-6e7b-40cd-bee7-592e2fa9eb85",
 					"name": "PlayerRegisteration01",
 					"originalRequest": {
 						"method": "POST",
@@ -103,7 +103,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"city\": \"boston\",\r\n  \"country\": \"usa\",\r\n  \"displayName\": \"Napolean Hill\",\r\n  \"email\": \"napolean.hill@gmail.com\",\r\n  \"firstName\": \"Napolean\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Hill\",\r\n  \"password\": \"hill\",\r\n  \"primarySport\": \"football\",\r\n  \"dob\": \"2003-08-23\",\r\n  \"school\": \"New England\",\r\n  \"profileImageUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/images/1_image_1554201726100-1.PNG\"\r\n}"
+					"raw": "{\r\n  \"city\": \"boston\",\r\n  \"country\": \"usa\",\r\n  \"email\": \"napolean.hill@gmail.com\",\r\n  \"firstName\": \"Napolean\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Hill\",\r\n  \"password\": \"hill\",\r\n  \"primarySport\": \"football\",\r\n  \"dob\": \"2003-08-23\",\r\n  \"school\": \"New England\"\r\n \r\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players",
@@ -160,7 +160,7 @@
 			},
 			"response": [
 				{
-					"id": "03a77382-0099-4727-8fe7-34e05849ae4b",
+					"id": "3532e001-5ea2-4cfe-8fbc-48bba87d52b5",
 					"name": "PlayerLogin",
 					"originalRequest": {
 						"method": "GET",
@@ -267,7 +267,7 @@
 			},
 			"response": [
 				{
-					"id": "dd1a6bd4-4e8d-4611-9607-ddbed1951391",
+					"id": "a5145b19-0014-4364-af17-4833095b1cc8",
 					"name": "PlayerLogin",
 					"originalRequest": {
 						"method": "GET",
@@ -411,7 +411,116 @@
 			},
 			"response": [
 				{
-					"id": "72d090b6-a83e-485f-b54b-303a9d6e8b8e",
+					"id": "60fb46ca-89ae-42bc-8014-d937d6278f5b",
+					"name": "GetPlayer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"warning": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJrLnR3YWluQGdtYWlsLmNvbSIsImV4cCI6MTU1MzUxNDA4N30._50GJIqxdQfpRI19O4v28yNHNSEDTODSLk6y3vo6k4ZfUlPslP138FlmxR_CplsuTGxoq07MNtuVNjkUtHscoQ",
+								"warning": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nycemoves",
+								"players-api",
+								"1.0.0",
+								"players",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"SUCCESS\",\"code\":\"11001\",\"message\":\"Player has been fetched successfully\",\"data\":{\"posts\":[],\"images\":[],\"videos\":[],\"email\":\"mark.twain@gmail.com\",\"firstName\":\"Mark\",\"lastName\":\"Twain\",\"password\":\"$2a$10$Ngw1FoMPRoGzEADwUn2vM.llKVMm4BCZaMu0zP7cJtgiRnovyRTSy\",\"displayName\":\"Mark Twain\",\"city\":\"newyork\",\"country\":\"usa\",\"gender\":null,\"school\":\"New Orleans Updated Test\",\"primarySport\":\"basketball\",\"dob\":\"2001-01-11\",\"profileImageUrl\":null,\"playerId\":1,\"creationTime\":\"2019-02-22T17:34:33.305Z\",\"updateTime\":null,\"numberOfConnections\":0}}"
+				}
+			]
+		},
+		{
+			"name": "SearchPlayers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					},
+					{
+						"key": "searchString",
+						"value": "Napolean"
+					},
+					{
+						"key": "pageSize",
+						"value": "10"
+					},
+					{
+						"key": "pageNumber",
+						"value": "1"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/searchFriends",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"players",
+						"1",
+						"searchFriends"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "3bd046e4-d905-4299-8933-2cd35396b7bf",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -625,6 +734,42 @@
 			"response": []
 		},
 		{
+			"name": "ApplaudIPostByPostId",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "identifier",
+						"value": "{{identifier}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1/applaud",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"nycemoves",
+						"players-api",
+						"1.0.0",
+						"posts",
+						"1",
+						"applaud"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "CreateImage",
 			"request": {
 				"method": "POST",
@@ -644,7 +789,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"description\": \"My third Image\",\r\n  \"imageUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/images/1_image_1554201726100-1.PNG\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My Second image\"\r\n}"
+					"raw": "{\r\n  \"description\": \"My 7th Image\",\r\n  \"imageUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/images/1_image_1554201726100-1.PNG\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My Second image\",\r\n  \"height\": \"1\",\r\n  \"width\": \"5\"\r\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1",
@@ -1033,12 +1178,12 @@
 					},
 					{
 						"key": "imageId",
-						"value": "2"
+						"value": "1"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"postedBy\": 1,\r\n  \"imageId\" : 2,\r\n  \"comments\" : \"My second comment\"\r\n}"
+					"raw": "{\r\n  \"postedBy\": 1,\r\n  \"imageId\" : 1,\r\n  \"comments\" : \"My second comment\"\r\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/comments/",
@@ -1068,7 +1213,7 @@
 					},
 					{
 						"key": "imageId",
-						"value": "2"
+						"value": "1"
 					},
 					{
 						"key": "identifier",
@@ -1180,7 +1325,7 @@
 			},
 			"response": [
 				{
-					"id": "d8dd01cb-650d-44c1-bbc9-665975b1fdaa",
+					"id": "ee016e70-f6b5-431b-ae7a-196ad714230b",
 					"name": "PlayerLogin",
 					"originalRequest": {
 						"method": "GET",
@@ -1383,7 +1528,7 @@
 			},
 			"response": [
 				{
-					"id": "c4f26cbf-3a84-4955-af46-20ec4eae83df",
+					"id": "34a4495d-f913-49d0-b226-c80a29150555",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1463,7 +1608,7 @@
 				],
 				"body": {},
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/dashboard",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/dashboard",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -1473,14 +1618,14 @@
 						"players-api",
 						"1.0.0",
 						"players",
-						"1",
+						"2",
 						"dashboard"
 					]
 				}
 			},
 			"response": [
 				{
-					"id": "6deaf245-60cb-480b-99f8-d83d000e25ab",
+					"id": "ae0ce9a0-725c-4674-9f2c-8db488fd93d9",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1581,7 +1726,7 @@
 			},
 			"response": [
 				{
-					"id": "59ebec44-3b63-4b1d-8e65-4ec098e2046f",
+					"id": "cd4c8c36-7403-4f64-a663-17518e9ba41f",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1682,7 +1827,7 @@
 			},
 			"response": [
 				{
-					"id": "1254888b-35ec-4131-96cb-7b36dae4f855",
+					"id": "f02ea316-9218-454a-b3c4-080509877c87",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1783,7 +1928,7 @@
 			},
 			"response": [
 				{
-					"id": "9e81e182-cb78-4ba5-8363-6344335b6a7d",
+					"id": "999214bb-4f4b-421b-85a7-ac0106013814",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1888,7 +2033,7 @@
 			},
 			"response": [
 				{
-					"id": "2723c9e9-0cc1-41f4-954e-d8cc79eec5f8",
+					"id": "41b968d6-6da3-40eb-8aba-3ee6f94e233a",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",

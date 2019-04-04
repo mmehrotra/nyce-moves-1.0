@@ -152,6 +152,15 @@ public interface PlayersApi {
     ResponseEntity<ResponseTemplate> resetPassword(@ApiParam(value = "The user name for login" ,required=true) @RequestHeader(value="username", required=true) String username);
 
 
+    @ApiOperation(value = "Get the details of a player based on player id session", nickname = "searchFriends", notes = "Player Information.", response = GetFriendsResponse.class, tags={ "players", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = GetFriendsResponse.class) })
+    @RequestMapping(value = "/players/{playerId}/searchFriends",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<GetFriendsResponse> searchFriends(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "The search string" ,required=true) @RequestHeader(value="searchString", required=true) String searchString,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber);
+
+    
     @ApiOperation(value = "Player sending the friend request", nickname = "sendFriendRequest", notes = "", response = ResponseTemplate.class, tags={ "players", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class) })

@@ -71,7 +71,7 @@ public class PlayersApiController implements PlayersApi {
 		}
 
 		ResponseTemplate responseTemplate = new ResponseTemplate();
-		responseTemplate = playerService.approveFriendRequest(playerId, friendId, responseTemplate);		
+		responseTemplate = playerService.approveFriendRequest(playerId, friendId, responseTemplate);
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
@@ -138,22 +138,22 @@ public class PlayersApiController implements PlayersApi {
 		responseTemplate = playerService.deletePlayer(playerId, responseTemplate);
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
-	
-	public ResponseEntity<GetDashBoardResponse> getDashboard(@ApiParam(value = "The playerId of the current player",required=true) @PathVariable("playerId") Long playerId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="10") BigDecimal pageSize,@ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") BigDecimal pageNumber) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<GetDashBoardResponse>(objectMapper.readValue("\"\"", GetDashBoardResponse.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<GetDashBoardResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
-        GetDashBoardResponse getDashboardResponse = new GetDashBoardResponse();
+	public ResponseEntity<GetDashBoardResponse> getDashboard(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				return new ResponseEntity<GetDashBoardResponse>(objectMapper.readValue("\"\"", GetDashBoardResponse.class), HttpStatus.NOT_IMPLEMENTED);
+			} catch (IOException e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<GetDashBoardResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		GetDashBoardResponse getDashboardResponse = new GetDashBoardResponse();
 		getDashboardResponse = playerService.getDashboard(playerId, pageSize, pageNumber, getDashboardResponse);
 		return new ResponseEntity<GetDashBoardResponse>(getDashboardResponse, HttpStatus.OK);
-    }
+	}
 
 	public ResponseEntity<GetFriendsResponse> getFriends(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
 		String accept = request.getHeader("Accept");
@@ -258,6 +258,22 @@ public class PlayersApiController implements PlayersApi {
 		}
 
 		return new ResponseEntity<ResponseTemplate>(HttpStatus.OK);
+	}
+
+	public ResponseEntity<GetFriendsResponse> searchFriends(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier, @ApiParam(value = "The search string", required = true) @RequestHeader(value = "searchString", required = true) String searchString, @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "pageSize", required = false, defaultValue = "10") BigDecimal pageSize, @ApiParam(value = "", defaultValue = "1") @Valid @RequestParam(value = "pageNumber", required = false, defaultValue = "1") BigDecimal pageNumber) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				return new ResponseEntity<GetFriendsResponse>(objectMapper.readValue("\"\"", GetFriendsResponse.class), HttpStatus.NOT_IMPLEMENTED);
+			} catch (IOException e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<GetFriendsResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		GetFriendsResponse getFriendsResponse = new GetFriendsResponse();
+		getFriendsResponse = playerService.searchPlayersByString(playerId, searchString, pageSize, pageNumber, getFriendsResponse);
+		return new ResponseEntity<GetFriendsResponse>(getFriendsResponse, HttpStatus.OK);
 	}
 
 	public ResponseEntity<ResponseTemplate> sendFriendRequest(@ApiParam(value = "The playerId of the current player who is sending the request", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "PlayerId of the player with whom friendship is been seeken", required = true) @RequestHeader(value = "friendId", required = true) Long friendId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {

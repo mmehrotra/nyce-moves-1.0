@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
@@ -28,6 +29,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T10:16:43.744+05:30")
 @Entity
+@NamedQuery(name = "Player.searchPlayersByString", query = "SELECT e FROM Player e WHERE (LOWER(e.firstName) LIKE :searchString1) OR (LOWER(e.firstName) LIKE :searchString2) OR (LOWER(e.displayName) LIKE :searchString3) AND e.playerId <> :playerId")
 public class Player {
 	@JsonProperty("email")
 	private String email = null;

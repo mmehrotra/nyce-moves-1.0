@@ -98,20 +98,19 @@ public class AmazonClient {
 		return "Successfully deleted";
 	}
 
-	public String getObjectNameFromS3Url(String fullS3Url){
-		
+	public String getObjectNameFromS3Url(String fullS3Url) {
+
 		String objectName = "";
 		String[] stringArray = fullS3Url.split(bucketName + "/");
-		
-		if(stringArray != null && stringArray.length > 0){
+
+		if (stringArray != null && stringArray.length > 0) {
 			objectName = stringArray[1];
 		}
-		
+
 		return objectName;
-		
+
 	}
-	
-	
+
 	public String generatePreSignedUrl(String objectName) {
 
 		// Set the presigned URL to expire after one hour.
@@ -126,8 +125,12 @@ public class AmazonClient {
 		return url.toString();
 
 	}
-	
+
 	public String getPreSignUrlFromUrl(String url) {
+
+		if (url == null) {
+			return null;
+		}
 		String objectName = getObjectNameFromS3Url(url);
 		return generatePreSignedUrl(objectName);
 	}

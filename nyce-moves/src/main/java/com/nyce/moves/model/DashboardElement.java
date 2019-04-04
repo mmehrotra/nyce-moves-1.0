@@ -92,6 +92,12 @@ public class DashboardElement {
 	@JsonProperty("numberOfComments")
 	private Long numberOfComments = null;
 
+	@JsonProperty("imageHeight")
+	private Long imageHeight;
+
+	@JsonProperty("imageWidth")
+	private Long imageWidth;
+
 	public DashboardElement playerId(Long playerId) {
 		this.playerId = playerId;
 		return this;
@@ -369,6 +375,22 @@ public class DashboardElement {
 	@Override
 	public int hashCode() {
 		return Objects.hash(playerId, dashboardElementId, dashboardElementType, title, url, preSignedUrl, description, applauds, postedTimestamp, numberOfComments);
+	}
+
+	public Long getImageHeight() {
+		return imageHeight;
+	}
+
+	public void setImageHeight(Long imageHeight) {
+		this.imageHeight = imageHeight;
+	}
+
+	public Long getImageWidth() {
+		return imageWidth;
+	}
+
+	public void setImageWidth(Long imageWidth) {
+		this.imageWidth = imageWidth;
 	}
 
 	@Override
