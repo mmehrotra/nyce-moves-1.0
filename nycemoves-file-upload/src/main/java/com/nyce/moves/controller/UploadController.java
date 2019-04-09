@@ -50,6 +50,20 @@ public class UploadController {
 
 		return uploadFileResponse;
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/players/temp/uploadFile")
+	public UploadFileResponse uploadTempFile(@RequestPart(value = "file") MultipartFile file, @RequestHeader String fileType) {
+
+		UploadFileResponse uploadFileResponse = new UploadFileResponse();
+		uploadFileResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+		uploadFileResponse.setStatus(UploadFileResponse.StatusEnum.SUCCESS);
+		uploadFileResponse.setMessage("File has been loaded successfully");
+		FileObject fileObject = new FileObject();
+		fileObject = this.amazonClient.uploadFile(file, 0L, fileType, fileObject);
+		uploadFileResponse.setFileObject(fileObject);
+
+		return uploadFileResponse;
+	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteFile")
 	public ResponseTemplate deleteFile(@RequestPart(value = "url") String fileUrl) {

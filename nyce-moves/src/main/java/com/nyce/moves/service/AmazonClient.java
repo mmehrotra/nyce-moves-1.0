@@ -19,6 +19,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -93,9 +94,20 @@ public class AmazonClient {
 	}
 
 	public String deleteFileFromS3Bucket(String fileUrl) {
-		String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-		s3client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
+		// String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+		String fileName = fileUrl.substring(fileUrl.indexOf(bucketName + "/") + bucketName.length() + 1);
+		s3client.deleteObject(new DeleteObjectRequest(bucketName, fileName));
 		return "Successfully deleted";
+	}
+	
+	public String getFileKeyFromUrl(String fileUrl){
+		return fileUrl.substring(fileUrl.indexOf(bucketName + "/") + bucketName.length() + 1);
+	}
+
+	public void copyObjectInS3(String sourceKey, String destinationKey) {
+		// Copy the object into a new object in the same bucket.
+		CopyObjectRequest copyObjRequest = new CopyObjectRequest(bucketName, sourceKey, bucketName, destinationKey);
+		s3client.copyObject(copyObjRequest);
 	}
 
 	public String getObjectNameFromS3Url(String fullS3Url) {

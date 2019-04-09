@@ -110,6 +110,20 @@ public class PlayerService {
 
 				Player player = playerRepository.save(playerObject);
 				if (player != null) {
+
+					if (player.getProfileImageUrl() != null && player.getProfileImageUrl() != "") {
+						String profileUrl = player.getProfileImageUrl();
+						String oldFileName = profileUrl.substring(profileUrl.lastIndexOf("/") + 1);
+						if (oldFileName.charAt(0) == '0') {
+							String sourceKey = amazonClient.getFileKeyFromUrl(playerRequest.getProfileImageUrl());
+							String destinationKey = (sourceKey.replace("0/", "" + player.getPlayerId() + '/')).replace("0_", "" + player.getPlayerId() + "_");
+							// 0/videos/0_video_1554793308240-abc.mp4
+							amazonClient.copyObjectInS3(amazonClient.getFileKeyFromUrl(playerRequest.getProfileImageUrl()), destinationKey);
+							amazonClient.deleteFileFromS3Bucket(player.getProfileImageUrl());
+							player.setProfileImageUrl((player.getProfileImageUrl().replace("0/", "" + player.getPlayerId() + '/')).replace("0_", "" + player.getPlayerId() + "_"));
+						}
+
+					}
 					player = populatePreSignedUrl(player);
 					playerResponse.setStatus(PlayerResponse.StatusEnum.SUCCESS);
 					playerResponse.setMessage("Player has been successfully created");
@@ -413,8 +427,8 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
 				dashboardElement.setDescription(image.getDescription());
 				dashboardElement.setApplauds(image.getApplauds());
-				if(image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0){
-					if(image.getApplaudDoneByPlayerIds().contains(playerId)){
+				if (image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0) {
+					if (image.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
 					}
 				}
@@ -446,8 +460,8 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
 				dashboardElement.setDescription(video.getDescription());
 				dashboardElement.setApplauds(video.getApplauds());
-				if(video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0){
-					if(video.getApplaudDoneByPlayerIds().contains(playerId)){
+				if (video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0) {
+					if (video.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
 					}
 				}
@@ -473,8 +487,8 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
 				dashboardElement.setDescription(post.getPost());
 				dashboardElement.setApplauds(post.getApplauds());
-				if(post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0){
-					if(post.getApplaudDoneByPlayerIds().contains(playerId)){
+				if (post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0) {
+					if (post.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
 					}
 				}
@@ -562,9 +576,8 @@ public class PlayerService {
 						}
 					}
 				}
-				
-				
-				if(!isFriendRequestAlreadyExists){
+
+				if (!isFriendRequestAlreadyExists) {
 					// Get the pending friend request for the users
 					pendingFriendRequestList = player.getPendingFriendRequests();
 					if (pendingFriendRequestList != null && pendingFriendRequestList.size() > 0) {
@@ -576,7 +589,6 @@ public class PlayerService {
 						}
 					}
 				}
-				
 
 				if (!isFriendRequestAlreadyExists) {
 					Friend friendObject = new Friend();
@@ -753,8 +765,8 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
 				dashboardElement.setDescription(image.getDescription());
 				dashboardElement.setApplauds(image.getApplauds());
-				if(image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0){
-					if(image.getApplaudDoneByPlayerIds().contains(playerId)){
+				if (image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0) {
+					if (image.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
 					}
 				}
@@ -786,8 +798,8 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
 				dashboardElement.setDescription(video.getDescription());
 				dashboardElement.setApplauds(video.getApplauds());
-				if(video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0){
-					if(video.getApplaudDoneByPlayerIds().contains(playerId)){
+				if (video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0) {
+					if (video.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
 					}
 				}
@@ -813,8 +825,8 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
 				dashboardElement.setDescription(post.getPost());
 				dashboardElement.setApplauds(post.getApplauds());
-				if(post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0){
-					if(post.getApplaudDoneByPlayerIds().contains(playerId)){
+				if (post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0) {
+					if (post.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
 					}
 				}
