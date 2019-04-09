@@ -49,7 +49,7 @@ public class PostsApiController implements PostsApi {
 		this.request = request;
 	}
 
-	public ResponseEntity<ResponseTemplate> applaudPostByPostId(@ApiParam(value = "The post id of the post which need to be applauded", required = true) @PathVariable("postId") Long postId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
+	public ResponseEntity<ResponseTemplate> applaudPostByPostId(@ApiParam(value = "The post id of the post which need to be applauded",required=true) @PathVariable("postId") Long postId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "" , allowableValues="true, false", defaultValue="false") @RequestHeader(value="unapplaud", required=false) String unapplaud) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -61,7 +61,7 @@ public class PostsApiController implements PostsApi {
 		}
 
 		ResponseTemplate responseTemplate = new ResponseTemplate();
-		postService.applaudPostByPostId(postId, responseTemplate);
+		postService.applaudPostByPostId(postId, identifier, responseTemplate, unapplaud);
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 

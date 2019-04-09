@@ -85,6 +85,9 @@ public class DashboardElement {
 
 	@JsonProperty("applauds")
 	private Long applauds = null;
+	
+	@JsonProperty("isApplaudDoneBySignedInPlayer")
+	private boolean isApplaudDoneBySignedInPlayer = false;
 
 	@JsonProperty("postedTimestamp")
 	private OffsetDateTime postedTimestamp = null;
@@ -256,6 +259,14 @@ public class DashboardElement {
 
 	public void setApplauds(Long applauds) {
 		this.applauds = applauds;
+	}
+
+	public boolean isApplaudDoneBySignedInPlayer() {
+		return isApplaudDoneBySignedInPlayer;
+	}
+
+	public void setApplaudDoneBySignedInPlayer(boolean isApplaudDoneBySignedInPlayer) {
+		this.isApplaudDoneBySignedInPlayer = isApplaudDoneBySignedInPlayer;
 	}
 
 	public DashboardElement postedTimestamp(OffsetDateTime postedTimestamp) {

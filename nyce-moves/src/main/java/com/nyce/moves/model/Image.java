@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,6 +50,10 @@ public class Image {
 
 	@JsonProperty("applauds")
 	private Long applauds = null;
+	
+	@JsonProperty
+	@ElementCollection
+	private List<Long> applaudDoneByPlayerIds = null;
 
 	@JsonProperty("postedTimestamp")
 	private OffsetDateTime postedTimestamp = null;
@@ -210,6 +215,14 @@ public class Image {
 
 	public void setComments(List<Comments> comments) {
 		this.comments = comments;
+	}
+	
+	public List<Long> getApplaudDoneByPlayerIds() {
+		return applaudDoneByPlayerIds;
+	}
+
+	public void setApplaudDoneByPlayerIds(List<Long> applaudDoneByPlayerIds) {
+		this.applaudDoneByPlayerIds = applaudDoneByPlayerIds;
 	}
 
 	public Image height(Integer height) {

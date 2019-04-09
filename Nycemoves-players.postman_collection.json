@@ -35,7 +35,6 @@
 			},
 			"response": [
 				{
-					"id": "429c69a0-6e7b-40cd-bee7-592e2fa9eb85",
 					"name": "PlayerRegisteration01",
 					"originalRequest": {
 						"method": "POST",
@@ -68,21 +67,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Sun, 24 Mar 2019 10:16:25 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -103,7 +102,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"city\": \"boston\",\r\n  \"country\": \"usa\",\r\n  \"email\": \"napolean.hill@gmail.com\",\r\n  \"firstName\": \"Napolean\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Hill\",\r\n  \"password\": \"hill\",\r\n  \"primarySport\": \"football\",\r\n  \"dob\": \"2003-08-23\",\r\n  \"school\": \"New England\"\r\n \r\n}"
+					"raw": "{\r\n  \"city\": \"boston\",\r\n  \"country\": \"usa\",\r\n  \"email\": \"napolean.hill12@gmail.com\",\r\n  \"firstName\": \"Napolean12\",\r\n  \"gender\": \"male\",\r\n  \"lastName\": \"Hill\",\r\n  \"password\": \"hill\",\r\n  \"primarySport\": \"football\",\r\n  \"dob\": \"2003-08-23\",\r\n  \"school\": \"New England\"\r\n \r\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players",
@@ -160,7 +159,6 @@
 			},
 			"response": [
 				{
-					"id": "3532e001-5ea2-4cfe-8fbc-48bba87d52b5",
 					"name": "PlayerLogin",
 					"originalRequest": {
 						"method": "GET",
@@ -205,21 +203,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:21:07 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -239,11 +237,11 @@
 					},
 					{
 						"key": "username",
-						"value": "napolean.hill@gmail.com"
+						"value": "Dj.chaubey@gmail.co"
 					},
 					{
 						"key": "password",
-						"value": "hill"
+						"value": "aaaaaa"
 					}
 				],
 				"body": {
@@ -267,7 +265,6 @@
 			},
 			"response": [
 				{
-					"id": "a5145b19-0014-4364-af17-4833095b1cc8",
 					"name": "PlayerLogin",
 					"originalRequest": {
 						"method": "GET",
@@ -312,21 +309,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:21:07 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -393,7 +390,10 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 					"protocol": "http",
@@ -411,7 +411,6 @@
 			},
 			"response": [
 				{
-					"id": "60fb46ca-89ae-42bc-8014-d937d6278f5b",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -427,7 +426,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -448,21 +450,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -501,7 +503,10 @@
 						"value": "1"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/searchFriends",
 					"protocol": "http",
@@ -520,7 +525,6 @@
 			},
 			"response": [
 				{
-					"id": "3bd046e4-d905-4299-8933-2cd35396b7bf",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -536,7 +540,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -557,21 +564,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -669,7 +676,10 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/posts/1?pageSize=5&pageNumber=1",
 					"protocol": "http",
@@ -745,6 +755,11 @@
 					{
 						"key": "identifier",
 						"value": "{{identifier}}"
+					},
+					{
+						"key": "unapplaud",
+						"value": "false",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -822,6 +837,11 @@
 					{
 						"key": "identifier",
 						"value": "{{identifier}}"
+					},
+					{
+						"key": "unapplaud",
+						"value": "false",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -861,7 +881,10 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/1",
 					"protocol": "http",
@@ -894,7 +917,10 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/images/players/1?pageSize=5&pageNumber=1",
 					"protocol": "http",
@@ -982,7 +1008,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"description\": \"My third video\",\r\n  \"videoUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/videos/1_video_1554201781075-abc.mp4\",\r\n  \"playerId\": 1,\r\n  \"title\": \"My third video\"\r\n}"
+					"raw": "{\r\n  \"description\": \"My third video\",\r\n  \"videoUrl\": \"https://s3.ap-south-1.amazonaws.com/nycemoves/1/videos/1_video_1554201781075-abc.mp4\",\r\n  \"playerId\": 3,\r\n  \"title\": \"My third video\"\r\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1",
@@ -1015,6 +1041,11 @@
 					{
 						"key": "identifier",
 						"value": "{{identifier}}"
+					},
+					{
+						"key": "unapplaud",
+						"value": "false",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -1054,7 +1085,10 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/players/1?pageSize=5&pageNumber=1",
 					"protocol": "http",
@@ -1098,7 +1132,10 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/media/videos/1",
 					"protocol": "http",
@@ -1224,7 +1261,10 @@
 						"value": "{{token}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/comments?pageSize=5&pageNumber=1",
 					"protocol": "http",
@@ -1325,7 +1365,6 @@
 			},
 			"response": [
 				{
-					"id": "ee016e70-f6b5-431b-ae7a-196ad714230b",
 					"name": "PlayerLogin",
 					"originalRequest": {
 						"method": "GET",
@@ -1370,21 +1409,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:21:07 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -1399,15 +1438,8 @@
 				"method": "GET",
 				"header": [],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"description": "",
-							"type": "file",
-							"src": "1.PNG"
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "http://{{upload-url}}/nycemoves/utilties/service-status",
@@ -1439,8 +1471,8 @@
 					"formdata": [
 						{
 							"key": "file",
-							"description": "",
-							"type": "file"
+							"type": "file",
+							"src": null
 						}
 					]
 				},
@@ -1509,7 +1541,10 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/timeline",
 					"protocol": "http",
@@ -1528,7 +1563,6 @@
 			},
 			"response": [
 				{
-					"id": "34a4495d-f913-49d0-b226-c80a29150555",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1544,7 +1578,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -1565,21 +1602,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -1606,9 +1643,12 @@
 						"value": "{{identifier}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/dashboard",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/3/dashboard",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -1618,14 +1658,13 @@
 						"players-api",
 						"1.0.0",
 						"players",
-						"2",
+						"3",
 						"dashboard"
 					]
 				}
 			},
 			"response": [
 				{
-					"id": "ae0ce9a0-725c-4674-9f2c-8db488fd93d9",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1641,7 +1680,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -1662,21 +1704,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -1704,12 +1746,15 @@
 					},
 					{
 						"key": "friendId",
-						"value": "2"
+						"value": "1"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1/friendRequest",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/3/friendRequest",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -1719,14 +1764,13 @@
 						"players-api",
 						"1.0.0",
 						"players",
-						"1",
+						"3",
 						"friendRequest"
 					]
 				}
 			},
 			"response": [
 				{
-					"id": "cd4c8c36-7403-4f64-a663-17518e9ba41f",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1742,7 +1786,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -1763,21 +1810,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -1805,12 +1852,15 @@
 					},
 					{
 						"key": "playerId",
-						"value": "2"
+						"value": "1"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/pendingFriendRequests",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/3/pendingFriendRequests",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -1820,14 +1870,13 @@
 						"players-api",
 						"1.0.0",
 						"players",
-						"2",
+						"3",
 						"pendingFriendRequests"
 					]
 				}
 			},
 			"response": [
 				{
-					"id": "f02ea316-9218-454a-b3c4-080509877c87",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1843,7 +1892,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -1864,21 +1916,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -1909,9 +1961,12 @@
 						"value": "1"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/approveFriendRequest",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/3/approveFriendRequest",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -1921,14 +1976,13 @@
 						"players-api",
 						"1.0.0",
 						"players",
-						"2",
+						"3",
 						"approveFriendRequest"
 					]
 				}
 			},
 			"response": [
 				{
-					"id": "999214bb-4f4b-421b-85a7-ac0106013814",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -1944,7 +1998,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -1965,21 +2022,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],
@@ -2014,9 +2071,12 @@
 						"value": "1"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/2/friends",
+					"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/3/friends",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -2026,14 +2086,13 @@
 						"players-api",
 						"1.0.0",
 						"players",
-						"2",
+						"3",
 						"friends"
 					]
 				}
 			},
 			"response": [
 				{
-					"id": "41b968d6-6da3-40eb-8aba-3ee6f94e233a",
 					"name": "GetPlayer",
 					"originalRequest": {
 						"method": "GET",
@@ -2049,7 +2108,10 @@
 								"warning": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://{{url}}/nycemoves/players-api/1.0.0/players/1",
 							"protocol": "http",
@@ -2070,21 +2132,21 @@
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
-							"name": "content-type",
 							"key": "content-type",
 							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
 							"description": ""
 						},
 						{
-							"name": "date",
 							"key": "date",
 							"value": "Mon, 18 Mar 2019 18:22:03 GMT",
+							"name": "date",
 							"description": ""
 						},
 						{
-							"name": "transfer-encoding",
 							"key": "transfer-encoding",
 							"value": "chunked",
+							"name": "transfer-encoding",
 							"description": ""
 						}
 					],

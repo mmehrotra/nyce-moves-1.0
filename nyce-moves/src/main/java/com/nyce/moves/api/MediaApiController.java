@@ -53,7 +53,7 @@ public class MediaApiController implements MediaApi {
 		this.request = request;
 	}
 
-	public ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image", required = true) @PathVariable("imageId") Long imageId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
+	public ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image",required=true) @PathVariable("imageId") Long imageId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "" , allowableValues="true, false", defaultValue="false") @RequestHeader(value="unapplaud", required=false) String unapplaud) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -65,11 +65,11 @@ public class MediaApiController implements MediaApi {
 		}
 
 		ResponseTemplate responseTemplate = new ResponseTemplate();
-		imageService.applaudImageByImageId(imageId, responseTemplate);
+		imageService.applaudImageByImageId(imageId, identifier, responseTemplate, unapplaud);
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched", required = true) @PathVariable("videoId") Long videoId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader(value = "identifier", required = true) Long identifier) {
+	public ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched",required=true) @PathVariable("videoId") Long videoId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "" , allowableValues="true, false", defaultValue="false") @RequestHeader(value="unapplaud", required=false) String unapplaud) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -81,7 +81,7 @@ public class MediaApiController implements MediaApi {
 		}
 
 		ResponseTemplate responseTemplate = new ResponseTemplate();
-		videoService.applaudVideoByVideoId(videoId, responseTemplate);
+		videoService.applaudVideoByVideoId(videoId, identifier, responseTemplate, unapplaud);
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 

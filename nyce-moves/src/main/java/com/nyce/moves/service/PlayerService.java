@@ -30,7 +30,6 @@ import com.nyce.moves.model.DashboardElement.DashboardElementTypeEnum;
 import com.nyce.moves.model.Friend;
 import com.nyce.moves.model.GetDashBoardResponse;
 import com.nyce.moves.model.GetFriendsResponse;
-import com.nyce.moves.model.GetImagesResponse;
 import com.nyce.moves.model.GetPendingFriendsRequestsResponse;
 import com.nyce.moves.model.Image;
 import com.nyce.moves.model.Player;
@@ -414,6 +413,11 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
 				dashboardElement.setDescription(image.getDescription());
 				dashboardElement.setApplauds(image.getApplauds());
+				if(image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0){
+					if(image.getApplaudDoneByPlayerIds().contains(playerId)){
+						dashboardElement.setApplaudDoneBySignedInPlayer(true);
+					}
+				}
 				dashboardElement.setPlayerId(image.getPlayerId());
 				dashboardElement.setPostedTimestamp(image.getPostedTimestamp());
 				dashboardElement.setUrl(image.getImageUrl());
@@ -442,6 +446,11 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
 				dashboardElement.setDescription(video.getDescription());
 				dashboardElement.setApplauds(video.getApplauds());
+				if(video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0){
+					if(video.getApplaudDoneByPlayerIds().contains(playerId)){
+						dashboardElement.setApplaudDoneBySignedInPlayer(true);
+					}
+				}
 				dashboardElement.setPlayerId(video.getPlayerId());
 				dashboardElement.setPostedTimestamp(video.getPostedTimestamp());
 				dashboardElement.setUrl(video.getVideoUrl());
@@ -463,7 +472,12 @@ public class PlayerService {
 				dashboardElement.setDashboardElementId(post.getPostId());
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
 				dashboardElement.setDescription(post.getPost());
-				// dashboardElement.setApplauds(post.getApplauds());
+				dashboardElement.setApplauds(post.getApplauds());
+				if(post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0){
+					if(post.getApplaudDoneByPlayerIds().contains(playerId)){
+						dashboardElement.setApplaudDoneBySignedInPlayer(true);
+					}
+				}
 				dashboardElement.setPlayerId(post.getPostedBy());
 				dashboardElement.setPostedTimestamp(post.getPostedTimestamp());
 				if (post.getComments() != null && post.getComments().size() > 0) {
@@ -536,18 +550,55 @@ public class PlayerService {
 			Player friend = playerRepository.findOne(friendId);
 
 			if (friend != null) {
-				Friend friendObject = new Friend();
-				friendObject.setPlayerId(playerId);
-				friendObject.setName(player.getDisplayName());
-				friendObject.setDisplayImageUrl(player.getProfileImageUrl());
-				friend.addPendingFriendRequestsItem(friendObject);
 
-				playerRepository.save(friend);
+				boolean isFriendRequestAlreadyExists = false;
+				// Get the pending friend request for the users
+				List<Friend> pendingFriendRequestList = friend.getPendingFriendRequests();
+				if (pendingFriendRequestList != null && pendingFriendRequestList.size() > 0) {
+					for (Friend pendingFriend : pendingFriendRequestList) {
+						if (pendingFriend.getPlayerId().longValue() == playerId) {
+							isFriendRequestAlreadyExists = true;
+							break;
+						}
+					}
+				}
+				
+				
+				if(!isFriendRequestAlreadyExists){
+					// Get the pending friend request for the users
+					pendingFriendRequestList = player.getPendingFriendRequests();
+					if (pendingFriendRequestList != null && pendingFriendRequestList.size() > 0) {
+						for (Friend pendingFriend : pendingFriendRequestList) {
+							if (pendingFriend.getPlayerId().longValue() == friendId) {
+								isFriendRequestAlreadyExists = true;
+								break;
+							}
+						}
+					}
+				}
+				
 
-				responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
-				responseTemplate.setMessage("Friend Request has been successfully placed to player with id [" + friendId + "] by player with id [" + playerId + "]");
-				responseTemplate.setStatus(StatusEnum.SUCCESS);
-				return responseTemplate;
+				if (!isFriendRequestAlreadyExists) {
+					Friend friendObject = new Friend();
+					friendObject.setPlayerId(playerId);
+					friendObject.setName(player.getDisplayName());
+					friendObject.setDisplayImageUrl(player.getProfileImageUrl());
+					friend.addPendingFriendRequestsItem(friendObject);
+
+					playerRepository.save(friend);
+
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Friend Request has been successfully placed to player with id [" + friendId + "] by player with id [" + playerId + "]");
+					responseTemplate.setStatus(StatusEnum.SUCCESS);
+					return responseTemplate;
+
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Friend Request Already Exists between [" + friendId + "] and [" + playerId + "]");
+					responseTemplate.setStatus(StatusEnum.FAILURE);
+					return responseTemplate;
+				}
+
 			} else {
 				responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 				responseTemplate.setMessage("Friend Request failed. No player exist with friend Id [" + friendId + "]");
@@ -702,6 +753,11 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
 				dashboardElement.setDescription(image.getDescription());
 				dashboardElement.setApplauds(image.getApplauds());
+				if(image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0){
+					if(image.getApplaudDoneByPlayerIds().contains(playerId)){
+						dashboardElement.setApplaudDoneBySignedInPlayer(true);
+					}
+				}
 				dashboardElement.setPlayerId(image.getPlayerId());
 				dashboardElement.setPostedTimestamp(image.getPostedTimestamp());
 				dashboardElement.setUrl(image.getImageUrl());
@@ -730,6 +786,11 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
 				dashboardElement.setDescription(video.getDescription());
 				dashboardElement.setApplauds(video.getApplauds());
+				if(video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0){
+					if(video.getApplaudDoneByPlayerIds().contains(playerId)){
+						dashboardElement.setApplaudDoneBySignedInPlayer(true);
+					}
+				}
 				dashboardElement.setPlayerId(video.getPlayerId());
 				dashboardElement.setPostedTimestamp(video.getPostedTimestamp());
 				dashboardElement.setUrl(video.getVideoUrl());
@@ -751,7 +812,12 @@ public class PlayerService {
 				dashboardElement.setDashboardElementId(post.getPostId());
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
 				dashboardElement.setDescription(post.getPost());
-				// dashboardElement.setApplauds(post.getApplauds());
+				dashboardElement.setApplauds(post.getApplauds());
+				if(post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0){
+					if(post.getApplaudDoneByPlayerIds().contains(playerId)){
+						dashboardElement.setApplaudDoneBySignedInPlayer(true);
+					}
+				}
 				dashboardElement.setPlayerId(post.getPostedBy());
 				dashboardElement.setPostedTimestamp(post.getPostedTimestamp());
 				if (post.getComments() != null && post.getComments().size() > 0) {

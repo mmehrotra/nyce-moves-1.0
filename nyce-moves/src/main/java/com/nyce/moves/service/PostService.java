@@ -2,6 +2,7 @@ package com.nyce.moves.service;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,32 +55,32 @@ public class PostService {
 	}
 
 	public Player deletePost(Long playerId, Long postId, ResponseTemplate responseTemplate) {
-		
+
 		Player player = playerRepository.findOne(playerId);
 		Player returnPlayer = null;
-		if(player != null){
+		if (player != null) {
 			List<Post> posts = player.getPosts();
-			
+
 			boolean deleteIndicator = posts.removeIf(p -> p.getPostId() == postId);
-			if(deleteIndicator){
+			if (deleteIndicator) {
 				player.setPosts(posts);
 				returnPlayer = playerRepository.save(player);
 				postRepository.delete(postId);
 				responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
 				responseTemplate.setMessage("Post has been deleted successfully with post id [" + postId + "] and playerId [" + playerId + "]");
-			}else{
+			} else {
 				responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 				responseTemplate.setMessage("Post was not found in the system against the player id [" + playerId + "] and postId [" + postId + "]");
 			}
-			
-		}else{
+
+		} else {
 			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 			responseTemplate.setMessage("Player was not found in the system against the player id [" + playerId + "]");
 		}
-		
+
 		return returnPlayer;
 	}
 
@@ -110,23 +111,53 @@ public class PostService {
 
 		return getAllPostsResponse;
 	}
-	
-	public ResponseTemplate applaudPostByPostId(Long postId, ResponseTemplate responseTemplate) {
+
+	public ResponseTemplate applaudPostByPostId(Long postId, Long playerId, ResponseTemplate responseTemplate, String unapplaud) {
 
 		Post post = postRepository.findOne(postId);
-		
-		if(post != null){
-			post.setApplauds(post.getApplauds() + 1);
-			postRepository.save(post);
-			responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
-			responseTemplate.setMessage("Applaud on postId [" + postId + "] has been increased by 1, Now, the applaud count is [" + post.getApplauds() + "]");
-			responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
-		}else{
+
+		if (post != null) {
+			if (unapplaud != null && unapplaud.equalsIgnoreCase("true")) {
+				List<Long> players = post.getApplaudDoneByPlayerIds();
+				if (players != null && players.size() > 0 && players.contains(playerId)) {
+					players.remove(playerId);
+					post.setApplauds(post.getApplauds() - 1);
+					post.setApplaudDoneByPlayerIds(players);
+					postRepository.save(post);
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Applaud on postId [" + postId + "] has been decreased by 1, Now, the applaud count is [" + post.getApplauds() + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Current player [" + playerId + " ] is not in the list of players who have applauded the post [" + postId + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
+				}
+			} else {
+				post.setApplauds(post.getApplauds() + 1);
+				List<Long> players = post.getApplaudDoneByPlayerIds();
+				if (players == null) {
+					players = new ArrayList<Long>();
+				}
+				if (!players.contains(playerId)) {
+					players.add(playerId);
+					post.setApplaudDoneByPlayerIds(players);
+					postRepository.save(post);
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Applaud on postId [" + postId + "] has been increased by 1, Now, the applaud count is [" + post.getApplauds() + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Current player [" + playerId + " ] has already appluaded the post [" + postId + "], hence applaud has not been applied");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
+				}
+			}
+
+		} else {
 			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			responseTemplate.setMessage("No Post was found against the postId [" + postId + "], hence applaud has not been applied");
 			responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 		}
-		
+
 		return responseTemplate;
 	}
 

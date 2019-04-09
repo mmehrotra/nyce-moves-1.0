@@ -28,11 +28,11 @@ public class ImageService {
 
 	@Autowired
 	ImageRepository imageRepository;
-	
+
 	@Autowired
 	private AmazonClient amazonClient;
 
-	public CreateImageResponse addImage(Long playerId, ImageRequest imageRequest,CreateImageResponse createImageResponse) {
+	public CreateImageResponse addImage(Long playerId, ImageRequest imageRequest, CreateImageResponse createImageResponse) {
 
 		Image image = new Image();
 		image.setApplauds(0l);
@@ -74,32 +74,32 @@ public class ImageService {
 	}
 
 	public Player deleteImage(Long playerId, Long imageId, ResponseTemplate responseTemplate) {
-		
+
 		Player player = playerRepository.findOne(playerId);
 		Player returnPlayer = null;
-		if(player != null){
+		if (player != null) {
 			List<Image> images = player.getImages();
-			
+
 			boolean deleteIndicator = images.removeIf(p -> p.getImageId() == imageId);
-			if(deleteIndicator){
+			if (deleteIndicator) {
 				player.setImages(images);
 				returnPlayer = playerRepository.save(player);
 				imageRepository.delete(imageId);
 				responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
 				responseTemplate.setMessage("Image has been deleted successfully with image id [" + imageId + "] and playerId [" + playerId + "]");
-			}else{
+			} else {
 				responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 				responseTemplate.setMessage("Image was not found in the system against the player id [" + playerId + "] and imageId [" + imageId + "]");
 			}
-			
-		}else{
+
+		} else {
 			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 			responseTemplate.setMessage("Player was not found in the system against the player id [" + playerId + "]");
 		}
-		
+
 		return returnPlayer;
 	}
 
@@ -127,15 +127,15 @@ public class ImageService {
 			getImagesResponse.setPageSize(pageSize.longValue());
 			getImagesResponse.setTotalNumberofPagesAvailable(0l);
 		}
-		
+
 		return getImagesResponse;
 	}
-	
+
 	public CreateImageResponse getImageByImageId(Long imageId, CreateImageResponse createImageResponse) {
 
 		Image image = imageRepository.findOne(imageId);
-		
-		if(image != null){
+
+		if (image != null) {
 			createImageResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			if (image.getImageUrl() != null && image.getImageUrl() != "") {
 				String objectName = amazonClient.getObjectNameFromS3Url(image.getImageUrl());
@@ -145,35 +145,66 @@ public class ImageService {
 			createImageResponse.setData(image);
 			createImageResponse.setMessage("Image has been successfully fetched against the image id [" + imageId + "]");
 			createImageResponse.setStatus(StatusEnum.SUCCESS);
-		}else{
+		} else {
 			createImageResponse.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			createImageResponse.setMessage("Image has not been successfully fetched against the image id [" + imageId + "]");
 			createImageResponse.setStatus(StatusEnum.FAILURE);
 		}
-		
+
 		return createImageResponse;
 	}
-	
-	
-	public ResponseTemplate applaudImageByImageId(Long imageId, ResponseTemplate responseTemplate) {
+
+	public ResponseTemplate applaudImageByImageId(Long imageId, Long playerId, ResponseTemplate responseTemplate, String unapplaud) {
 
 		Image image = imageRepository.findOne(imageId);
-		
-		if(image != null){
-			image.setApplauds(image.getApplauds() + 1);
-			imageRepository.save(image);
-			responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
-			responseTemplate.setMessage("Applaud on imageId [" + imageId + "] has been increased by 1, Now, the applaud count is [" + image.getApplauds() + "]");
-			responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
-		}else{
+
+		if (image != null) {
+
+			if (unapplaud != null && unapplaud.equalsIgnoreCase("true")) {
+				List<Long> players = image.getApplaudDoneByPlayerIds();
+				if (players != null && players.size() > 0 && players.contains(playerId)) {
+					players.remove(playerId);
+					image.setApplauds(image.getApplauds() - 1);
+					image.setApplaudDoneByPlayerIds(players);
+					imageRepository.save(image);
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Applaud on imageId [" + imageId + "] has been decreased by 1, Now, the applaud count is [" + image.getApplauds() + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Current player [" + playerId + " ] is not in the list of players who have applauded the image [" + imageId + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
+				}
+			} else {
+				image.setApplauds(image.getApplauds() + 1);
+				List<Long> players = image.getApplaudDoneByPlayerIds();
+				if (players == null) {
+					players = new ArrayList<Long>();
+				}
+				if (!players.contains(playerId)) {
+					players.add(playerId);
+					image.setApplaudDoneByPlayerIds(players);
+					imageRepository.save(image);
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Applaud on imageId [" + imageId + "] has been increased by 1, Now, the applaud count is [" + image.getApplauds() + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Current player [" + playerId + " ] has already appluaded the image [" + imageId + "], hence applaud has not been applied");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
+				}
+
+			}
+
+		} else {
 			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			responseTemplate.setMessage("No Image was found against the imageId [" + imageId + "], hence applaud has not been applied");
 			responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
 		}
-		
+
 		return responseTemplate;
 	}
-	
+
 	public List<Image> modifyPreSignedUrls(List<Image> images) {
 
 		for (Image image : images) {
@@ -183,10 +214,8 @@ public class ImageService {
 				image.setPreSignedImageUrl(presignedUrl);
 			}
 		}
-		
+
 		return images;
 	}
-
-	
 
 }

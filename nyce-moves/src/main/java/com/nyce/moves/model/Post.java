@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +42,10 @@ public class Post {
 
 	@JsonProperty("applauds")
 	private Long applauds = null;
+	
+	@JsonProperty
+	@ElementCollection
+	private List<Long> applaudDoneByPlayerIds = null;
 
 	@JsonProperty("postedTimestamp")
 	private OffsetDateTime postedTimestamp = null;
@@ -156,6 +161,14 @@ public class Post {
 
 	public void setApplauds(Long applauds) {
 		this.applauds = applauds;
+	}
+	
+	public List<Long> getApplaudDoneByPlayerIds() {
+		return applaudDoneByPlayerIds;
+	}
+
+	public void setApplaudDoneByPlayerIds(List<Long> applaudDoneByPlayerIds) {
+		this.applaudDoneByPlayerIds = applaudDoneByPlayerIds;
 	}
 
 	@Override

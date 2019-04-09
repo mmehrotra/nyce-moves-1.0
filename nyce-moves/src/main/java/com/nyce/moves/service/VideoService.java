@@ -2,6 +2,7 @@ package com.nyce.moves.service;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,16 +152,46 @@ public class VideoService {
 		return createVideoResponse;
 	}
 
-	public ResponseTemplate applaudVideoByVideoId(Long videoId, ResponseTemplate responseTemplate) {
+	public ResponseTemplate applaudVideoByVideoId(Long videoId, Long playerId, ResponseTemplate responseTemplate, String unapplaud) {
 
 		Video video = videoRepository.findOne(videoId);
 
 		if (video != null) {
-			video.setApplauds(video.getApplauds() + 1);
-			videoRepository.save(video);
-			responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
-			responseTemplate.setMessage("Applaud on videoId [" + videoId + "] has been increased by 1, Now, the applaud count is [" + video.getApplauds() + "]");
-			responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+			if (unapplaud != null && unapplaud.equalsIgnoreCase("true")) {
+				List<Long> players = video.getApplaudDoneByPlayerIds();
+				if (players != null && players.size() > 0 && players.contains(playerId)) {
+					players.remove(playerId);
+					video.setApplauds(video.getApplauds() - 1);
+					video.setApplaudDoneByPlayerIds(players);
+					videoRepository.save(video);
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Applaud on videoId [" + videoId + "] has been decreased by 1, Now, the applaud count is [" + video.getApplauds() + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Current player [" + playerId + " ] is not in the list of players who have applauded the video [" + videoId + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
+				}
+			} else {
+				video.setApplauds(video.getApplauds() + 1);
+
+				List<Long> players = video.getApplaudDoneByPlayerIds();
+				if (players == null) {
+					players = new ArrayList<Long>();
+				}
+				if (!players.contains(playerId)) {
+					players.add(playerId);
+					video.setApplaudDoneByPlayerIds(players);
+					videoRepository.save(video);
+					responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
+					responseTemplate.setMessage("Applaud on videoId [" + videoId + "] has been increased by 1, Now, the applaud count is [" + video.getApplauds() + "]");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
+				} else {
+					responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
+					responseTemplate.setMessage("Current player [" + playerId + " ] has already appluaded the video [" + videoId + "], hence applaud has not been applied");
+					responseTemplate.setStatus(ResponseTemplate.StatusEnum.FAILURE);
+				}
+			}
 		} else {
 			responseTemplate.setCode(ApplicationConstants.FAILURE_CODE_31001);
 			responseTemplate.setMessage("No Video was found against the videoId [" + videoId + "], hence applaud has not been applied");

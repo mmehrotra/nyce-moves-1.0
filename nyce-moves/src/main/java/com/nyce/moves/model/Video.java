@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -53,6 +53,10 @@ public class Video {
 
 	@JsonProperty("applauds")
 	private Long applauds = null;
+	
+	@JsonProperty
+	@ElementCollection
+	private List<Long> applaudDoneByPlayerIds = null;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Comments> comments;
@@ -197,6 +201,14 @@ public class Video {
 
 	public void setApplauds(Long applauds) {
 		this.applauds = applauds;
+	}
+	
+	public List<Long> getApplaudDoneByPlayerIds() {
+		return applaudDoneByPlayerIds;
+	}
+
+	public void setApplaudDoneByPlayerIds(List<Long> applaudDoneByPlayerIds) {
+		this.applaudDoneByPlayerIds = applaudDoneByPlayerIds;
 	}
 
 	public List<Comments> getComments() {

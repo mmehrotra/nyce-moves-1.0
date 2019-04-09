@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -127,11 +128,11 @@ public class Player {
 	private List<Video> videos;
 
 	@JsonProperty("friends")
-	@OneToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL })
 	private List<Friend> friends = null;
 	
 	@JsonProperty("pendingFriendRequests")
-	@OneToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL })
 	private List<Friend> pendingFriendRequests = null;
 	
 

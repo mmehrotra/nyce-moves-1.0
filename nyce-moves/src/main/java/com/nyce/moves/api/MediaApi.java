@@ -33,22 +33,21 @@ import java.util.List;
 @Api(value = "media", description = "the media API")
 public interface MediaApi {
 
-    @ApiOperation(value = "Applaud - like the image", nickname = "applaudImageByImageId", notes = "", response = ResponseTemplate.class, tags={ "images", })
+	@ApiOperation(value = "Applaud - like the image", nickname = "applaudImageByImageId", notes = "", response = ResponseTemplate.class, tags={ "images", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class) })
     @RequestMapping(value = "/media/images/{imageId}/appluad",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image",required=true) @PathVariable("imageId") Long imageId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
+    ResponseEntity<ResponseTemplate> applaudImageByImageId(@ApiParam(value = "The ImageId of the image",required=true) @PathVariable("imageId") Long imageId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "" , allowableValues="true, false", defaultValue="false") @RequestHeader(value="unapplaud", required=false) String unapplaud);
 
-
-    @ApiOperation(value = "Applaud / Like the by video id", nickname = "applaudVideosByVideoId", notes = "", response = ResponseTemplate.class, tags={ "videos", })
+	@ApiOperation(value = "Applaud / Like the by video id", nickname = "applaudVideosByVideoId", notes = "", response = ResponseTemplate.class, tags={ "videos", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ResponseTemplate.class) })
     @RequestMapping(value = "/media/videos/{videoId}/appluad",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched",required=true) @PathVariable("videoId") Long videoId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier);
+    ResponseEntity<ResponseTemplate> applaudVideosByVideoId(@ApiParam(value = "The video id of the video which need to be fetched",required=true) @PathVariable("videoId") Long videoId,@ApiParam(value = "The playerId of the current player" ,required=true) @RequestHeader(value="identifier", required=true) Long identifier,@ApiParam(value = "" , allowableValues="true, false", defaultValue="false") @RequestHeader(value="unapplaud", required=false) String unapplaud);
 
 
     @ApiOperation(value = "Delete a image", nickname = "deleteImage", notes = "Delete a image", response = ResponseTemplate.class, tags={ "images", })
