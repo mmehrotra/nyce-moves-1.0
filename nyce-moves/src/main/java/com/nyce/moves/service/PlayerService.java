@@ -121,6 +121,7 @@ public class PlayerService {
 							amazonClient.copyObjectInS3(amazonClient.getFileKeyFromUrl(playerRequest.getProfileImageUrl()), destinationKey);
 							amazonClient.deleteFileFromS3Bucket(player.getProfileImageUrl());
 							player.setProfileImageUrl((player.getProfileImageUrl().replace("0/", "" + player.getPlayerId() + '/')).replace("0_", "" + player.getPlayerId() + "_"));
+							playerRepository.save(player);
 						}
 
 					}
@@ -427,6 +428,7 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
 				dashboardElement.setDescription(image.getDescription());
 				dashboardElement.setApplauds(image.getApplauds());
+				dashboardElement.setApplaudDoneBySignedInPlayer(false);
 				if (image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0) {
 					if (image.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
@@ -460,6 +462,7 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
 				dashboardElement.setDescription(video.getDescription());
 				dashboardElement.setApplauds(video.getApplauds());
+				dashboardElement.setApplaudDoneBySignedInPlayer(false);
 				if (video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0) {
 					if (video.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
@@ -487,6 +490,7 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
 				dashboardElement.setDescription(post.getPost());
 				dashboardElement.setApplauds(post.getApplauds());
+				dashboardElement.setApplaudDoneBySignedInPlayer(false);
 				if (post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0) {
 					if (post.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
@@ -765,6 +769,7 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.IMAGE);
 				dashboardElement.setDescription(image.getDescription());
 				dashboardElement.setApplauds(image.getApplauds());
+				dashboardElement.setApplaudDoneBySignedInPlayer(false);
 				if (image.getApplaudDoneByPlayerIds() != null && image.getApplaudDoneByPlayerIds().size() > 0) {
 					if (image.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
@@ -798,6 +803,7 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.VIDEO);
 				dashboardElement.setDescription(video.getDescription());
 				dashboardElement.setApplauds(video.getApplauds());
+				dashboardElement.setApplaudDoneBySignedInPlayer(false);
 				if (video.getApplaudDoneByPlayerIds() != null && video.getApplaudDoneByPlayerIds().size() > 0) {
 					if (video.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
@@ -825,6 +831,7 @@ public class PlayerService {
 				dashboardElement.setDashboardElementType(DashboardElementTypeEnum.POST);
 				dashboardElement.setDescription(post.getPost());
 				dashboardElement.setApplauds(post.getApplauds());
+				dashboardElement.setApplaudDoneBySignedInPlayer(false);
 				if (post.getApplaudDoneByPlayerIds() != null && post.getApplaudDoneByPlayerIds().size() > 0) {
 					if (post.getApplaudDoneByPlayerIds().contains(playerId)) {
 						dashboardElement.setApplaudDoneBySignedInPlayer(true);
