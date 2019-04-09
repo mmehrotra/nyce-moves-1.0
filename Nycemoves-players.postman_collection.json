@@ -1494,6 +1494,43 @@
 			"response": []
 		},
 		{
+			"name": "uploadTempFile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "fileType",
+						"value": "image"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{upload-url}}/nycemoves/utilties/players/temp/uploadFile",
+					"protocol": "http",
+					"host": [
+						"{{upload-url}}"
+					],
+					"path": [
+						"nycemoves",
+						"utilties",
+						"players",
+						"temp",
+						"uploadFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "deleteFile",
 			"request": {
 				"method": "DELETE",
@@ -1503,7 +1540,7 @@
 					"formdata": [
 						{
 							"key": "url",
-							"value": "https://s3.ap-south-1.amazonaws.com/nycemoves/1_image_1552929765463-1.PNG",
+							"value": "https://s3.ap-south-1.amazonaws.com/nycemoves/0/videos/0_video_1554793308240-abc.mp4",
 							"type": "text"
 						}
 					]
