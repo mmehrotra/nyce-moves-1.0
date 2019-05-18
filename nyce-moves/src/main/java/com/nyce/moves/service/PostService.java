@@ -1,7 +1,6 @@
 package com.nyce.moves.service;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.nyce.moves.common.ApplicationConstants;
 import com.nyce.moves.common.UtilityFunctions;
+import com.nyce.moves.model.Challenge;
 import com.nyce.moves.model.GetAllPostsResponse;
-import com.nyce.moves.model.Image;
 import com.nyce.moves.model.Player;
 import com.nyce.moves.model.Post;
 import com.nyce.moves.model.PostRequest;
@@ -27,13 +26,16 @@ public class PostService {
 
 	@Autowired
 	PostRepository postRepository;
+	
+	@Autowired
+	PlayerService playerService;
 
 	public Post addPost(Long playerId, PostRequest postRequest) {
 
 		Post post = new Post();
 		post.setPost(postRequest.getPost());
 		post.setPostedBy(playerId);
-		post.setPostedTimestamp(OffsetDateTime.now());
+		post.setPostedTimestamp(new java.sql.Timestamp(new java.util.Date().getTime()));
 		post.setApplauds(0L);
 		long postId = 0L;
 
@@ -41,6 +43,13 @@ public class PostService {
 		Player returnPlayer = null;
 
 		if (player != null) {
+			
+			if(postRequest.getChallengeName() != null && postRequest.getChallengeName().trim() != ""){
+				post.setChallengeName(postRequest.getChallengeName());
+				Challenge challenge = playerService.createChallenge(postRequest.getChallengeName(), player);
+				post.setChallengeId(challenge.getChallangeId());				
+			}
+			
 			player.getPosts().add(post);
 			returnPlayer = playerRepository.save(player);
 			if (returnPlayer != null && returnPlayer.getPosts() != null && returnPlayer.getPosts().size() > 0) {

@@ -1,6 +1,6 @@
 package com.nyce.moves.model;
 
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -52,7 +52,7 @@ public class Comments {
 	private Long commentId = null;
 
 	@JsonProperty("postedTimestamp")
-	private OffsetDateTime postedTimestamp = null;
+	private Timestamp postedTimestamp = null;
 
 	public Comments postedBy(Long postedBy) {
 		this.postedBy = postedBy;
@@ -174,7 +174,7 @@ public class Comments {
 		this.commentId = commentId;
 	}
 
-	public Comments postedTimestamp(OffsetDateTime postedTimestamp) {
+	public Comments postedTimestamp(Timestamp postedTimestamp) {
 		this.postedTimestamp = postedTimestamp;
 		return this;
 	}
@@ -188,11 +188,11 @@ public class Comments {
 
 	@Valid
 
-	public OffsetDateTime getPostedTimestamp() {
+	public Timestamp getPostedTimestamp() {
 		return postedTimestamp;
 	}
 
-	public void setPostedTimestamp(OffsetDateTime postedTimestamp) {
+	public void setPostedTimestamp(Timestamp postedTimestamp) {
 		this.postedTimestamp = postedTimestamp;
 	}
 

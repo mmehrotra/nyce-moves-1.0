@@ -1,13 +1,12 @@
 package com.nyce.moves.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
 import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * PostRequest
@@ -21,6 +20,9 @@ public class PostRequest   {
 
   @JsonProperty("post")
   private String post = null;
+
+  @JsonProperty("challengeName")
+  private String challengeName = null;
 
   public PostRequest postedBy(Long postedBy) {
     this.postedBy = postedBy;
@@ -102,5 +104,15 @@ public class PostRequest   {
     }
     return o.toString().replace("\n", "\n    ");
   }
+
+public String getChallengeName() {
+	return challengeName;
+}
+
+public void setChallengeName(String challengeName) {
+	this.challengeName = challengeName;
+}
+  
+  
 }
 

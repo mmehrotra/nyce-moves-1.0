@@ -2,7 +2,6 @@ package com.nyce.moves.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +22,9 @@ import org.springframework.stereotype.Service;
 
 import com.nyce.moves.common.ApplicationConstants;
 import com.nyce.moves.common.UtilityFunctions;
+import com.nyce.moves.model.Challenge;
+import com.nyce.moves.model.Challenge.ChallengeStatusEnum;
+import com.nyce.moves.model.ChallengeParticipants;
 import com.nyce.moves.model.ChangeEmailRequest;
 import com.nyce.moves.model.ChangePasswordRequest;
 import com.nyce.moves.model.DashboardElement;
@@ -32,6 +34,7 @@ import com.nyce.moves.model.GetDashBoardResponse;
 import com.nyce.moves.model.GetFriendsResponse;
 import com.nyce.moves.model.GetPendingFriendsRequestsResponse;
 import com.nyce.moves.model.Image;
+import com.nyce.moves.model.LightweightChallenge;
 import com.nyce.moves.model.Player;
 import com.nyce.moves.model.PlayerRequest;
 import com.nyce.moves.model.PlayerResponse;
@@ -40,6 +43,7 @@ import com.nyce.moves.model.ResponseTemplate;
 import com.nyce.moves.model.ResponseTemplate.StatusEnum;
 import com.nyce.moves.model.UpdatePlayerRequest;
 import com.nyce.moves.model.Video;
+import com.nyce.moves.repository.ChallengeRepository;
 import com.nyce.moves.repository.ImageRepository;
 import com.nyce.moves.repository.PlayerRepository;
 import com.nyce.moves.repository.PostRepository;
@@ -62,6 +66,9 @@ public class PlayerService {
 
 	@Autowired
 	private AmazonClient amazonClient;
+	
+	@Autowired
+	private ChallengeRepository challengeRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -100,7 +107,7 @@ public class PlayerService {
 				playerObject.setPrimarySport(playerRequest.getPrimarySport());
 				playerObject.setDob(playerRequest.getDob());
 				playerObject.setNumberOfConnections(0L);
-				playerObject.setCreationTime(OffsetDateTime.now());
+				playerObject.setCreationTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 				playerObject.setProfileImageUrl(playerRequest.getProfileImageUrl());
 				if (playerRequest.getGender() != null && playerRequest.getGender().toString().equalsIgnoreCase(Player.GenderEnum.MALE.toString())) {
 					playerObject.setGender(Player.GenderEnum.MALE);
@@ -181,7 +188,7 @@ public class PlayerService {
 		if (player.getProfileImageUrl() != null) {
 			playerInSystem.setProfileImageUrl(player.getProfileImageUrl());
 		}
-		playerInSystem.setUpdateTime(OffsetDateTime.now());
+		playerInSystem.setUpdateTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 
 		Player updatedPlayer = playerRepository.save(playerInSystem);
 		if (updatedPlayer != null) {
@@ -929,6 +936,40 @@ public class PlayerService {
 
 		return getFriendsResponse;
 
+	}
+	
+	public Challenge createChallenge(String challengeName, Player player){
+		Challenge challenge = new Challenge();
+		challenge.setChallangeName(challengeName);
+		challenge.setChallangeCreatedBy(player.getPlayerId());
+		challenge.setChallangeOwnerName(player.getDisplayName());
+		challenge.setOwnerProfileImageUrl(player.getProfileImageUrl());
+		challenge.setChallanageCreationTime(new java.sql.Timestamp(new java.util.Date().getTime()));
+		challenge.setChallengeStatus(ChallengeStatusEnum.OPEN);
+		
+		ChallengeParticipants friend = new ChallengeParticipants();
+		friend.setName(player.getDisplayName());
+		friend.setPlayerId(player.getPlayerId());
+		friend.setDisplayImageUrl(player.getProfileImageUrl());
+		List<ChallengeParticipants> friends = new ArrayList<ChallengeParticipants>();
+		friends.add(friend);
+		challenge.setChallengeParticipants(friends);
+		
+		Challenge returnChallenge = challengeRepository.save(challenge);
+		
+		if(player.getLightweightChallenges() == null){
+	    	List<LightweightChallenge> lightweightChallenges = new ArrayList<LightweightChallenge>();
+	    	player.setLightweightChallenges(lightweightChallenges);
+	    }
+	    
+		List<LightweightChallenge> challengesFromPlayer = player.getLightweightChallenges();
+	    LightweightChallenge lightweightChallenge = new LightweightChallenge();
+	    lightweightChallenge.setChallangeId(returnChallenge.getChallangeId());
+	    lightweightChallenge.setChallangeName(returnChallenge.getChallangeName());
+	    challengesFromPlayer.add(lightweightChallenge);
+		player.setLightweightChallenges(challengesFromPlayer);
+		
+		return returnChallenge;
 	}
 
 }

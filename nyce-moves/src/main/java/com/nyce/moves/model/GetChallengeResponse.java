@@ -1,7 +1,5 @@
 package com.nyce.moves.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -15,12 +13,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * GetPendingFriendsRequestsResponse
+ * GetChallengeResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-02T15:09:35.250+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-05-18T16:26:14.015+05:30")
 
-public class GetPendingFriendsRequestsResponse   {
+public class GetChallengeResponse   {
   /**
    * Gets or Sets status
    */
@@ -62,13 +60,9 @@ public class GetPendingFriendsRequestsResponse   {
   private String message = null;
 
   @JsonProperty("data")
-  @Valid
-  private List<Friend> data = null;
+  private Challenge data = null;
 
-  @JsonProperty("numberOfPendingRequests")
-  private Long numberOfPendingRequests = null;
-
-  public GetPendingFriendsRequestsResponse status(StatusEnum status) {
+  public GetChallengeResponse status(StatusEnum status) {
     this.status = status;
     return this;
   }
@@ -88,7 +82,7 @@ public class GetPendingFriendsRequestsResponse   {
     this.status = status;
   }
 
-  public GetPendingFriendsRequestsResponse code(String code) {
+  public GetChallengeResponse code(String code) {
     this.code = code;
     return this;
   }
@@ -108,7 +102,7 @@ public class GetPendingFriendsRequestsResponse   {
     this.code = code;
   }
 
-  public GetPendingFriendsRequestsResponse message(String message) {
+  public GetChallengeResponse message(String message) {
     this.message = message;
     return this;
   }
@@ -128,16 +122,8 @@ public class GetPendingFriendsRequestsResponse   {
     this.message = message;
   }
 
-  public GetPendingFriendsRequestsResponse data(List<Friend> data) {
+  public GetChallengeResponse data(Challenge data) {
     this.data = data;
-    return this;
-  }
-
-  public GetPendingFriendsRequestsResponse addDataItem(Friend dataItem) {
-    if (this.data == null) {
-      this.data = new ArrayList<Friend>();
-    }
-    this.data.add(dataItem);
     return this;
   }
 
@@ -149,32 +135,12 @@ public class GetPendingFriendsRequestsResponse   {
 
   @Valid
 
-  public List<Friend> getData() {
+  public Challenge getData() {
     return data;
   }
 
-  public void setData(List<Friend> data) {
+  public void setData(Challenge data) {
     this.data = data;
-  }
-
-  public GetPendingFriendsRequestsResponse numberOfPendingRequests(Long numberOfPendingRequests) {
-    this.numberOfPendingRequests = numberOfPendingRequests;
-    return this;
-  }
-
-  /**
-   * Get numberOfPendingRequests
-   * @return numberOfPendingRequests
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getNumberOfPendingRequests() {
-    return numberOfPendingRequests;
-  }
-
-  public void setNumberOfPendingRequests(Long numberOfPendingRequests) {
-    this.numberOfPendingRequests = numberOfPendingRequests;
   }
 
 
@@ -186,29 +152,27 @@ public class GetPendingFriendsRequestsResponse   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetPendingFriendsRequestsResponse getPendingFriendsRequestsResponse = (GetPendingFriendsRequestsResponse) o;
-    return Objects.equals(this.status, getPendingFriendsRequestsResponse.status) &&
-        Objects.equals(this.code, getPendingFriendsRequestsResponse.code) &&
-        Objects.equals(this.message, getPendingFriendsRequestsResponse.message) &&
-        Objects.equals(this.data, getPendingFriendsRequestsResponse.data) &&
-        Objects.equals(this.numberOfPendingRequests, getPendingFriendsRequestsResponse.numberOfPendingRequests);
+    GetChallengeResponse getChallengeResponse = (GetChallengeResponse) o;
+    return Objects.equals(this.status, getChallengeResponse.status) &&
+        Objects.equals(this.code, getChallengeResponse.code) &&
+        Objects.equals(this.message, getChallengeResponse.message) &&
+        Objects.equals(this.data, getChallengeResponse.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, code, message, data, numberOfPendingRequests);
+    return Objects.hash(status, code, message, data);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetPendingFriendsRequestsResponse {\n");
+    sb.append("class GetChallengeResponse {\n");
     
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
-    sb.append("    numberOfPendingRequests: ").append(toIndentedString(numberOfPendingRequests)).append("\n");
     sb.append("}");
     return sb.toString();
   }

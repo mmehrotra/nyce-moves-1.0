@@ -50,7 +50,7 @@ public class CommentsService {
 
 		Comments comments = new Comments();
 		comments.setComments(commentsRequest.getComments());
-		comments.setPostedTimestamp(OffsetDateTime.now());
+		comments.setPostedTimestamp(new java.sql.Timestamp(new java.util.Date().getTime()));
 		comments.setPostedBy(playerId);
 		long commentsId = 0L;
 

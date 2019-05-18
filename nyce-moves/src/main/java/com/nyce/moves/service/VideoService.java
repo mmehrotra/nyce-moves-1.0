@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.nyce.moves.common.ApplicationConstants;
 import com.nyce.moves.common.UtilityFunctions;
+import com.nyce.moves.model.Challenge;
 import com.nyce.moves.model.CreateVideoResponse;
 import com.nyce.moves.model.CreateVideoResponse.StatusEnum;
 import com.nyce.moves.model.GetVideosResponse;
@@ -31,6 +32,9 @@ public class VideoService {
 
 	@Autowired
 	private AmazonClient amazonClient;
+	
+	@Autowired
+	PlayerService playerService;
 
 	public CreateVideoResponse addVideo(Long playerId, VideoRequest videoRequest, CreateVideoResponse createVideoResponse) {
 
@@ -39,7 +43,7 @@ public class VideoService {
 		video.setDescription(videoRequest.getDescription());
 		video.setVideoUrl(videoRequest.getVideoUrl());
 		video.setPlayerId(playerId);
-		video.setPostedTimestamp(OffsetDateTime.now());
+		video.setPostedTimestamp(new java.sql.Timestamp(new java.util.Date().getTime()));
 		video.setTitle(videoRequest.getTitle());
 		long videoId = 0L;
 
@@ -47,6 +51,13 @@ public class VideoService {
 		Player returnPlayer = null;
 
 		if (player != null) {
+			
+			if(videoRequest.getChallengeName() != null && videoRequest.getChallengeName().trim() != ""){
+				video.setChallengeName(videoRequest.getChallengeName());
+				Challenge challenge = playerService.createChallenge(videoRequest.getChallengeName(), player);
+				video.setChallengeId(challenge.getChallangeId());				
+			}
+			
 			player.getVideos().add(video);
 			returnPlayer = playerRepository.save(player);
 			if (returnPlayer != null && returnPlayer.getVideos() != null && returnPlayer.getVideos().size() > 0) {

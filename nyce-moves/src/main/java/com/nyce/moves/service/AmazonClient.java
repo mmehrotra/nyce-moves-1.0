@@ -39,11 +39,13 @@ public class AmazonClient {
 	private String accessKey;
 	@Value("${amazonProperties.secretKey}")
 	private String secretKey;
+	@Value("${amazonProperties.region}")
+	private String region;	
 
 	@PostConstruct
 	private void initializeAmazon() {
 		BasicAWSCredentials awsCreds = new BasicAWSCredentials(this.accessKey, this.secretKey);
-		this.s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.AP_SOUTH_1).build();
+		this.s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(region).build();
 	}
 
 	private File convertMultiPartToFile(MultipartFile file) throws IOException {

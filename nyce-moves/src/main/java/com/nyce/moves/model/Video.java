@@ -1,6 +1,6 @@
 package com.nyce.moves.model;
 
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,17 +49,23 @@ public class Video {
 	private Long videoId = null;
 
 	@JsonProperty("postedTimestamp")
-	private OffsetDateTime postedTimestamp = null;
+	private Timestamp postedTimestamp = null;
 
 	@JsonProperty("applauds")
 	private Long applauds = null;
-	
+
 	@JsonProperty
 	@ElementCollection
 	private List<Long> applaudDoneByPlayerIds = null;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Comments> comments;
+
+	@JsonProperty("challengeName")
+	private String challengeName = null;
+
+	@JsonProperty("challengeId")
+	private Long challengeId = null;
 
 	public Video playerId(Long playerId) {
 		this.playerId = playerId;
@@ -161,7 +167,7 @@ public class Video {
 		this.videoId = videoId;
 	}
 
-	public Video postedTimestamp(OffsetDateTime postedTimestamp) {
+	public Video postedTimestamp(Timestamp postedTimestamp) {
 		this.postedTimestamp = postedTimestamp;
 		return this;
 	}
@@ -175,11 +181,11 @@ public class Video {
 
 	@Valid
 
-	public OffsetDateTime getPostedTimestamp() {
+	public Timestamp getPostedTimestamp() {
 		return postedTimestamp;
 	}
 
-	public void setPostedTimestamp(OffsetDateTime postedTimestamp) {
+	public void setPostedTimestamp(Timestamp postedTimestamp) {
 		this.postedTimestamp = postedTimestamp;
 	}
 
@@ -202,7 +208,7 @@ public class Video {
 	public void setApplauds(Long applauds) {
 		this.applauds = applauds;
 	}
-	
+
 	public List<Long> getApplaudDoneByPlayerIds() {
 		return applaudDoneByPlayerIds;
 	}
@@ -269,6 +275,22 @@ public class Video {
 
 	public void setPreSignedVideoUrl(String preSignedVideoUrl) {
 		this.preSignedVideoUrl = preSignedVideoUrl;
+	}
+
+	public String getChallengeName() {
+		return challengeName;
+	}
+
+	public void setChallengeName(String challengeName) {
+		this.challengeName = challengeName;
+	}
+
+	public Long getChallengeId() {
+		return challengeId;
+	}
+
+	public void setChallengeId(Long challengeId) {
+		this.challengeId = challengeId;
 	}
 
 }

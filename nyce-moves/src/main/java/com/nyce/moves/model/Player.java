@@ -1,7 +1,8 @@
 package com.nyce.moves.model;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+//import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -96,7 +97,7 @@ public class Player {
 	private String primarySport = null;
 
 	@JsonProperty("dob")
-	private LocalDate dob = null;
+	private Date dob = null;
 
 	@JsonProperty("profileImageUrl")
 	private String profileImageUrl = null;
@@ -110,10 +111,10 @@ public class Player {
 	private Long playerId = null;
 
 	@JsonProperty("creationTime")
-	private OffsetDateTime creationTime = null;
+	private Timestamp creationTime = null;
 
 	@JsonProperty("updateTime")
-	private OffsetDateTime updateTime = null;
+	private Timestamp updateTime = null;
 
 	@JsonProperty("numberOfConnections")
 	private Long numberOfConnections = null;
@@ -130,11 +131,14 @@ public class Player {
 	@JsonProperty("friends")
 	@ManyToMany(cascade = { CascadeType.ALL })
 	private List<Friend> friends = null;
-	
+
 	@JsonProperty("pendingFriendRequests")
 	@ManyToMany(cascade = { CascadeType.ALL })
 	private List<Friend> pendingFriendRequests = null;
-	
+
+	@JsonProperty("challenges")
+	@ManyToMany(cascade = { CascadeType.ALL })
+	private List<LightweightChallenge> lightweightChallenges = null;
 
 	public Player email(String email) {
 		this.email = email;
@@ -336,7 +340,7 @@ public class Player {
 		this.primarySport = primarySport;
 	}
 
-	public Player dob(LocalDate dob) {
+	public Player dob(Date dob) {
 		this.dob = dob;
 		return this;
 	}
@@ -350,11 +354,11 @@ public class Player {
 
 	@Valid
 
-	public LocalDate getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(LocalDate dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
@@ -398,7 +402,7 @@ public class Player {
 		this.playerId = playerId;
 	}
 
-	public Player creationTime(OffsetDateTime creationTime) {
+	public Player creationTime(Timestamp creationTime) {
 		this.creationTime = creationTime;
 		return this;
 	}
@@ -412,15 +416,15 @@ public class Player {
 
 	@Valid
 
-	public OffsetDateTime getCreationTime() {
+	public Timestamp getCreationTime() {
 		return creationTime;
 	}
 
-	public void setCreationTime(OffsetDateTime creationTime) {
+	public void setCreationTime(Timestamp creationTime) {
 		this.creationTime = creationTime;
 	}
 
-	public Player updateTime(OffsetDateTime updateTime) {
+	public Player updateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 		return this;
 	}
@@ -434,11 +438,11 @@ public class Player {
 
 	@Valid
 
-	public OffsetDateTime getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateTime(OffsetDateTime updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 
@@ -517,34 +521,35 @@ public class Player {
 	}
 
 	public Player pendingFriendRequests(List<Friend> pendingFriendRequests) {
-	    this.pendingFriendRequests = pendingFriendRequests;
-	    return this;
-	  }
+		this.pendingFriendRequests = pendingFriendRequests;
+		return this;
+	}
 
-	  public Player addPendingFriendRequestsItem(Friend pendingFriendRequestsItem) {
-	    if (this.pendingFriendRequests == null) {
-	      this.pendingFriendRequests = new ArrayList<Friend>();
-	    }
-	    this.pendingFriendRequests.add(pendingFriendRequestsItem);
-	    return this;
-	  }
+	public Player addPendingFriendRequestsItem(Friend pendingFriendRequestsItem) {
+		if (this.pendingFriendRequests == null) {
+			this.pendingFriendRequests = new ArrayList<Friend>();
+		}
+		this.pendingFriendRequests.add(pendingFriendRequestsItem);
+		return this;
+	}
 
-	  /**
-	   * Get pendingFriendRequests
-	   * @return pendingFriendRequests
-	  **/
-	  @ApiModelProperty(value = "")
+	/**
+	 * Get pendingFriendRequests
+	 * 
+	 * @return pendingFriendRequests
+	 **/
+	@ApiModelProperty(value = "")
 
-	  @Valid
+	@Valid
 
-	  public List<Friend> getPendingFriendRequests() {
-	    return pendingFriendRequests;
-	  }
+	public List<Friend> getPendingFriendRequests() {
+		return pendingFriendRequests;
+	}
 
-	  public void setPendingFriendRequests(List<Friend> pendingFriendRequests) {
-	    this.pendingFriendRequests = pendingFriendRequests;
-	  }
-	
+	public void setPendingFriendRequests(List<Friend> pendingFriendRequests) {
+		this.pendingFriendRequests = pendingFriendRequests;
+	}
+
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {
@@ -604,6 +609,14 @@ public class Player {
 
 	public void setProfileImagePreSignedUrl(String profileImagePreSignedUrl) {
 		this.profileImagePreSignedUrl = profileImagePreSignedUrl;
+	}
+
+	public List<LightweightChallenge> getLightweightChallenges() {
+		return lightweightChallenges;
+	}
+
+	public void setLightweightChallenges(List<LightweightChallenge> lightweightChallenges) {
+		this.lightweightChallenges = lightweightChallenges;
 	}
 
 }

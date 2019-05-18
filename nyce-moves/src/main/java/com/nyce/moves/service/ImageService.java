@@ -1,7 +1,6 @@
 package com.nyce.moves.service;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nyce.moves.common.ApplicationConstants;
 import com.nyce.moves.common.UtilityFunctions;
+import com.nyce.moves.model.Challenge;
 import com.nyce.moves.model.CreateImageResponse;
 import com.nyce.moves.model.CreateImageResponse.StatusEnum;
 import com.nyce.moves.model.GetImagesResponse;
@@ -17,6 +17,7 @@ import com.nyce.moves.model.Image;
 import com.nyce.moves.model.ImageRequest;
 import com.nyce.moves.model.Player;
 import com.nyce.moves.model.ResponseTemplate;
+import com.nyce.moves.repository.ChallengeRepository;
 import com.nyce.moves.repository.ImageRepository;
 import com.nyce.moves.repository.PlayerRepository;
 
@@ -28,6 +29,12 @@ public class ImageService {
 
 	@Autowired
 	ImageRepository imageRepository;
+	
+	@Autowired
+	ChallengeRepository challengeRepository;
+	
+	@Autowired
+	PlayerService playerService;
 
 	@Autowired
 	private AmazonClient amazonClient;
@@ -39,22 +46,30 @@ public class ImageService {
 		image.setDescription(imageRequest.getDescription());
 		image.setImageUrl(imageRequest.getImageUrl());
 		image.setPlayerId(playerId);
-		image.setPostedTimestamp(OffsetDateTime.now());
+		image.setPostedTimestamp(new java.sql.Timestamp(new java.util.Date().getTime()));
 		image.setTitle(imageRequest.getTitle());
 		image.setHeight(imageRequest.getHeight());
 		image.setWidth(imageRequest.getWidth());
 		long imageId = 0L;
-
+		
 		Player player = playerRepository.findOne(playerId);
 		Player returnPlayer = null;
 
 		if (player != null) {
+		
+			if(imageRequest.getChallengeName() != null && imageRequest.getChallengeName().trim() != ""){
+				image.setChallengeName(imageRequest.getChallengeName());
+				Challenge challenge = playerService.createChallenge(imageRequest.getChallengeName(), player);
+				image.setChallengeId(challenge.getChallangeId());				
+			}
+			
 			player.getImages().add(image);
 			returnPlayer = playerRepository.save(player);
 			if (returnPlayer != null && returnPlayer.getImages() != null && returnPlayer.getImages().size() > 0) {
 				imageId = returnPlayer.getImages().get(returnPlayer.getImages().size() - 1).getImageId();
 				image.setImageId(imageId);
 			}
+			
 			createImageResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 			createImageResponse.setMessage("Image has been successfully submitted for player [" + playerId + "]");
 			if (image.getImageUrl() != null && image.getImageUrl() != "") {
@@ -216,6 +231,6 @@ public class ImageService {
 		}
 
 		return images;
-	}
-
+	}	
+	
 }

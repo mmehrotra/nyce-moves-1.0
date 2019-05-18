@@ -1,6 +1,7 @@
 package com.nyce.moves.model;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -84,7 +85,7 @@ public class PlayerRequest   {
   private String primarySport = null;
 
   @JsonProperty("dob")
-  private LocalDate dob = null;
+  private Date dob = null;
 
   @JsonProperty("profileImageUrl")
   private String profileImageUrl = null;
@@ -289,7 +290,7 @@ public class PlayerRequest   {
     this.primarySport = primarySport;
   }
 
-  public PlayerRequest dob(LocalDate dob) {
+  public PlayerRequest dob(Date dob) {
     this.dob = dob;
     return this;
   }
@@ -302,11 +303,11 @@ public class PlayerRequest   {
 
   @Valid
 
-  public LocalDate getDob() {
+  public Date getDob() {
     return dob;
   }
 
-  public void setDob(LocalDate dob) {
+  public void setDob(Date dob) {
     this.dob = dob;
   }
 

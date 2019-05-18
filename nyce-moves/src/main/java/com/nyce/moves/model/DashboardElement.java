@@ -1,6 +1,6 @@
 package com.nyce.moves.model;
 
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -90,7 +90,7 @@ public class DashboardElement {
 	private boolean isApplaudDoneBySignedInPlayer = false;
 
 	@JsonProperty("postedTimestamp")
-	private OffsetDateTime postedTimestamp = null;
+	private Timestamp postedTimestamp = null;
 
 	@JsonProperty("numberOfComments")
 	private Long numberOfComments = null;
@@ -269,7 +269,7 @@ public class DashboardElement {
 		this.isApplaudDoneBySignedInPlayer = isApplaudDoneBySignedInPlayer;
 	}
 
-	public DashboardElement postedTimestamp(OffsetDateTime postedTimestamp) {
+	public DashboardElement postedTimestamp(Timestamp postedTimestamp) {
 		this.postedTimestamp = postedTimestamp;
 		return this;
 	}
@@ -283,11 +283,11 @@ public class DashboardElement {
 
 	@Valid
 
-	public OffsetDateTime getPostedTimestamp() {
+	public Timestamp getPostedTimestamp() {
 		return postedTimestamp;
 	}
 
-	public void setPostedTimestamp(OffsetDateTime postedTimestamp) {
+	public void setPostedTimestamp(Timestamp postedTimestamp) {
 		this.postedTimestamp = postedTimestamp;
 	}
 

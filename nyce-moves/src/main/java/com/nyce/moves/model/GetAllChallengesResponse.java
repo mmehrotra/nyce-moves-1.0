@@ -15,12 +15,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * GetFriendsResponse
+ * GetAllChallengesResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-02T15:47:19.016+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-05-18T16:26:14.015+05:30")
 
-public class GetFriendsResponse   {
+public class GetAllChallengesResponse   {
   /**
    * Gets or Sets status
    */
@@ -63,7 +63,7 @@ public class GetFriendsResponse   {
 
   @JsonProperty("data")
   @Valid
-  private List<Friend> data = null;
+  private List<Challenge> data = null;
 
   @JsonProperty("pageSize")
   private Long pageSize = null;
@@ -74,7 +74,7 @@ public class GetFriendsResponse   {
   @JsonProperty("totalNumberofPagesAvailable")
   private Long totalNumberofPagesAvailable = null;
 
-  public GetFriendsResponse status(StatusEnum status) {
+  public GetAllChallengesResponse status(StatusEnum status) {
     this.status = status;
     return this;
   }
@@ -94,7 +94,7 @@ public class GetFriendsResponse   {
     this.status = status;
   }
 
-  public GetFriendsResponse code(String code) {
+  public GetAllChallengesResponse code(String code) {
     this.code = code;
     return this;
   }
@@ -114,7 +114,7 @@ public class GetFriendsResponse   {
     this.code = code;
   }
 
-  public GetFriendsResponse message(String message) {
+  public GetAllChallengesResponse message(String message) {
     this.message = message;
     return this;
   }
@@ -134,14 +134,14 @@ public class GetFriendsResponse   {
     this.message = message;
   }
 
-  public GetFriendsResponse data(List<Friend> data) {
+  public GetAllChallengesResponse data(List<Challenge> data) {
     this.data = data;
     return this;
   }
 
-  public GetFriendsResponse addDataItem(Friend dataItem) {
+  public GetAllChallengesResponse addDataItem(Challenge dataItem) {
     if (this.data == null) {
-      this.data = new ArrayList<Friend>();
+      this.data = new ArrayList<Challenge>();
     }
     this.data.add(dataItem);
     return this;
@@ -155,15 +155,15 @@ public class GetFriendsResponse   {
 
   @Valid
 
-  public List<Friend> getData() {
+  public List<Challenge> getData() {
     return data;
   }
 
-  public void setData(List<Friend> data) {
+  public void setData(List<Challenge> data) {
     this.data = data;
   }
 
-  public GetFriendsResponse pageSize(Long pageSize) {
+  public GetAllChallengesResponse pageSize(Long pageSize) {
     this.pageSize = pageSize;
     return this;
   }
@@ -183,7 +183,7 @@ public class GetFriendsResponse   {
     this.pageSize = pageSize;
   }
 
-  public GetFriendsResponse pageNumber(Long pageNumber) {
+  public GetAllChallengesResponse pageNumber(Long pageNumber) {
     this.pageNumber = pageNumber;
     return this;
   }
@@ -203,7 +203,7 @@ public class GetFriendsResponse   {
     this.pageNumber = pageNumber;
   }
 
-  public GetFriendsResponse totalNumberofPagesAvailable(Long totalNumberofPagesAvailable) {
+  public GetAllChallengesResponse totalNumberofPagesAvailable(Long totalNumberofPagesAvailable) {
     this.totalNumberofPagesAvailable = totalNumberofPagesAvailable;
     return this;
   }
@@ -232,14 +232,14 @@ public class GetFriendsResponse   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetFriendsResponse getFriendsResponse = (GetFriendsResponse) o;
-    return Objects.equals(this.status, getFriendsResponse.status) &&
-        Objects.equals(this.code, getFriendsResponse.code) &&
-        Objects.equals(this.message, getFriendsResponse.message) &&
-        Objects.equals(this.data, getFriendsResponse.data) &&
-        Objects.equals(this.pageSize, getFriendsResponse.pageSize) &&
-        Objects.equals(this.pageNumber, getFriendsResponse.pageNumber) &&
-        Objects.equals(this.totalNumberofPagesAvailable, getFriendsResponse.totalNumberofPagesAvailable);
+    GetAllChallengesResponse getAllChallengesResponse = (GetAllChallengesResponse) o;
+    return Objects.equals(this.status, getAllChallengesResponse.status) &&
+        Objects.equals(this.code, getAllChallengesResponse.code) &&
+        Objects.equals(this.message, getAllChallengesResponse.message) &&
+        Objects.equals(this.data, getAllChallengesResponse.data) &&
+        Objects.equals(this.pageSize, getAllChallengesResponse.pageSize) &&
+        Objects.equals(this.pageNumber, getAllChallengesResponse.pageNumber) &&
+        Objects.equals(this.totalNumberofPagesAvailable, getAllChallengesResponse.totalNumberofPagesAvailable);
   }
 
   @Override
@@ -250,7 +250,7 @@ public class GetFriendsResponse   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetFriendsResponse {\n");
+    sb.append("class GetAllChallengesResponse {\n");
     
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");

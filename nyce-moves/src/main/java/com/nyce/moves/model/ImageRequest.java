@@ -33,6 +33,9 @@ public class ImageRequest {
 	@JsonProperty("width")
 	private Integer width = null;
 
+	@JsonProperty("challengeName")
+	private String challengeName = null;
+
 	public ImageRequest playerId(Long playerId) {
 		this.playerId = playerId;
 		return this;
@@ -193,4 +196,13 @@ public class ImageRequest {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
+
+	public String getChallengeName() {
+		return challengeName;
+	}
+
+	public void setChallengeName(String challengeName) {
+		this.challengeName = challengeName;
+	}
+
 }

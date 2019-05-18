@@ -1,13 +1,12 @@
 package com.nyce.moves.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
 import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * VideoRequest
@@ -15,142 +14,149 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-07T16:07:52.516+05:30")
 
-public class VideoRequest   {
-  @JsonProperty("playerId")
-  private Long playerId = null;
+public class VideoRequest {
+	@JsonProperty("playerId")
+	private Long playerId = null;
 
-  @JsonProperty("title")
-  private String title = null;
+	@JsonProperty("title")
+	private String title = null;
 
-  @JsonProperty("videoUrl")
-  private String videoUrl = null;
+	@JsonProperty("videoUrl")
+	private String videoUrl = null;
 
-  @JsonProperty("description")
-  private String description = null;
+	@JsonProperty("description")
+	private String description = null;
 
-  public VideoRequest playerId(Long playerId) {
-    this.playerId = playerId;
-    return this;
-  }
+	@JsonProperty("challengeName")
+	private String challengeName = null;
 
-  /**
-   * Get playerId
-   * @return playerId
-  **/
-  @ApiModelProperty(value = "")
+	public String getChallengeName() {
+		return challengeName;
+	}
 
+	public void setChallengeName(String challengeName) {
+		this.challengeName = challengeName;
+	}
 
-  public Long getPlayerId() {
-    return playerId;
-  }
+	public VideoRequest playerId(Long playerId) {
+		this.playerId = playerId;
+		return this;
+	}
 
-  public void setPlayerId(Long playerId) {
-    this.playerId = playerId;
-  }
+	/**
+	 * Get playerId
+	 * 
+	 * @return playerId
+	 **/
+	@ApiModelProperty(value = "")
 
-  public VideoRequest title(String title) {
-    this.title = title;
-    return this;
-  }
+	public Long getPlayerId() {
+		return playerId;
+	}
 
-  /**
-   * Get title
-   * @return title
-  **/
-  @ApiModelProperty(value = "")
+	public void setPlayerId(Long playerId) {
+		this.playerId = playerId;
+	}
 
+	public VideoRequest title(String title) {
+		this.title = title;
+		return this;
+	}
 
-  public String getTitle() {
-    return title;
-  }
+	/**
+	 * Get title
+	 * 
+	 * @return title
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+	public String getTitle() {
+		return title;
+	}
 
-  public VideoRequest videoUrl(String videoUrl) {
-    this.videoUrl = videoUrl;
-    return this;
-  }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-  /**
-   * Get videoUrl
-   * @return videoUrl
-  **/
-  @ApiModelProperty(value = "")
+	public VideoRequest videoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
+		return this;
+	}
 
+	/**
+	 * Get videoUrl
+	 * 
+	 * @return videoUrl
+	 **/
+	@ApiModelProperty(value = "")
 
-  public String getVideoUrl() {
-    return videoUrl;
-  }
+	public String getVideoUrl() {
+		return videoUrl;
+	}
 
-  public void setVideoUrl(String videoUrl) {
-    this.videoUrl = videoUrl;
-  }
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
 
-  public VideoRequest description(String description) {
-    this.description = description;
-    return this;
-  }
+	public VideoRequest description(String description) {
+		this.description = description;
+		return this;
+	}
 
-  /**
-   * Get description
-   * @return description
-  **/
-  @ApiModelProperty(value = "")
+	/**
+	 * Get description
+	 * 
+	 * @return description
+	 **/
+	@ApiModelProperty(value = "")
 
+	public String getDescription() {
+		return description;
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		VideoRequest videoRequest = (VideoRequest) o;
+		return Objects.equals(this.playerId, videoRequest.playerId) && Objects.equals(this.title, videoRequest.title) && Objects.equals(this.videoUrl, videoRequest.videoUrl) && Objects.equals(this.description, videoRequest.description);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(playerId, title, videoUrl, description);
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    VideoRequest videoRequest = (VideoRequest) o;
-    return Objects.equals(this.playerId, videoRequest.playerId) &&
-        Objects.equals(this.title, videoRequest.title) &&
-        Objects.equals(this.videoUrl, videoRequest.videoUrl) &&
-        Objects.equals(this.description, videoRequest.description);
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class VideoRequest {\n");
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(playerId, title, videoUrl, description);
-  }
+		sb.append("    playerId: ").append(toIndentedString(playerId)).append("\n");
+		sb.append("    title: ").append(toIndentedString(title)).append("\n");
+		sb.append("    videoUrl: ").append(toIndentedString(videoUrl)).append("\n");
+		sb.append("    description: ").append(toIndentedString(description)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class VideoRequest {\n");
-    
-    sb.append("    playerId: ").append(toIndentedString(playerId)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    videoUrl: ").append(toIndentedString(videoUrl)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
-
