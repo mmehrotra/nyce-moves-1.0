@@ -91,7 +91,7 @@ public class PlayersApiController implements PlayersApi {
 		return new ResponseEntity<ResponseTemplate>(responseTemplate, HttpStatus.OK);
 	}
 
-	public ResponseEntity<ResponseTemplate> changePassword(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @PathVariable("identifier") Long identifier, @ApiParam(value = "Change Password", required = true) @Valid @RequestBody ChangePasswordRequest body) {
+	public ResponseEntity<ResponseTemplate> changePassword(@ApiParam(value = "The playerId of the current player", required = true) @PathVariable("playerId") Long playerId, @ApiParam(value = "The playerId of the current player", required = true) @RequestHeader("identifier") Long identifier, @ApiParam(value = "Change Password", required = true) @Valid @RequestBody ChangePasswordRequest body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {

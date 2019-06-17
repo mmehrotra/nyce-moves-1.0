@@ -117,7 +117,7 @@ public class AmazonClient {
 		String objectName = "";
 		String[] stringArray = fullS3Url.split(bucketName + "/");
 
-		if (stringArray != null && stringArray.length > 0) {
+		if (stringArray != null && stringArray.length > 0 && stringArray.length >= 2) {
 			objectName = stringArray[1];
 		}
 

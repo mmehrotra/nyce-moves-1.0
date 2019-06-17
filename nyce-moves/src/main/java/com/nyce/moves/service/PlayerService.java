@@ -17,6 +17,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -66,12 +67,18 @@ public class PlayerService {
 
 	@Autowired
 	private AmazonClient amazonClient;
-	
+
 	@Autowired
 	private ChallengeRepository challengeRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Value("${notification.source.email.address}")
+	private String emailAddress;
+
+	@Value("${notification.source.email.password}")
+	private String emailPassword;
 
 	public PlayerResponse addPlayer(PlayerRequest playerRequest, PlayerResponse playerResponse) {
 
@@ -137,6 +144,12 @@ public class PlayerService {
 					playerResponse.setMessage("Player has been successfully created");
 					playerResponse.setCode(ApplicationConstants.SUCCESS_CODE_11001);
 					playerResponse.setData(player);
+					try{
+						sendmail("Welcome " + player.getDisplayName() + "! , you have been successfully registered to NyceMoves !", "NyceMoves :: New Registration", player.getEmail());
+					}catch(Exception e){
+						System.out.println("Exception occurred while sending the mail while doing registeration");
+					}
+					
 				} else {
 					playerResponse.setStatus(PlayerResponse.StatusEnum.SUCCESS);
 					playerResponse.setMessage("Player has not beein created in the system");
@@ -304,10 +317,10 @@ public class PlayerService {
 		if (players != null && players.size() > 0) {
 			try {
 
-				String newPassword = "newPassword"; // getAlphaNumericString(10);
+				String newPassword = getAlphaNumericString(10);  // "newPassword"; // 
 				players.get(0).setPassword(bCryptPasswordEncoder.encode(newPassword));
 				playerRepository.save(players.get(0));
-				// sendmail(newPassword);
+				sendmail("Your new password is " + newPassword,"NyceMoves :: Password Reset Request", emailAddress);
 				responseTemplate.setStatus(ResponseTemplate.StatusEnum.SUCCESS);
 				responseTemplate.setMessage("New Password has been successfully sent to the registered email address [" + emailAddress + "]");
 				responseTemplate.setCode(ApplicationConstants.SUCCESS_CODE_11001);
@@ -339,38 +352,46 @@ public class PlayerService {
 
 	}
 
-	private void sendmail(String newPassword) throws AddressException, MessagingException, IOException {
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+	private void sendmail(String message, String subject, String recipientEmailAddress) throws AddressException, MessagingException, IOException {
 
-		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("XXXXX@gmail.com", "XXXXXXXXX@19");
-			}
-		});
-		Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress("nycemoves@gmail.com", false));
+		try {
+			Properties props = new Properties();
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", "587");
 
-		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("XXXXXXXXXXXXXXX@gmail.com"));
-		msg.setSubject("NyceMoves :: Password Reset Request");
-		msg.setContent("Your new password is " + newPassword, "text/html");
-		msg.setSentDate(new Date());
+			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(emailAddress, emailPassword);
+				}
+			});
 
-		/*
-		 * MimeBodyPart messageBodyPart = new MimeBodyPart();
-		 * messageBodyPart.setContent("Tutorials point email", "text/html");
-		 * 
-		 * Multipart multipart = new MimeMultipart();
-		 * multipart.addBodyPart(messageBodyPart); MimeBodyPart attachPart = new
-		 * MimeBodyPart();
-		 * 
-		 * attachPart.attachFile("/var/tmp/image19.png");
-		 * multipart.addBodyPart(attachPart); msg.setContent(multipart);
-		 */
-		Transport.send(msg);
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(emailAddress, false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmailAddress));
+			msg.setSubject(subject);
+			msg.setContent(message, "text/html");
+			msg.setSentDate(new Date());
+
+			/*
+			 * MimeBodyPart messageBodyPart = new MimeBodyPart();
+			 * messageBodyPart.setContent("Tutorials point email", "text/html");
+			 * 
+			 * Multipart multipart = new MimeMultipart();
+			 * multipart.addBodyPart(messageBodyPart); MimeBodyPart attachPart =
+			 * new MimeBodyPart();
+			 * 
+			 * attachPart.attachFile("/var/tmp/image19.png");
+			 * multipart.addBodyPart(attachPart); msg.setContent(multipart);
+			 */
+			Transport.send(msg);
+
+		} catch (Exception e) {
+			System.out.println("EXCEPTION OCCURRED WHILE SENDING THE EMAIL TO " + recipientEmailAddress + " with message " + message );
+			e.printStackTrace();
+		}
+
 	}
 
 	static String getAlphaNumericString(int n) {
@@ -456,6 +477,12 @@ public class PlayerService {
 				} else {
 					dashboardElement.setNumberOfComments(0L);
 				}
+				if (image.getChallengeId() != null) {
+					LightweightChallenge lightweightChallenge = new LightweightChallenge();
+					lightweightChallenge.setChallangeId(image.getChallengeId());
+					lightweightChallenge.setChallangeName(image.getChallengeName());
+					dashboardElement.setLightweightChallenge(lightweightChallenge);
+				}
 				dashboardElements.add(dashboardElement);
 
 			}
@@ -484,6 +511,12 @@ public class PlayerService {
 				} else {
 					dashboardElement.setNumberOfComments(0L);
 				}
+				if (video.getChallengeId() != null) {
+					LightweightChallenge lightweightChallenge = new LightweightChallenge();
+					lightweightChallenge.setChallangeId(video.getChallengeId());
+					lightweightChallenge.setChallangeName(video.getChallengeName());
+					dashboardElement.setLightweightChallenge(lightweightChallenge);
+				}
 				dashboardElements.add(dashboardElement);
 
 			}
@@ -509,6 +542,12 @@ public class PlayerService {
 					dashboardElement.setNumberOfComments(new Long(post.getComments().size()));
 				} else {
 					dashboardElement.setNumberOfComments(0L);
+				}
+				if (post.getChallengeId() != null) {
+					LightweightChallenge lightweightChallenge = new LightweightChallenge();
+					lightweightChallenge.setChallangeId(post.getChallengeId());
+					lightweightChallenge.setChallangeName(post.getChallengeName());
+					dashboardElement.setLightweightChallenge(lightweightChallenge);
 				}
 				dashboardElements.add(dashboardElement);
 			}
@@ -797,6 +836,12 @@ public class PlayerService {
 				} else {
 					dashboardElement.setNumberOfComments(0L);
 				}
+				if (image.getChallengeId() != null) {
+					LightweightChallenge lightweightChallenge = new LightweightChallenge();
+					lightweightChallenge.setChallangeId(image.getChallengeId());
+					lightweightChallenge.setChallangeName(image.getChallengeName());
+					dashboardElement.setLightweightChallenge(lightweightChallenge);
+				}
 				dashboardElements.add(dashboardElement);
 
 			}
@@ -825,6 +870,12 @@ public class PlayerService {
 				} else {
 					dashboardElement.setNumberOfComments(0L);
 				}
+				if (video.getChallengeId() != null) {
+					LightweightChallenge lightweightChallenge = new LightweightChallenge();
+					lightweightChallenge.setChallangeId(video.getChallengeId());
+					lightweightChallenge.setChallangeName(video.getChallengeName());
+					dashboardElement.setLightweightChallenge(lightweightChallenge);
+				}
 				dashboardElements.add(dashboardElement);
 
 			}
@@ -851,6 +902,12 @@ public class PlayerService {
 				} else {
 					dashboardElement.setNumberOfComments(0L);
 				}
+				if (post.getChallengeId() != null) {
+					LightweightChallenge lightweightChallenge = new LightweightChallenge();
+					lightweightChallenge.setChallangeId(post.getChallengeId());
+					lightweightChallenge.setChallangeName(post.getChallengeName());
+					dashboardElement.setLightweightChallenge(lightweightChallenge);
+				}
 				dashboardElements.add(dashboardElement);
 			}
 		}
@@ -873,9 +930,9 @@ public class PlayerService {
 				Player elementPlayer = playerRepository.findOne(elementPlayerId);
 				if (elementPlayer != null) {
 					dashboardElement.setDisplayName(elementPlayer.getDisplayName());
-					dashboardElement.setProfileImageUrl(player.getProfileImageUrl());
-					if (player.getProfileImageUrl() != null) {
-						dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(player.getProfileImageUrl()));
+					dashboardElement.setProfileImageUrl(elementPlayer.getProfileImageUrl());
+					if (elementPlayer.getProfileImageUrl() != null) {
+						dashboardElement.setProfilePreSignUrl(amazonClient.getPreSignUrlFromUrl(elementPlayer.getProfileImageUrl()));
 					}
 				}
 				if (dashboardElement.getUrl() != null) {
@@ -897,7 +954,8 @@ public class PlayerService {
 
 	public GetFriendsResponse searchPlayersByString(Long playerId, String searchString, BigDecimal pageSize, BigDecimal pageNumber, GetFriendsResponse getFriendsResponse) {
 
-		String searchStringLower = searchString.toLowerCase();
+		String searchStringLower = '%' + searchString.toLowerCase() + '%';
+
 		List<Player> playerList = playerRepository.searchPlayersByString(searchStringLower, searchStringLower, searchStringLower, playerId);
 
 		if (playerList != null && playerList.size() > 0) {
@@ -937,8 +995,8 @@ public class PlayerService {
 		return getFriendsResponse;
 
 	}
-	
-	public Challenge createChallenge(String challengeName, Player player){
+
+	public Challenge createChallenge(String challengeName, Player player) {
 		Challenge challenge = new Challenge();
 		challenge.setChallangeName(challengeName);
 		challenge.setChallangeCreatedBy(player.getPlayerId());
@@ -946,7 +1004,7 @@ public class PlayerService {
 		challenge.setOwnerProfileImageUrl(player.getProfileImageUrl());
 		challenge.setChallanageCreationTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 		challenge.setChallengeStatus(ChallengeStatusEnum.OPEN);
-		
+
 		ChallengeParticipants friend = new ChallengeParticipants();
 		friend.setName(player.getDisplayName());
 		friend.setPlayerId(player.getPlayerId());
@@ -954,21 +1012,21 @@ public class PlayerService {
 		List<ChallengeParticipants> friends = new ArrayList<ChallengeParticipants>();
 		friends.add(friend);
 		challenge.setChallengeParticipants(friends);
-		
+
 		Challenge returnChallenge = challengeRepository.save(challenge);
-		
-		if(player.getLightweightChallenges() == null){
-	    	List<LightweightChallenge> lightweightChallenges = new ArrayList<LightweightChallenge>();
-	    	player.setLightweightChallenges(lightweightChallenges);
-	    }
-	    
+
+		if (player.getLightweightChallenges() == null) {
+			List<LightweightChallenge> lightweightChallenges = new ArrayList<LightweightChallenge>();
+			player.setLightweightChallenges(lightweightChallenges);
+		}
+
 		List<LightweightChallenge> challengesFromPlayer = player.getLightweightChallenges();
-	    LightweightChallenge lightweightChallenge = new LightweightChallenge();
-	    lightweightChallenge.setChallangeId(returnChallenge.getChallangeId());
-	    lightweightChallenge.setChallangeName(returnChallenge.getChallangeName());
-	    challengesFromPlayer.add(lightweightChallenge);
+		LightweightChallenge lightweightChallenge = new LightweightChallenge();
+		lightweightChallenge.setChallangeId(returnChallenge.getChallangeId());
+		lightweightChallenge.setChallangeName(returnChallenge.getChallangeName());
+		challengesFromPlayer.add(lightweightChallenge);
 		player.setLightweightChallenges(challengesFromPlayer);
-		
+
 		return returnChallenge;
 	}
 

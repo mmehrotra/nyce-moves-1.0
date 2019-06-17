@@ -100,6 +100,9 @@ public class DashboardElement {
 
 	@JsonProperty("imageWidth")
 	private Long imageWidth;
+	
+	@JsonProperty("challange")
+	LightweightChallenge lightweightChallenge;
 
 	public DashboardElement playerId(Long playerId) {
 		this.playerId = playerId;
@@ -402,6 +405,14 @@ public class DashboardElement {
 
 	public void setImageWidth(Long imageWidth) {
 		this.imageWidth = imageWidth;
+	}
+
+	public LightweightChallenge getLightweightChallenge() {
+		return lightweightChallenge;
+	}
+
+	public void setLightweightChallenge(LightweightChallenge lightweightChallenge) {
+		this.lightweightChallenge = lightweightChallenge;
 	}
 
 	@Override
